@@ -1,11 +1,18 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+
+const Wrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 function App() {
   return (
-    <div>
+    <Wrap>
       <Outlet />
-    </div>
+    </Wrap>
   );
 }
 

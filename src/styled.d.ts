@@ -3,8 +3,10 @@ import "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    textColor: string;
-    bgColor: string;
-    btnColor: string;
+    firstColor: string;
+    secondColor: string;
+    thirdColor: string;
+    fourthColor: string;
+    fifthColor: string;
   }
 }

@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "theme.ts"]
+  "include": ["src", "src/theme.ts"]
 }
