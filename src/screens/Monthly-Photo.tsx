@@ -78,11 +78,12 @@ const DayDiv = styled.div`
   border-radius: 2px;
 `;
 const DateDiv = styled.div`
-  background-image: url("https://user-images.githubusercontent.com/97151214/211022057-38a93503-9a77-4a47-bfac-2336377683d5.jpg");
-  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.8);
+  //background-image: url("https://user-images.githubusercontent.com/97151214/211022057-38a93503-9a77-4a47-bfac-2336377683d5.jpg");
+  //background-size: cover;
   border-radius: 2px;
   p {
-    color: ${(props) => props.theme.fifthColor};
+    color: ${(props) => props.theme.fourthColor};
     font-weight: 200;
     padding: 5px;
     font-size: 12px;
