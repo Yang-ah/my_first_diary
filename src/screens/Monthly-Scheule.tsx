@@ -11,6 +11,8 @@ const Wrap = styled.div`
   align-self: center;
   align-items: center;
   justify-content: space-between;
+  padding: 15px;
+  margin-top: 10px;
 `;
 
 const Header = styled.div`
@@ -38,6 +40,7 @@ const SectionTable = styled.div`
   width: 690px;
   height: 570px;
   background-color: ${(props) => props.theme.fourthColor};
+  overflow-y: scroll;
 `;
 
 function MonthlySchedule() {
@@ -79,6 +82,15 @@ function MonthlySchedule() {
           </div>
         </SectionHeader>
         <SectionTable>
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
+          <MonthLine />
           <MonthLine />
           <MonthLine />
           <MonthLine />

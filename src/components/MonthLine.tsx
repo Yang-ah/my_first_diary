@@ -4,28 +4,29 @@ const SectionLine = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 40px 1fr 80px 40px;
+  grid-gap: 1px;
   height: 40px;
+  margin-bottom: 1px;
 `;
 
 const DateBox = styled.div`
-  background-color: red;
+  background-color: ${(props) => props.theme.thirdColor};
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const MainBox = styled.div`
-  background-color: blue;
+  background-color: ${(props) => props.theme.secondColor};
 `;
 
 const SectionSide = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  background-color: yellow;
+  grid-gap: 1px;
 `;
 const SideBox = styled.div`
-  border: 1px solid black;
-  background-color: yellow;
+  background-color: ${(props) => props.theme.thirdColor};
 `;
 
 function MonthLine() {
