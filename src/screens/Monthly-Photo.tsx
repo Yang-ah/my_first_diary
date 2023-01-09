@@ -94,39 +94,42 @@ const OtherDateDiv = styled(ThisDateDiv)`
   background-color: rgba(255, 255, 255, 0.3);
 `;
 
-const Message = styled.h1`
+export const Message = styled.h1`
   font-size: 11px;
   font-weight: 400;
   color: ${(props) => props.theme.fourthColor};
 `;
 
+const weeks = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+const thisYear = new Date().getFullYear();
+const thisMonth = new Date().getMonth();
+const thisMonthStart = new Date(thisYear, thisMonth, 1).getDay();
+const thisMonthEnd = new Date(thisYear, thisMonth + 1, 0).getDate();
+const thisMonthEndDay = new Date(thisYear, thisMonth + 1, 0).getDay();
+export const thisMonthString = new Date()
+  .toLocaleString("en-US", { month: "long" })
+  .toUpperCase();
+
+const lastMonthLastDate = new Date(thisYear, thisMonth + 1, 0).getDate();
+
+const prevDates: Date[] = [];
+export const thisDates: Date[] = [];
+const nextDates: Date[] = [];
+
+for (let i = thisMonthStart - 1; i >= 0; i--) {
+  prevDates.push(new Date(thisYear, thisMonth, lastMonthLastDate - i));
+}
+
+for (let i = 1; i <= thisMonthEnd; i++) {
+  thisDates.push(new Date(thisYear, thisMonth, i));
+}
+
+for (let i = 1; i < 7 - thisMonthEndDay; i++) {
+  nextDates.push(new Date(thisYear, thisMonth + 1, i));
+}
+
 function MonthlyPhoto() {
-  const weeks = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
-  const thisYear = new Date().getFullYear();
-  const thisMonth = new Date().getMonth();
-  const thisMonthStart = new Date(thisYear, thisMonth, 1).getDay();
-  const thisMonthEnd = new Date(thisYear, thisMonth + 1, 0).getDate();
-  const thisMonthEndDay = new Date(thisYear, thisMonth + 1, 0).getDay();
-
-  const lastMonthLastDate = new Date(thisYear, thisMonth + 1, 0).getDate();
-
-  const prevDates: Date[] = [];
-  const thisDates: Date[] = [];
-  const nextDates: Date[] = [];
-
-  for (let i = thisMonthStart - 1; i >= 0; i--) {
-    prevDates.push(new Date(thisYear, thisMonth, lastMonthLastDate - i));
-  }
-
-  for (let i = 1; i <= thisMonthEnd; i++) {
-    thisDates.push(new Date(thisYear, thisMonth, i));
-  }
-
-  for (let i = 1; i < 7 - thisMonthEndDay; i++) {
-    nextDates.push(new Date(thisYear, thisMonth + 1, i));
-  }
-
   return (
     <Wrap>
       <Header>
@@ -134,9 +137,7 @@ function MonthlyPhoto() {
         <p>PHOTO MONTHLY</p>
       </Header>
       <Section>
-        <Title>
-          {new Date().toLocaleString("en-US", { month: "long" }).toUpperCase()}
-        </Title>
+        <Title>{thisMonthString}</Title>
         <Container>
           <Arrow>
             <i className="fas fa-chevron-left"></i>

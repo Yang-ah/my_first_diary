@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MonthLine from "./../components/MonthLine";
+import { thisDates, thisMonthString, Message } from "./Monthly-Photo";
 
 const Wrap = styled.div`
   display: flex;
@@ -13,94 +13,144 @@ const Wrap = styled.div`
   justify-content: space-between;
   padding: 15px;
   margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid ${(props) => props.theme.fourthColor};
 `;
 
 const Header = styled.div`
   display: flex;
+  letter-spacing: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: ${(props) => props.theme.fourthColor};
+  h1:first-child {
+    margin-right: 20px;
+  }
 `;
-
-const Month = styled.h1`
-  margin-right: 20px;
-`;
-const MonthMode = styled.h1``;
-
-const Section = styled.div``;
 
 const SectionHeader = styled.div`
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  > div:first-child {
+  color: ${(props) => props.theme.secondColor};
+  font-size: 13px;
+  padding-right: 15px;
+`;
+
+const CheckBox = styled.div`
+  display: flex;
+  :last-child {
+    flex-direction: column;
+  }
+  input {
+    width: 15px;
+    height: 15px;
+  }
+  label {
+    padding: 0 0 2px 2px;
+  }
+  > div {
     display: flex;
-    margin-right: 40px;
+    align-items: center;
+    margin-right: 5px;
   }
 `;
 
 const SectionTable = styled.div`
   width: 690px;
-  height: 570px;
-  background-color: ${(props) => props.theme.fourthColor};
+  height: 540px;
   overflow-y: scroll;
+`;
+
+const SectionLine = styled.div`
+  width: 100%;
+  grid-gap: 1px;
+  display: grid;
+  grid-template-columns: 40px 1fr 80px 40px;
+  margin-bottom: 1px;
+  height: 40px;
+  :last-child {
+    margin: 0px;
+  }
+`;
+
+const DateBox = styled.div`
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.fourthColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.secondColor};
+  font-size: 13px;
+`;
+
+const MainBox = styled.div`
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.fourthColor};
+`;
+
+const SectionSide = styled.div`
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: repeat(2, 1fr);
+`;
+
+const SideBox = styled.div`
+  background-color: ${(props) => props.theme.fourthColor};
+  border-radius: 5px;
 `;
 
 function MonthlySchedule() {
   return (
     <Wrap>
       <Header>
-        <Month>JANUARY</Month>
-        <MonthMode>SCHEDULE</MonthMode>
+        <h1>{thisMonthString}</h1>
+        <h1>SCHEDULE</h1>
       </Header>
-      <Section>
+      <section>
         <SectionHeader>
-          <div>
+          <CheckBox>
             <div>
-              <input type="checkbox" />
-              <label>PLAN</label>
+              <input id="plan" type="checkbox" />
+              <label htmlFor="plan">PLAN</label>
             </div>
             <div>
-              <input type="checkbox" />
-              <label>WORK</label>
+              <input id="work" type="checkbox" />
+              <label htmlFor="work">WORK</label>
             </div>
             <div>
-              <input type="checkbox" />
-              <label>DIARY</label>
+              <input id="diary" type="checkbox" />
+              <label htmlFor="diary">DIARY</label>
             </div>
             <div>
-              <input type="checkbox" />
-              <label>TRACKER</label>
+              <input id="tracker" type="checkbox" />
+              <label htmlFor="tracker">TRACKER</label>
             </div>
-          </div>
-          <div>
+          </CheckBox>
+          <CheckBox>
             <div>
-              <input type="checkbox" />
-              <label>WEEKLY MODE</label>
+              <input id="weekly-mode" type="checkbox" />
+              <label htmlFor="weekly-mode">WEEKLY MODE</label>
             </div>
-            <div>
-              <input type="checkbox" />
-              <label>DIARY MODE</label>
-            </div>
-          </div>
+          </CheckBox>
         </SectionHeader>
+
         <SectionTable>
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
-          <MonthLine />
+          {thisDates.map((date: Date) => (
+            <SectionLine key={date.getDate()}>
+              <DateBox>{date.getDate()}</DateBox>
+              <MainBox></MainBox>
+              <SectionSide>
+                <SideBox></SideBox>
+                <SideBox></SideBox>
+              </SectionSide>
+              <SideBox></SideBox>
+            </SectionLine>
+          ))}
         </SectionTable>
-      </Section>
+      </section>
+      <Message>yangah.career@gmail.com</Message>
     </Wrap>
   );
 }
