@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 //size
 // local : 1536
 // tablet : 600~768
@@ -77,7 +76,8 @@ const DayDiv = styled.div`
   line-height: 24px;
   border-radius: 2px;
 `;
-const DateDiv = styled.div`
+
+const ThisDateDiv = styled.div`
   background-color: rgba(255, 255, 255, 0.8);
   //background-image: url("https://user-images.githubusercontent.com/97151214/211022057-38a93503-9a77-4a47-bfac-2336377683d5.jpg");
   //background-size: cover;
@@ -89,6 +89,11 @@ const DateDiv = styled.div`
     font-size: 12px;
   }
 `;
+
+const OtherDateDiv = styled(ThisDateDiv)`
+  background-color: rgba(255, 255, 255, 0.3);
+`;
+
 const Message = styled.h1`
   font-size: 11px;
   font-weight: 400;
@@ -96,6 +101,32 @@ const Message = styled.h1`
 `;
 
 function MonthlyPhoto() {
+  const weeks = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+  const thisYear = new Date().getFullYear();
+  const thisMonth = new Date().getMonth();
+  const thisMonthStart = new Date(thisYear, thisMonth, 1).getDay();
+  const thisMonthEnd = new Date(thisYear, thisMonth + 1, 0).getDate();
+  const thisMonthEndDay = new Date(thisYear, thisMonth + 1, 0).getDay();
+
+  const lastMonthLastDate = new Date(thisYear, thisMonth + 1, 0).getDate();
+
+  const prevDates: Date[] = [];
+  const thisDates: Date[] = [];
+  const nextDates: Date[] = [];
+
+  for (let i = thisMonthStart - 1; i >= 0; i--) {
+    prevDates.push(new Date(thisYear, thisMonth, lastMonthLastDate - i));
+  }
+
+  for (let i = 1; i <= thisMonthEnd; i++) {
+    thisDates.push(new Date(thisYear, thisMonth, i));
+  }
+
+  for (let i = 1; i < 7 - thisMonthEndDay; i++) {
+    nextDates.push(new Date(thisYear, thisMonth + 1, i));
+  }
+
   return (
     <Wrap>
       <Header>
@@ -103,56 +134,51 @@ function MonthlyPhoto() {
         <p>PHOTO MONTHLY</p>
       </Header>
       <Section>
-        <Title>JANUARY</Title>
+        <Title>
+          {new Date().toLocaleString("en-US", { month: "long" }).toUpperCase()}
+        </Title>
         <Container>
           <Arrow>
             <i className="fas fa-chevron-left"></i>
           </Arrow>
           <Calendar>
-            <DayDiv>SON</DayDiv>
-            <DayDiv>MON</DayDiv>
-            <DayDiv>TUE</DayDiv>
-            <DayDiv>WED</DayDiv>
-            <DayDiv>THU</DayDiv>
-            <DayDiv>FRI</DayDiv>
-            <DayDiv>SAT</DayDiv>
-            <DateDiv>
-              <p>1</p>
-            </DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
-            <DateDiv></DateDiv>
+            {weeks.map((week: string) => {
+              return <DayDiv key={week}>{week}</DayDiv>;
+            })}
+
+            {prevDates.map((date: Date) => {
+              return (
+                <OtherDateDiv
+                  key={`${date.toLocaleString("en-US", {
+                    month: "short",
+                  })}${date.getDate()}`}
+                >
+                  <p>{date.getDate()}</p>
+                </OtherDateDiv>
+              );
+            })}
+            {thisDates.map((date: Date) => {
+              return (
+                <ThisDateDiv
+                  key={`${date.toLocaleString("en-US", {
+                    month: "short",
+                  })}${date.getDate()}`}
+                >
+                  <p>{date.getDate()}</p>
+                </ThisDateDiv>
+              );
+            })}
+            {nextDates.map((date: Date) => {
+              return (
+                <OtherDateDiv
+                  key={`${date.toLocaleString("en-US", {
+                    month: "short",
+                  })}${date.getDate()}`}
+                >
+                  <p>{date.getDate()}</p>
+                </OtherDateDiv>
+              );
+            })}
           </Calendar>
           <Arrow>
             <i className="fas fa-chevron-right"></i>
