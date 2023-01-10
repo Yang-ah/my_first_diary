@@ -51,6 +51,7 @@ const CheckBox = styled.div`
     margin-left: 10px;
   }
   label {
+    cursor: pointer;
     display: flex;
     align-items: center;
   }
@@ -78,11 +79,21 @@ const SectionLineWithoutTracker = styled(SectionLine)`
   grid-template-columns: 40px 1fr 27px;
 `;
 
+const TableHeader = styled(SectionLine)`
+  height: 32px;
+  margin-bottom: 10px;
+  div:first-child,
+  div:nth-child(2),
+  div > div {
+    background-color: ${(props) => props.theme.fourthColor};
+  }
+`;
+
 const DateBox = styled.div`
   border-radius: 5px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   font-size: 13px;
   background-color: rgba(255, 255, 255, 0.8);
   color: ${(props) => props.theme.thirdColor};
@@ -99,13 +110,20 @@ const SectionSide = styled.div`
   grid-template-columns: repeat(3, 1fr);
 `;
 
-const SideBox = styled.div`
+const SideBox = styled.input`
+  width: 26px;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 3px;
+  border: none;
+  outline: none;
+`;
+
+const LockBox = styled(SideBox)`
+  cursor: pointer;
 `;
 
 const LineHeader = styled(Header)`
@@ -150,13 +168,6 @@ function MonthlySchedule() {
                 DIARY
               </label>
             </div>
-            <div>
-              <input id="weekly-mode" type="checkbox" />
-              <label htmlFor="weekly-mode">
-                <i className="fa-regular fa-square"></i>
-                WEEKLY MODE
-              </label>
-            </div>
           </CheckBox>
           <CheckBox>
             <div>
@@ -166,7 +177,7 @@ function MonthlySchedule() {
                   <i className="fa-solid fa-square-check"></i>
                 ) : (
                   <i className="fa-regular fa-square"></i>
-                )}{" "}
+                )}
                 TRACKER
               </label>
             </div>
@@ -175,6 +186,17 @@ function MonthlySchedule() {
 
         {onTracker ? (
           <SectionTable>
+            <TableHeader>
+              <DateBox>DATE</DateBox>
+              <MainBox></MainBox>
+              <SectionSide>
+                <SideBox as="div">😌</SideBox>
+                <SideBox as="div" style={{ fontSize: "20px" }}>
+                  🏃🏻
+                </SideBox>
+                <SideBox as="div">🔒</SideBox>
+              </SectionSide>
+            </TableHeader>
             {thisDates.map((date: Date) => (
               <SectionLine
                 key={`${date.toLocaleString("en-US", {
@@ -184,15 +206,22 @@ function MonthlySchedule() {
                 <DateBox>{date.getDate()}</DateBox>
                 <MainBox></MainBox>
                 <SectionSide>
-                  <SideBox></SideBox>
-                  <SideBox></SideBox>
-                  <SideBox>🔒</SideBox>
+                  <SideBox />
+                  <SideBox />
+                  <LockBox as="button">🔒</LockBox>
                 </SectionSide>
               </SectionLine>
             ))}
           </SectionTable>
         ) : (
           <SectionTable>
+            <TableHeader style={{ gridTemplateColumns: "40px 1fr 27px" }}>
+              <DateBox>DATE</DateBox>
+              <MainBox></MainBox>
+              <SectionSide>
+                <SideBox as="div">🔒</SideBox>
+              </SectionSide>
+            </TableHeader>
             {thisDates.map((date: Date) => (
               <SectionLineWithoutTracker
                 key={`${date.toLocaleString("en-US", {
@@ -201,7 +230,7 @@ function MonthlySchedule() {
               >
                 <DateBox>{date.getDate()}</DateBox>
                 <MainBox></MainBox>
-                <SideBox>🔒</SideBox>
+                <LockBox as="button">🔒</LockBox>
               </SectionLineWithoutTracker>
             ))}
           </SectionTable>
