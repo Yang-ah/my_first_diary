@@ -19,15 +19,16 @@ const Wrap = styled.div`
   background-color: ${(props) => props.theme.fifthColor};
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
   font-size: 14px;
   display: flex;
   align-items: center;
   color: ${(props) => props.theme.secondColor};
   line-height: 15px;
+  margin: 15px 0 0 15px;
 `;
 
-const ThemeIcon = styled.div`
+export const ThemeIcon = styled.div`
   margin-right: 3px;
   width: 5px;
   height: 15px;

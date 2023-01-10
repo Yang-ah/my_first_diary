@@ -3,7 +3,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import MonthlyPhoto from "./screens/Monthly-Photo";
-import MonthlySchedule from "./screens/Monthly-Scheule";
+import MonthlySchedule from "./screens/Monthly-Schedule";
 
 const router = createBrowserRouter([
   {
