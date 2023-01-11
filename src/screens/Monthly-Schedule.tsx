@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { onTrackerAtom, onDiaryAtom, onPlanAtom, onWorkAtom } from "./../atom";
+import CheckBox, { Tracker } from "../components/CheckBox";
+
 import {
   thisDates,
   thisMonthString,
@@ -24,36 +27,18 @@ const Wrap = styled.div`
   border: 1px solid ${(props) => props.theme.fourthColor};
 `;
 
-const SectionHeader = styled.div`
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: ${(props) => props.theme.secondColor};
-  font-size: 13px;
-  padding-right: 15px;
-`;
-
-const CheckBox = styled.div`
-  display: flex;
-  :last-child {
-    flex-direction: column;
-  }
-  i {
-    font-size: 15px;
-    margin: 2px 1px 0 0;
-  }
-  input {
-    display: none;
-  }
-
-  div {
-    margin-left: 10px;
-  }
-  label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+const TableHeader = styled.div<TrackerProps>`
+  height: 32px;
+  display: grid;
+  grid-template-columns: ${(props) =>
+    props.tracker ? `40px 1fr 90px` : `40px 1fr 30px`};
+  grid-gap: 5px;
+  margin-bottom: 10px;
+  padding-right: 17px;
+  div:first-child,
+  div:nth-child(2),
+  div > div {
+    background-color: ${(props) => props.theme.fourthColor};
   }
 `;
 
@@ -63,29 +48,16 @@ const SectionTable = styled.div`
   overflow-y: scroll;
 `;
 
-const SectionLine = styled.div`
+const SectionLine = styled.div<TrackerProps>`
   width: 100%;
   grid-gap: 5px;
   display: grid;
-  grid-template-columns: 40px 1fr 90px;
+  grid-template-columns: ${(props) =>
+    props.tracker ? "40px 1fr 90px" : "40px 1fr 30px"};
   margin-bottom: 5px;
   height: 40px;
   :last-child {
     margin: 0px;
-  }
-`;
-
-const SectionLineWithoutTracker = styled(SectionLine)`
-  grid-template-columns: 40px 1fr 27px;
-`;
-
-const TableHeader = styled(SectionLine)`
-  height: 32px;
-  margin-bottom: 10px;
-  div:first-child,
-  div:nth-child(2),
-  div > div {
-    background-color: ${(props) => props.theme.fourthColor};
   }
 `;
 
@@ -131,12 +103,12 @@ const LineHeader = styled(Header)`
   margin-left: 30px;
 `;
 
+interface TrackerProps {
+  tracker: boolean;
+}
+
 function MonthlySchedule() {
-  const [onTracker, setTracker] = useState(true);
-  const onClickTracker = () => {
-    setTracker((cur) => !cur);
-    console.log(onTracker);
-  };
+  const onTracker = useRecoilValue(onTrackerAtom);
 
   return (
     <Wrap>
@@ -144,97 +116,39 @@ function MonthlySchedule() {
         <ThemeIcon />
         <p>{`LINE MONTHLY - ${thisMonthString}`}</p>
       </LineHeader>
-      <section>
-        <SectionHeader>
-          <CheckBox>
-            <div>
-              <input id="plan" type="checkbox" />
-              <label htmlFor="plan">
-                <i className="fa-regular fa-square"></i>
-                PLAN
-              </label>
-            </div>
-            <div>
-              <input id="work" type="checkbox" />
-              <label htmlFor="work">
-                <i className="fa-regular fa-square"></i>
-                WORK
-              </label>
-            </div>
-            <div>
-              <input id="diary" type="checkbox" />
-              <label htmlFor="diary">
-                <i className="fa-regular fa-square"></i>
-                DIARY
-              </label>
-            </div>
-          </CheckBox>
-          <CheckBox>
-            <div>
-              <input id="tracker" type="checkbox" onClick={onClickTracker} />
-              <label htmlFor="tracker">
-                {onTracker ? (
-                  <i className="fa-solid fa-square-check"></i>
-                ) : (
-                  <i className="fa-regular fa-square"></i>
-                )}
-                TRACKER
-              </label>
-            </div>
-          </CheckBox>
-        </SectionHeader>
+      <Tracker />
 
-        {onTracker ? (
-          <SectionTable>
-            <TableHeader>
-              <DateBox>DATE</DateBox>
+      <section>
+        <TableHeader tracker={onTracker ? true : false}>
+          <DateBox>DATE</DateBox>
+          <MainBox>
+            <CheckBox />
+          </MainBox>
+          <SectionSide>
+            {onTracker ? <SideBox as="div">😊</SideBox> : null}
+            {onTracker ? <SideBox as="div">🏃🏻</SideBox> : null}
+            <SideBox as="div">🔒</SideBox>
+          </SectionSide>
+        </TableHeader>
+
+        <SectionTable>
+          {thisDates.map((date: Date) => (
+            <SectionLine
+              tracker={onTracker ? true : false}
+              key={`${date.toLocaleString("en-US", {
+                month: "short",
+              })}${date.getDate()}`}
+            >
+              <DateBox>{date.getDate()}</DateBox>
               <MainBox></MainBox>
               <SectionSide>
-                <SideBox as="div">😌</SideBox>
-                <SideBox as="div" style={{ fontSize: "20px" }}>
-                  🏃🏻
-                </SideBox>
-                <SideBox as="div">🔒</SideBox>
-              </SectionSide>
-            </TableHeader>
-            {thisDates.map((date: Date) => (
-              <SectionLine
-                key={`${date.toLocaleString("en-US", {
-                  month: "short",
-                })}${date.getDate()}`}
-              >
-                <DateBox>{date.getDate()}</DateBox>
-                <MainBox></MainBox>
-                <SectionSide>
-                  <SideBox />
-                  <SideBox />
-                  <LockBox as="button">🔒</LockBox>
-                </SectionSide>
-              </SectionLine>
-            ))}
-          </SectionTable>
-        ) : (
-          <SectionTable>
-            <TableHeader style={{ gridTemplateColumns: "40px 1fr 27px" }}>
-              <DateBox>DATE</DateBox>
-              <MainBox></MainBox>
-              <SectionSide>
-                <SideBox as="div">🔒</SideBox>
-              </SectionSide>
-            </TableHeader>
-            {thisDates.map((date: Date) => (
-              <SectionLineWithoutTracker
-                key={`${date.toLocaleString("en-US", {
-                  month: "short",
-                })}${date.getDate()}`}
-              >
-                <DateBox>{date.getDate()}</DateBox>
-                <MainBox></MainBox>
+                {onTracker ? <SideBox /> : null}
+                {onTracker ? <SideBox /> : null}
                 <LockBox as="button">🔒</LockBox>
-              </SectionLineWithoutTracker>
-            ))}
-          </SectionTable>
-        )}
+              </SectionSide>
+            </SectionLine>
+          ))}
+        </SectionTable>
       </section>
       <Message>yangah.career@gmail.com</Message>
     </Wrap>
