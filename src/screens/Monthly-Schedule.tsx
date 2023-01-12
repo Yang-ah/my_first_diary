@@ -4,30 +4,8 @@ import { onTrackerAtom, onDiaryAtom, onPlanAtom, onWorkAtom } from "./../atom";
 import CheckBox, { Tracker } from "../components/CheckBox";
 import { useState } from "react";
 import Emojis from "../components/Emojis";
-
-import {
-  thisDates,
-  thisMonthString,
-  Message,
-  ThemeIcon,
-  Header,
-} from "./Monthly-Photo";
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 760px;
-  height: 720px;
-  color: ${(props) => props.theme.firstColor};
-  background-color: ${(props) => props.theme.fifthColor};
-  align-self: center;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.fourthColor};
-`;
+import { thisDates, thisMonthString } from "../components/Dates";
+import { Message, ThemeIcon, Header, Wrap } from "./Monthly-Photo";
 
 const TableHeader = styled.div<TrackerProps>`
   height: 32px;
@@ -52,7 +30,6 @@ const SectionTable = styled.div`
 
 interface SectionLineProps {
   tracker: boolean;
-  lock: boolean;
 }
 
 const SectionLine = styled.div<SectionLineProps>`
@@ -86,6 +63,10 @@ const MainBox = styled.input`
   border: none;
   outline: none;
   padding: 0 10px;
+  color: ${(props) => props.theme.secondColor};
+  display: flex;
+  align-items: center;
+  font-size: 12px;
 `;
 
 const SectionSide = styled.div`
@@ -110,8 +91,6 @@ export const SideBox = styled.div`
   }
 `;
 
-const LockBox = styled(SideBox)``;
-
 const LineHeader = styled(Header)`
   width: 100%;
   margin-left: 30px;
@@ -123,19 +102,22 @@ interface TrackerProps {
 
 function MonthlySchedule() {
   const onTracker = useRecoilValue(onTrackerAtom);
-  const onDiary = useRecoilValue(onDiaryAtom);
 
   function Diary() {
     const [mainContent, mainChange] = useState("");
+    const onDiary = useRecoilValue(onDiaryAtom);
+
     const setMain = (e: React.FormEvent<HTMLInputElement>) => {
       mainChange(e.currentTarget.value);
     };
+
     return (
       <div>
         {onDiary ? (
           <MainBox
             onChange={setMain}
-            placeholder="오늘의 한 줄 일기를 써보세요. (최대 47자)"
+            placeholder="오늘의 한 줄 일기를 써보세요. (최대 56자)"
+            value={mainContent ? mainContent : ""}
           />
         ) : (
           <MainBox as="div">{mainContent}</MainBox>
@@ -143,8 +125,6 @@ function MonthlySchedule() {
       </div>
     );
   }
-
-  const [lineLock, setLineLock] = useState(false);
 
   function Exercise() {
     const [done, setDone] = useState("");
@@ -160,8 +140,8 @@ function MonthlySchedule() {
     const [lock, setLock] = useState(false);
     const lockToggle = () => {
       setLock((cur) => !cur);
-      setLineLock(lock);
     };
+
     return (
       <SideBox
         as="input"
@@ -173,7 +153,7 @@ function MonthlySchedule() {
   }
 
   return (
-    <Wrap>
+    <Wrap style={{ alignItems: "center" }}>
       <LineHeader>
         <ThemeIcon />
         <p>{`LINE MONTHLY - ${thisMonthString}`}</p>
@@ -196,7 +176,6 @@ function MonthlySchedule() {
         <SectionTable>
           {thisDates.map((date: Date) => (
             <SectionLine
-              lock={lineLock}
               tracker={onTracker ? true : false}
               key={`${date.toLocaleString("en-US", {
                 month: "short",

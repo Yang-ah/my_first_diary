@@ -56,20 +56,32 @@ export function Tracker() {
 }
 
 function CheckBox() {
-  const [onDiary, SetDiary] = useRecoilState(onDiaryAtom);
-  const [onPlan, SetPlan] = useRecoilState(onPlanAtom);
-  const [onWork, SetWork] = useRecoilState(onWorkAtom);
+  const [onDiary, setDiary] = useRecoilState(onDiaryAtom);
+  const [onPlan, setPlan] = useRecoilState(onPlanAtom);
+  const [onWork, setWork] = useRecoilState(onWorkAtom);
 
-  const toggleDiaryAtom = () => SetDiary((prev) => !prev);
-  const togglePlanAtom = () => SetPlan((prev) => !prev);
-  const toggleWorkAtom = () => SetWork((prev) => !prev);
+  const toggleDiaryAtom = () => {
+    setDiary((prev) => !prev);
+  };
+  const togglePlanAtom = () => {
+    onDiary
+      ? alert("다이어리 해제 후 다시 클릭해주세요.")
+      : setPlan((prev) => !prev);
+  };
+  const toggleWorkAtom = () => {
+    onDiary
+      ? alert("다이어리 해제 후 다시 클릭해주세요.")
+      : setWork((prev) => !prev);
+  };
 
   return (
     <CheckContainer>
       <div>
         <input id="plan" type="checkbox" onClick={togglePlanAtom} />
         <label htmlFor="plan">
-          {onPlan ? (
+          {onDiary ? (
+            <i className="fa-regular fa-square"></i>
+          ) : onPlan ? (
             <i className="fa-solid fa-square-check"></i>
           ) : (
             <i className="fa-regular fa-square"></i>
@@ -80,7 +92,9 @@ function CheckBox() {
       <div>
         <input id="work" type="checkbox" onClick={toggleWorkAtom} />
         <label htmlFor="work">
-          {onWork ? (
+          {onDiary ? (
+            <i className="fa-regular fa-square"></i>
+          ) : onWork ? (
             <i className="fa-solid fa-square-check"></i>
           ) : (
             <i className="fa-regular fa-square"></i>

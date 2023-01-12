@@ -1,22 +1,20 @@
 import styled from "styled-components";
-//size
-// local : 1536
-// tablet : 600~768
+import {
+  thisDates,
+  thisMonthString,
+  weeks,
+  prevDates,
+  nextDates,
+} from "../components/Dates";
 
-const Wrap = styled.div`
-  color: ${(props) => props.theme.firstColor};
-  margin-top: 10px;
-  width: 760px;
-  height: 720px;
+export const Wrap = styled.div`
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-  justify-self: center;
+  width: 100%;
+  height: 100%;
   align-self: center;
+  justify-content: space-between;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.fourthColor};
-  padding: 15px;
-  background-color: ${(props) => props.theme.fifthColor};
 `;
 
 export const Header = styled.div`
@@ -100,35 +98,6 @@ export const Message = styled.h1`
   font-weight: 400;
   color: ${(props) => props.theme.fourthColor};
 `;
-
-const weeks = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
-const thisYear = new Date().getFullYear();
-const thisMonth = new Date().getMonth();
-const thisMonthStart = new Date(thisYear, thisMonth, 1).getDay();
-const thisMonthEnd = new Date(thisYear, thisMonth + 1, 0).getDate();
-const thisMonthEndDay = new Date(thisYear, thisMonth + 1, 0).getDay();
-export const thisMonthString = new Date()
-  .toLocaleString("en-US", { month: "long" })
-  .toUpperCase();
-
-const lastMonthLastDate = new Date(thisYear, thisMonth + 1, 0).getDate();
-
-const prevDates: Date[] = [];
-export const thisDates: Date[] = [];
-const nextDates: Date[] = [];
-
-for (let i = thisMonthStart - 1; i >= 0; i--) {
-  prevDates.push(new Date(thisYear, thisMonth, lastMonthLastDate - i));
-}
-
-for (let i = 1; i <= thisMonthEnd; i++) {
-  thisDates.push(new Date(thisYear, thisMonth, i));
-}
-
-for (let i = 1; i < 7 - thisMonthEndDay; i++) {
-  nextDates.push(new Date(thisYear, thisMonth + 1, i));
-}
 
 function MonthlyPhoto() {
   return (
