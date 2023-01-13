@@ -1,5 +1,11 @@
 import { useRecoilState } from "recoil";
-import { onTrackerAtom, onDiaryAtom, onPlanAtom, onWorkAtom } from "./../atom";
+import {
+  onTrackerAtom,
+  onDiaryAtom,
+  onPlanAtom,
+  onWorkAtom,
+  onLockAtom,
+} from "./../atom";
 import styled from "styled-components";
 
 const CheckContainer = styled.div`
@@ -28,13 +34,16 @@ const CheckContainer = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
+    p {
+      margin-bottom: 3px;
+    }
   }
 `;
 
 const TrackerContainer = styled(CheckContainer)`
   height: 10px;
   justify-content: flex-end;
-  margin-right: 120px;
+  margin-right: 80px;
 `;
 
 export function Tracker() {
@@ -59,6 +68,7 @@ function CheckBox() {
   const [onDiary, setDiary] = useRecoilState(onDiaryAtom);
   const [onPlan, setPlan] = useRecoilState(onPlanAtom);
   const [onWork, setWork] = useRecoilState(onWorkAtom);
+  const [onLock, setLock] = useRecoilState(onLockAtom);
 
   const toggleDiaryAtom = () => {
     setDiary((prev) => !prev);
@@ -72,6 +82,9 @@ function CheckBox() {
     onDiary
       ? alert("다이어리 해제 후 다시 클릭해주세요.")
       : setWork((prev) => !prev);
+  };
+  const toggleLockAtom = () => {
+    setLock((prev) => !prev);
   };
 
   return (
@@ -111,6 +124,17 @@ function CheckBox() {
             <i className="fa-regular fa-square"></i>
           )}
           DIARY
+        </label>
+      </div>
+      <div>
+        <input id="lock" type="checkbox" onClick={toggleLockAtom} />
+        <label htmlFor="lock">
+          {onLock ? (
+            <i className="fa-solid fa-square-check"></i>
+          ) : (
+            <i className="fa-regular fa-square"></i>
+          )}
+          LOCK<p>{onLock ? "🔒" : "🔓"}</p>
         </label>
       </div>
     </CheckContainer>
