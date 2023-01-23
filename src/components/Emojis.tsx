@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { onLockAtom } from "../atom";
 import { SideBox } from "../screens/Monthly-Schedule";
 
 const Option = styled.option`
@@ -8,8 +10,10 @@ const Option = styled.option`
 `;
 
 function Emojis() {
+  const onLock = useRecoilValue(onLockAtom);
+
   return (
-    <SideBox as="select">
+    <SideBox as="select" disabled={onLock}>
       <Option value="none"></Option>
       <Option value="happy">🥰</Option>
       <Option value="good">🙂</Option>

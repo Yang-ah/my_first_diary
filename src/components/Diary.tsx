@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { onDiaryAtom } from "../atom";
+import { onDiaryAtom, onLockAtom } from "../atom";
 import { useState } from "react";
 
 export const MainBox = styled.input`
@@ -18,6 +18,7 @@ export const MainBox = styled.input`
 `;
 
 function Diary() {
+  const onLock = useRecoilValue(onLockAtom);
   const [mainContent, mainChange] = useState("");
   const onDiary = useRecoilValue(onDiaryAtom);
   const setMain = (e: React.FormEvent<HTMLInputElement>) => {
@@ -28,9 +29,11 @@ function Diary() {
     <div>
       {onDiary ? (
         <MainBox
+          type="text"
           onChange={setMain}
           placeholder="오늘의 한 줄 일기를 써보세요. (최대 56자)"
           value={mainContent ? mainContent : ""}
+          disabled={onLock}
         />
       ) : (
         <MainBox as="div">{mainContent}</MainBox>

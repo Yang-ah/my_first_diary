@@ -43,7 +43,7 @@ const CheckContainer = styled.div`
 const TrackerContainer = styled(CheckContainer)`
   height: 10px;
   justify-content: flex-end;
-  margin-right: 80px;
+  margin-right: 40px;
 `;
 
 export function Tracker() {
