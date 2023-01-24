@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../atom";
 import CheckBox, { Tracker } from "../components/CheckBox";
-import Emojis from "../components/Emojis";
 import { thisDates, thisMonthString } from "../components/Dates";
 import {
   Header,
@@ -15,12 +14,12 @@ import {
   baseSpace,
   baseRadius,
 } from "../components/Common";
-import Diary, { MainBox } from "../components/Diary";
-import Exercise from "../components/Exercise";
+
+import DateLine, { MainBox } from "../components/DateLine";
 
 const SectionTable = styled.div`
   width: 100%;
-  height: 100%;
+  height: 95%;
   overflow-y: scroll;
   position: relative;
 `;
@@ -45,7 +44,7 @@ const TableHeader = styled.div<TrackerProps>`
   top: 0;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.tracker ? `40px 1fr 100px` : `40px 1fr`};
+    props.tracker ? `40px 1fr 120px` : `40px 1fr 40px`};
   grid-gap: 2px;
 
   div:first-child,
@@ -55,24 +54,8 @@ const TableHeader = styled.div<TrackerProps>`
   }
 `;
 
-interface SectionLineProps {
-  tracker: boolean;
-}
-
-const SectionLine = styled.div<SectionLineProps>`
+export const DateBox = styled.div`
   width: 100%;
-  grid-gap: 2px;
-  display: grid;
-  grid-template-columns: ${(props) =>
-    props.tracker ? `40px 1fr 100px` : `40px 1fr`};
-  margin-bottom: 5px;
-  height: 40px;
-  :last-child {
-    margin: 0px;
-  }
-`;
-
-const DateBox = styled.div`
   border-radius: ${baseRadius};
   display: flex;
   align-items: center;
@@ -82,43 +65,32 @@ const DateBox = styled.div`
   color: ${(props) => props.theme.thirdColor};
 `;
 
-const SectionSide = styled.div`
+export const SectionSide = styled.div<TrackerProps>`
   display: grid;
   grid-gap: 2px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: ${(props) =>
+    props.tracker ? `repeat(3, 1fr)` : `1fr`};
 `;
 
 export const SideBox = styled.div`
-  border-radius: ${baseRadius};
+  width: 100%;
 
+  border-radius: ${baseRadius};
   background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   font-size: 19px;
-  color: ${(props) => props.theme.fourthColor};
+  color: ${(props) => props.theme.thirdColor};
   span {
-    color: ${(props) => props.theme.firstColor};
+    color: ${(props) => props.theme.thirdColor};
   }
 `;
-
-const LockBox = styled(SideBox)``;
 
 interface TrackerProps {
   tracker: boolean;
 }
-
-const AppPage = styled.div`
-  position: absolute;
-  width: 80%;
-  height: 500px;
-  background-color: white;
-  z-index: 99;
-  left: 40px;
-  top: 40px;
-  display: none;
-`;
 
 // main
 
@@ -144,12 +116,23 @@ function MonthlySchedule() {
               <MainBox as="div">
                 <CheckBox />
               </MainBox>
-              <SectionSide>
-                {onTracker ? <SideBox>😊</SideBox> : null}
-                {onTracker ? <SideBox>🏃🏻</SideBox> : null}
-                <LockBox>🔒</LockBox>
+              <SectionSide tracker={onTracker ? true : false}>
+                {onTracker ? (
+                  <SideBox>
+                    <i className="fas fa-smile-wink"></i>
+                  </SideBox>
+                ) : null}
+                {onTracker ? (
+                  <SideBox>
+                    <i className="fas fa-running"></i>
+                  </SideBox>
+                ) : null}
+                <SideBox>
+                  <i className="fas fa-lock"></i>
+                </SideBox>
               </SectionSide>
             </TableHeader>
+            {thisDates.map((date) => DateLine(date.getDate()))}
           </SectionTable>
         </MainContainer>
       </Section>
