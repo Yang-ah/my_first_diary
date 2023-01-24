@@ -2,8 +2,9 @@
 
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import MonthlyPhoto from "./screens/Monthly-Photo";
-import MonthlySchedule from "./screens/Monthly-Schedule";
+import Photo from "./screens/Photo";
+import Line from "./screens/Line";
+import Tracker from "./screens/Tracker";
 
 const router = createBrowserRouter([
   {
@@ -12,11 +13,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <MonthlyPhoto />,
+        element: <Photo />,
       },
       {
-        path: "schedule",
-        element: <MonthlySchedule />,
+        path: "line",
+        element: <Line />,
+      },
+      {
+        path: "tracker",
+        element: <Tracker />,
       },
     ],
   },

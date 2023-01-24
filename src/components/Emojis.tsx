@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { onLockAtom } from "../atom";
-import { SideBox } from "../screens/Monthly-Schedule";
+import { SideBox } from "../screens/Line";
 
 const Option = styled.option`
   border: none;

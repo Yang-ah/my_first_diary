@@ -8,11 +8,11 @@ const BodyWrap = styled.div`
   flex-direction: column;
 `;
 
-const Wrap = styled.div`
+const AppWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 760px;
-  height: 100%;
+  height: 700px;
   color: ${(props) => props.theme.firstColor};
   background-color: ${(props) => props.theme.fifthColor};
   border: 1px solid ${(props) => props.theme.fourthColor};
@@ -20,19 +20,20 @@ const Wrap = styled.div`
   align-self: center;
   justify-content: space-between;
   border-radius: 10px;
-  padding: 15px;
+  padding: 30px;
   position: relative;
+  align-items: center;
 `;
 
 const BtnWrap = styled.div`
   position: absolute;
-  width: 200px;
+  width: 100px;
   top: 10px;
-  right: -201px;
+  right: -101px;
 `;
 
 const Btn = styled.button`
-  width: 120px;
+  width: 80px;
   height: 50px;
   margin-bottom: 10px;
 `;
@@ -44,27 +45,35 @@ export const Message = styled.h1`
   font-size: 11px;
   font-weight: 400;
   color: ${(props) => props.theme.fourthColor};
+  margin-top: 15px;
 `;
 
 function App() {
   const navigate = useNavigate();
-  const goSchedule = () => {
-    navigate("/schedule");
-  };
 
   const goHome = () => {
     navigate("/");
   };
+
+  const goSchedule = () => {
+    navigate("/line");
+  };
+
+  const goTracker = () => {
+    navigate("/tracker");
+  };
+
   return (
     <BodyWrap>
-      <Wrap>
+      <AppWrap>
         <Outlet />
         <BtnWrap>
-          <Btn onClick={goHome}>Monthly-Photo</Btn>
-          <Btn onClick={goSchedule}>Monthly-Schedule</Btn>
+          <Btn onClick={goHome}>Photo</Btn>
+          <Btn onClick={goSchedule}>Line</Btn>
+          <Btn onClick={goTracker}>Tracker</Btn>
         </BtnWrap>
         <Message>yangah.career@gmail.com</Message>
-      </Wrap>
+      </AppWrap>
     </BodyWrap>
   );
 }

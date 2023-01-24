@@ -43,7 +43,6 @@ const CheckContainer = styled.div`
 const TrackerContainer = styled(CheckContainer)`
   height: 10px;
   justify-content: flex-end;
-  margin-right: 40px;
 `;
 
 export function Tracker() {
@@ -83,9 +82,6 @@ function CheckBox() {
       ? alert("다이어리 해제 후 다시 클릭해주세요.")
       : setWork((prev) => !prev);
   };
-  const toggleLockAtom = () => {
-    setLock((prev) => !prev);
-  };
 
   return (
     <CheckContainer>
@@ -124,17 +120,6 @@ function CheckBox() {
             <i className="fa-regular fa-square"></i>
           )}
           DIARY
-        </label>
-      </div>
-      <div>
-        <input id="lock" type="checkbox" onClick={toggleLockAtom} />
-        <label htmlFor="lock">
-          {onLock ? (
-            <i className="fa-solid fa-square-check"></i>
-          ) : (
-            <i className="fa-regular fa-square"></i>
-          )}
-          LOCK<p>{onLock ? "🔒" : "🔓"}</p>
         </label>
       </div>
     </CheckContainer>

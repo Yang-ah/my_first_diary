@@ -1,17 +1,26 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { onTrackerAtom } from "./../atom";
+import { onTrackerAtom } from "../atom";
 import CheckBox, { Tracker } from "../components/CheckBox";
 import Emojis from "../components/Emojis";
 import { thisDates, thisMonthString } from "../components/Dates";
-import { ThemeIcon, Header, Wrap, AddBtn } from "./Monthly-Photo";
+import {
+  Header,
+  AddBtn,
+  Wrap,
+  ThemeIcon,
+  Section,
+  SectionHeader,
+  MainContainer,
+  baseSpace,
+  baseRadius,
+} from "../components/Common";
 import Diary, { MainBox } from "../components/Diary";
 import Exercise from "../components/Exercise";
 
 const SectionTable = styled.div`
-  margin-bottom: 15px;
-  width: 700px;
-  height: 580px;
+  width: 100%;
+  height: 100%;
   overflow-y: scroll;
   position: relative;
 `;
@@ -29,15 +38,16 @@ const AddScheduleBtn = styled(AddBtn)`
 `;
 
 const TableHeader = styled.div<TrackerProps>`
-  position: sticky;
-  margin-bottom: 15px;
   width: 100%;
-  top: 0;
   height: 32px;
+  position: sticky;
+  margin-bottom: ${baseSpace};
+  top: 0;
   display: grid;
   grid-template-columns: ${(props) =>
     props.tracker ? `40px 1fr 100px` : `40px 1fr`};
-  grid-gap: 5px;
+  grid-gap: 2px;
+
   div:first-child,
   div:nth-child(2),
   div > div {
@@ -51,7 +61,7 @@ interface SectionLineProps {
 
 const SectionLine = styled.div<SectionLineProps>`
   width: 100%;
-  grid-gap: 5px;
+  grid-gap: 2px;
   display: grid;
   grid-template-columns: ${(props) =>
     props.tracker ? `40px 1fr 100px` : `40px 1fr`};
@@ -63,7 +73,7 @@ const SectionLine = styled.div<SectionLineProps>`
 `;
 
 const DateBox = styled.div`
-  border-radius: 5px;
+  border-radius: ${baseRadius};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,33 +84,26 @@ const DateBox = styled.div`
 
 const SectionSide = styled.div`
   display: grid;
-  grid-gap: 5px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
 `;
 
 export const SideBox = styled.div`
-  border-radius: 5px;
+  border-radius: ${baseRadius};
+
   background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  border: none;
-  outline: none;
   font-size: 19px;
   color: ${(props) => props.theme.fourthColor};
   span {
     color: ${(props) => props.theme.firstColor};
   }
-  :last-child {
-    margin-right: 5px;
-  }
 `;
 
-const LineHeader = styled(Header)`
-  width: 100%;
-  margin-left: 30px;
-`;
+const LockBox = styled(SideBox)``;
 
 interface TrackerProps {
   tracker: boolean;
@@ -123,48 +126,33 @@ function MonthlySchedule() {
   const onTracker = useRecoilValue(onTrackerAtom);
 
   return (
-    <Wrap style={{ alignItems: "center" }}>
+    <Wrap>
       <AddScheduleBtn>+</AddScheduleBtn>
-      <AppPage>
-        <div>카테고리 선택</div>
-        <div>제목</div>
-        <div>시간</div>
-        <div>장소</div>
-        <div>중요도5단계를 range로</div>
-      </AppPage>
-      <LineHeader>
+
+      <Header>
         <ThemeIcon />
         <p>{`LINE MONTHLY - ${thisMonthString}`}</p>
-      </LineHeader>
-      <Tracker />
-
-      <SectionTable>
-        <TableHeader tracker={onTracker ? true : false}>
-          <DateBox>DATE</DateBox>
-          <MainBox as="div">
-            <CheckBox />
-          </MainBox>
-          <SectionSide>
-            {onTracker ? <SideBox>😊</SideBox> : null}
-            {onTracker ? <SideBox>🏃🏻</SideBox> : null}
-          </SectionSide>
-        </TableHeader>
-        {thisDates.map((date: Date) => (
-          <SectionLine
-            tracker={onTracker ? true : false}
-            key={`${date.toLocaleString("en-US", {
-              month: "short",
-            })}${date.getDate()}`}
-          >
-            <DateBox>{date.getDate()}</DateBox>
-            <Diary />
-            <SectionSide>
-              {onTracker ? <Emojis /> : null}
-              {onTracker ? <Exercise /> : null}
-            </SectionSide>
-          </SectionLine>
-        ))}
-      </SectionTable>
+      </Header>
+      <Section>
+        <SectionHeader>
+          <Tracker />
+        </SectionHeader>
+        <MainContainer>
+          <SectionTable>
+            <TableHeader tracker={onTracker ? true : false}>
+              <DateBox>DATE</DateBox>
+              <MainBox as="div">
+                <CheckBox />
+              </MainBox>
+              <SectionSide>
+                {onTracker ? <SideBox>😊</SideBox> : null}
+                {onTracker ? <SideBox>🏃🏻</SideBox> : null}
+                <LockBox>🔒</LockBox>
+              </SectionSide>
+            </TableHeader>
+          </SectionTable>
+        </MainContainer>
+      </Section>
     </Wrap>
   );
 }

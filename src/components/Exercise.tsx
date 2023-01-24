@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SideBox } from "./../screens/Monthly-Schedule";
+import { SideBox } from "../screens/Line";
 import { useRecoilValue } from "recoil";
 import { onLockAtom } from "../atom";
 
