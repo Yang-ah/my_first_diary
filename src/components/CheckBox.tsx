@@ -40,9 +40,30 @@ const CheckContainer = styled.div`
   }
 `;
 
-const TrackerContainer = styled(CheckContainer)`
-  height: 10px;
+const TrackerContainer = styled.div`
+  width: 100%;
+  display: flex;
   justify-content: flex-end;
+  color: ${(props) => props.theme.secondColor};
+  font-size: 12px;
+  position: relative;
+  bottom: 15px;
+  z-index: 100;
+  height: 20px;
+  input {
+    display: none;
+  }
+  label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    i {
+      margin-right: 2px;
+    }
+    p {
+      margin-bottom: 3px;
+    }
+  }
 `;
 
 export function Tracker() {
@@ -67,7 +88,6 @@ function CheckBox() {
   const [onDiary, setDiary] = useRecoilState(onDiaryAtom);
   const [onPlan, setPlan] = useRecoilState(onPlanAtom);
   const [onWork, setWork] = useRecoilState(onWorkAtom);
-  const [onLock, setLock] = useRecoilState(onLockAtom);
 
   const toggleDiaryAtom = () => {
     setDiary((prev) => !prev);

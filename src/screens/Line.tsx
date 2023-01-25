@@ -1,33 +1,37 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../atom";
 import CheckBox, { Tracker } from "../components/CheckBox";
 import { thisDates, thisMonthString } from "../components/Dates";
+
 import {
   Header,
   AddBtn,
   Wrap,
   ThemeIcon,
   Section,
-  SectionHeader,
   MainContainer,
   baseSpace,
   baseRadius,
 } from "../components/Common";
 
 import DateLine, { MainBox } from "../components/DateLine";
+import { useState } from "react";
+import Add from "../components/Add";
 
 const SectionTable = styled.div`
   width: 100%;
-  height: 95%;
+  height: 100%;
   overflow-y: scroll;
   position: relative;
+  margin-bottom: 25px;
 `;
 
-const AddScheduleBtn = styled(AddBtn)`
+const AddScheduleBtn = styled(motion(AddBtn))`
   position: absolute;
-  bottom: 30px;
-  right: 30px;
+  bottom: 5px;
+  right: 20px;
   z-index: 100;
   width: 50px;
   height: 50px;
@@ -74,14 +78,13 @@ export const SectionSide = styled.div<TrackerProps>`
 
 export const SideBox = styled.div`
   width: 100%;
-
+  height: 100%;
   border-radius: ${baseRadius};
   background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  font-size: 19px;
+  font-size: 17px;
   color: ${(props) => props.theme.thirdColor};
   span {
     color: ${(props) => props.theme.thirdColor};
@@ -92,23 +95,52 @@ interface TrackerProps {
   tracker: boolean;
 }
 
+const Overlay = styled(motion.div)`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(1, 1, 1, 0.7);
+  position: absolute;
+  z-index: 200;
+  top: -40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AddPage = styled.div`
+  width: 300px;
+  height: 300px;
+  background-color: white;
+`;
+
 // main
 
 function MonthlySchedule() {
   const onTracker = useRecoilValue(onTrackerAtom);
+  const [clicked, setClicked] = useState(false);
+  const toggleClicked = () => setClicked((prev) => !prev);
 
   return (
     <Wrap>
-      <AddScheduleBtn>+</AddScheduleBtn>
+      {!clicked ? (
+        <AddScheduleBtn layoutId="addPage" onClick={toggleClicked}>
+          +
+        </AddScheduleBtn>
+      ) : null}
+      {clicked ? (
+        <Overlay layoutId="addPage">
+          <AddPage>
+            <Add />
+          </AddPage>
+        </Overlay>
+      ) : null}
 
       <Header>
         <ThemeIcon />
         <p>{`LINE MONTHLY - ${thisMonthString}`}</p>
       </Header>
       <Section>
-        <SectionHeader>
-          <Tracker />
-        </SectionHeader>
+        <Tracker />
         <MainContainer>
           <SectionTable>
             <TableHeader tracker={onTracker ? true : false}>

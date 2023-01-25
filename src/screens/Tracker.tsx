@@ -1,12 +1,9 @@
 import styled from "styled-components";
 import {
   Header,
-  AddBtn,
   Wrap,
   ThemeIcon,
   Section,
-  SectionHeader,
-  MainContainer,
   baseRadius,
 } from "../components/Common";
 import { months } from "../components/Dates";
@@ -14,7 +11,7 @@ import { months } from "../components/Dates";
 const TrackerSection = styled(Section)`
   display: grid;
   grid-template-columns: 20px repeat(12, 1fr);
-  grid-gap: 3px;
+  grid-gap: 5px;
   overflow-y: scroll;
   position: relative;
 `;
@@ -51,8 +48,8 @@ const Column = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 20px repeat(31, 30px);
-  grid-gap: 3px;
+  grid-template-rows: 20px repeat(31, 35px);
+  grid-gap: 5px;
 `;
 
 function Tracker() {
@@ -60,7 +57,7 @@ function Tracker() {
     <Wrap>
       <Header>
         <ThemeIcon />
-        <p>Tracker</p>
+        <p>TRACKER</p>
       </Header>
       <TrackerSection>
         <Column>
