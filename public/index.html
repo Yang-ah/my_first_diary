@@ -34,6 +34,21 @@
       select {
         cursor: pointer;
       }
+
+      /* input number 화살표 제거 (webkit:chrome, moz:firefox*/
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      input[type="range"],
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+      }
     </style>
   </head>
   <body>

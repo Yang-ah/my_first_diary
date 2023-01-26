@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { baseRadius } from "./Common";
+import { thisMonth, thisMonthEnd, thisYear } from "./Dates";
+
+const fontSize = "13px";
 
 const Container = styled.form`
   width: 100%;
@@ -8,76 +12,164 @@ const Container = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: 300;
+  color: ${(props) => props.theme.firstColor};
+  font-size: ${fontSize};
 `;
+
 const Wrap = styled.div`
   width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  height: 70%;
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  grid-gap: 5px;
+  margin-bottom: 30px;
 `;
+
+const BtnWrap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+`;
+
 const Btn = styled.div`
-  width: 80px;
-  height: 100%;
-  background-color: red;
-  font-size: 14px;
+  display: flex;
+  border-bottom: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+
+  :hover {
+    transform: scale(1.3);
+    cursor: pointer;
+    background-color: green;
+  }
+`;
+
+const ContentInput = styled.input`
+  box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+  padding: 0 5px;
+  font-size: ${fontSize};
+  ::placeholder {
+    font-weight: 300;
+    font-size: ${fontSize};
+  }
+`;
+
+const Label = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: end;
+  font-weight: 500;
+  box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
 `;
 
-const Input = styled.input``;
-const Label = styled.label``;
+const DateWrap = styled.div`
+  width: 100%;
+  box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+  display: flex;
+  justify-content: center;
+`;
+
+const DateInput = styled.input`
+  width: 30px;
+  height: 100%;
+  font-size: ${fontSize};
+  font-weight: 300;
+  ::placeholder {
+    color: rgba(1, 1, 1, 0.2);
+  }
+`;
+
+const DateDiv = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: ${fontSize};
+`;
+
+const RangeWrap = styled.div`
+  display: flex;
+  align-items: center;
+  box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+`;
+
+const InputRange = styled.input`
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+  background-color: green;
+
+  ::-webkit-slider-thumb {
+    background-color: transparent;
+    height: 20px;
+    width: 16px;
+    background-color: black;
+    border-radius: 5px;
+  }
+`;
 
 const SubmitBtn = styled.button`
   width: 100px;
   height: 30px;
   justify-self: center;
   margin-top: 10px;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.firstColor};
+  color: white;
+  font-weight: 300;
 `;
 
-// input type 달력 => 날짜 제한 가능할까? 안된다면, select로 바꿔야할듯 ??
-// 아니면 좀 귀여운 버튼 일렬로 늘어놔도 귀여울듯 ??
-
 function Add() {
+  const month = thisMonth < 9 ? `0${thisMonth + 1}` : thisMonth + 1;
+  const today = new Date().getDate();
+
   return (
     <Container>
       <Wrap>
-        <Btn>Category : </Btn>
-        <Btn>work</Btn>
-        <Btn>plan</Btn>
-      </Wrap>
+        <Label>Category</Label>
 
-      <Wrap>
-        <Label htmlFor="dateInput">Date : </Label>
-        <Input id="dateInput" type="date" />
-      </Wrap>
+        <BtnWrap>
+          <Btn>work</Btn>
+          <Btn>plan</Btn>
+        </BtnWrap>
 
-      <Wrap>
-        <Label htmlFor="timeInput">Time : </Label>
-        <Input id="timeInput" type="time" />
-      </Wrap>
+        <Label htmlFor="dateInput">Date</Label>
 
-      <Wrap>
-        <Label htmlFor="contentInput">Content : </Label>
-        <Input id="contentInput" type="text" placeholder="내용을 입력하세요." />
-      </Wrap>
+        <DateWrap>
+          <DateDiv>
+            {thisYear} / {month} /&nbsp;
+            <DateInput
+              id="dateInput"
+              type="number"
+              min="1"
+              max={thisMonthEnd}
+              placeholder={String(today)}
+            />
+          </DateDiv>
+        </DateWrap>
 
-      <Wrap>
-        <Label htmlFor="rangeInput">Importance : </Label>
-        <Input id="rangeInput" type="range" min="0" max="5" list="markers" />
+        <Label htmlFor="contentInput">Content</Label>
+        <ContentInput
+          id="contentInput"
+          type="text"
+          placeholder="내용을 간단히 입력하세요."
+        />
+
+        <Label htmlFor="rangeInput">Importance</Label>
+        <RangeWrap>
+          <InputRange
+            id="rangeInput"
+            type="range"
+            min="0"
+            max="5"
+            list="markers"
+          />
+        </RangeWrap>
       </Wrap>
 
       <SubmitBtn>Add work</SubmitBtn>
-
-      <datalist id="markers">
-        <option value="0"></option>
-        <option value="1"></option>
-        <option value="2"></option>
-        <option value="3"></option>
-        <option value="4"></option>
-        <option value="5"></option>
-      </datalist>
     </Container>
   );
 }

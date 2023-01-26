@@ -70,6 +70,7 @@ function DateLine(date: number) {
           placeholder="오늘의 한 줄 일기를 써보세요. (최대 56자)"
           value={mainContent ? mainContent : ""}
           disabled={onLock}
+          maxLength={56}
         />
       ) : (
         <MainBox as="div">{mainContent}</MainBox>

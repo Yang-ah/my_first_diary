@@ -14,10 +14,10 @@ export const months = [
   "DEC",
 ];
 
-const thisYear = new Date().getFullYear();
-const thisMonth = new Date().getMonth();
+export const thisYear = new Date().getFullYear();
+export const thisMonth = new Date().getMonth();
 const thisMonthStart = new Date(thisYear, thisMonth, 1).getDay();
-const thisMonthEnd = new Date(thisYear, thisMonth + 1, 0).getDate();
+export const thisMonthEnd = new Date(thisYear, thisMonth + 1, 0).getDate();
 const thisMonthEndDay = new Date(thisYear, thisMonth + 1, 0).getDay();
 const lastMonthLastDate = new Date(thisYear, thisMonth + 1, 0).getDate();
 
