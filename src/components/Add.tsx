@@ -42,17 +42,19 @@ const Btn = styled.div`
   :hover {
     transform: scale(1.3);
     cursor: pointer;
-    background-color: green;
+    background-color: ${(props) => props.theme.fourthColor};
   }
 `;
 
 const ContentInput = styled.input`
   box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
   padding: 0 5px;
-  font-size: ${fontSize};
+  font-size: 12px;
+  background-color: ${(props) => props.theme.fifthColor};
   ::placeholder {
     font-weight: 300;
-    font-size: ${fontSize};
+    font-size: 12px;
+    color: rgba(1, 1, 1, 0.2);
   }
 `;
 
@@ -75,6 +77,7 @@ const DateWrap = styled.div`
 const DateInput = styled.input`
   width: 30px;
   height: 100%;
+  background-color: ${(props) => props.theme.fifthColor};
   font-size: ${fontSize};
   font-weight: 300;
   ::placeholder {
@@ -99,13 +102,13 @@ const InputRange = styled.input`
   height: 10px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
-  background-color: green;
+  background-color: ${(props) => props.theme.fourthColor};
 
   ::-webkit-slider-thumb {
     background-color: transparent;
     height: 20px;
     width: 16px;
-    background-color: black;
+    background-color: ${(props) => props.theme.firstColor};
     border-radius: 5px;
   }
 `;
@@ -119,6 +122,9 @@ const SubmitBtn = styled.button`
   background-color: ${(props) => props.theme.firstColor};
   color: white;
   font-weight: 300;
+  :hover {
+    transform: scale(1.2);
+  }
 `;
 
 function Add() {
@@ -155,6 +161,7 @@ function Add() {
           id="contentInput"
           type="text"
           placeholder="내용을 간단히 입력하세요."
+          maxLength={8}
         />
 
         <Label htmlFor="rangeInput">Importance</Label>

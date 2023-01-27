@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../atom";
 import CheckBox, { Tracker } from "../components/CheckBox";
@@ -17,8 +17,7 @@ import {
 } from "../components/Common";
 
 import DateLine, { MainBox } from "../components/DateLine";
-import { useState } from "react";
-import Add from "../components/Add";
+import { Outlet, useMatch, useNavigate } from "react-router-dom";
 
 const SectionTable = styled.div`
   width: 100%;
@@ -36,8 +35,8 @@ const AddScheduleBtn = styled(motion(AddBtn))`
   width: 50px;
   height: 50px;
   font-size: 25px;
-  background-color: ${(props) => props.theme.fourthColor};
-  opacity: 0.8;
+  background-color: ${(props) => props.theme.thirdColor};
+  border-radius: ${baseRadius};
 `;
 
 const TableHeader = styled.div<TrackerProps>`
@@ -54,7 +53,7 @@ const TableHeader = styled.div<TrackerProps>`
   div:first-child,
   div:nth-child(2),
   div > div {
-    background-color: ${(props) => props.theme.fourthColor};
+    background-color: ${(props) => props.theme.thirdColor};
   }
 `;
 
@@ -66,7 +65,7 @@ export const DateBox = styled.div`
   justify-content: center;
   font-size: 13px;
   background-color: rgba(255, 255, 255, 0.8);
-  color: ${(props) => props.theme.thirdColor};
+  color: ${(props) => props.theme.firstColor};
 `;
 
 export const SectionSide = styled.div<TrackerProps>`
@@ -85,9 +84,9 @@ export const SideBox = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 17px;
-  color: ${(props) => props.theme.thirdColor};
+  color: ${(props) => props.theme.firstColor};
   span {
-    color: ${(props) => props.theme.thirdColor};
+    color: ${(props) => props.theme.firstColor};
   }
 `;
 
@@ -102,38 +101,46 @@ const Overlay = styled(motion.div)`
   position: absolute;
   z-index: 200;
   top: -40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  opacity: 0;
 `;
 
-const AddPage = styled.div`
+const AddPage = styled(motion.div)`
   width: 300px;
   height: 300px;
-  background-color: white;
+  background-color: ${(props) => props.theme.fifthColor};
+  position: absolute;
+  z-index: 300;
+  top: 120px;
+  border-radius: ${baseRadius};
 `;
 
 // main
 
 function MonthlySchedule() {
+  const addMatch = useMatch("/line/add");
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [clicked, setClicked] = useState(false);
-  const toggleClicked = () => setClicked((prev) => !prev);
+  const navigate = useNavigate();
+
+  const clickedAdd = () => navigate("/line/add");
+  const goLine = () => navigate("/line");
+
+  console.log(addMatch);
 
   return (
     <Wrap>
-      {!clicked ? (
-        <AddScheduleBtn layoutId="addPage" onClick={toggleClicked}>
-          +
-        </AddScheduleBtn>
-      ) : null}
-      {clicked ? (
-        <Overlay layoutId="addPage">
-          <AddPage>
-            <Add />
-          </AddPage>
-        </Overlay>
-      ) : null}
+      <AddScheduleBtn layoutId="addPage" onClick={clickedAdd}>
+        +
+      </AddScheduleBtn>
+      <AnimatePresence>
+        {addMatch ? (
+          <>
+            <Overlay onClick={goLine} animate={{ opacity: 1 }}></Overlay>
+            <AddPage layoutId="addPage">
+              <Outlet />
+            </AddPage>
+          </>
+        ) : null}
+      </AnimatePresence>
 
       <Header>
         <ThemeIcon />

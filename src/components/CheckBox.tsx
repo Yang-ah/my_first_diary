@@ -1,11 +1,5 @@
 import { useRecoilState } from "recoil";
-import {
-  onTrackerAtom,
-  onDiaryAtom,
-  onPlanAtom,
-  onWorkAtom,
-  onLockAtom,
-} from "./../atom";
+import { onTrackerAtom, onDiaryAtom, onPlanAtom, onWorkAtom } from "./../atom";
 import styled from "styled-components";
 
 const CheckContainer = styled.div`
@@ -17,7 +11,7 @@ const CheckContainer = styled.div`
   font-size: 12px;
   border-radius: 10px;
 
-  color: ${(props) => props.theme.secondColor};
+  color: ${(props) => props.theme.firstColor};
   i {
     font-size: 13px;
     margin: 2px 1px 0 0;
@@ -44,7 +38,7 @@ const TrackerContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  color: ${(props) => props.theme.secondColor};
+  color: ${(props) => props.theme.firstColor};
   font-size: 12px;
   position: relative;
   bottom: 15px;

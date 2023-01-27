@@ -5,6 +5,7 @@ import App from "./App";
 import Photo from "./screens/Photo";
 import Line from "./screens/Line";
 import Tracker from "./screens/Tracker";
+import Add from "./components/Add";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       {
         path: "line",
         element: <Line />,
+        children: [{ path: "add", element: <Add /> }],
       },
       {
         path: "tracker",

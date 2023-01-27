@@ -22,9 +22,9 @@ const Date = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  background-color: ${(props) => props.theme.fourthColor};
+  background-color: ${(props) => props.theme.thirdColor};
   border-radius: ${baseRadius};
-  color: white;
+  color: ${(props) => props.theme.firstColor};
 `;
 
 const Month = styled(Date)`

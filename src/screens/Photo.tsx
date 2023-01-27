@@ -33,7 +33,7 @@ const Title = styled.h1`
   letter-spacing: 20px;
   font-size: 18px;
   font-weight: 400;
-  color: ${(props) => props.theme.fourthColor};
+  color: ${(props) => props.theme.secondColor};
   text-align: center;
 `;
 
@@ -49,9 +49,8 @@ const Calendar = styled.div`
 
 const DayDiv = styled.div`
   text-align: center;
-  background-color: ${(props) => props.theme.fourthColor};
-  color: ${(props) => props.theme.fifthColor};
-  font-weight: 200;
+  background-color: ${(props) => props.theme.thirdColor};
+  color: ${(props) => props.theme.firstColor};
   font-size: 12px;
   line-height: 24px;
   border-radius: ${baseRadius};
@@ -65,8 +64,7 @@ const ThisDateDiv = styled.div`
   justify-content: space-between;
 
   p {
-    color: ${(props) => props.theme.fourthColor};
-    font-weight: 200;
+    color: ${(props) => props.theme.firstColor};
     padding: 5px;
     font-size: 12px;
   }
@@ -74,6 +72,9 @@ const ThisDateDiv = styled.div`
 
 const OtherDateDiv = styled(ThisDateDiv)`
   background-color: rgba(255, 255, 255, 0.3);
+  p {
+    font-weight: 200;
+  }
 `;
 
 function Photo() {

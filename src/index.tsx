@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
 import { ThemeProvider } from "styled-components";
-import { Default } from "./theme";
+import { Default, Purple } from "./theme";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <ThemeProvider theme={Default}>
+        <ThemeProvider theme={Purple}>
           <RouterProvider router={router} />
         </ThemeProvider>
       </RecoilRoot>

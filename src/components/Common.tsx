@@ -49,7 +49,7 @@ export const AddBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(129, 125, 125, 0.1);
+  background-color: ${(props) => props.theme.fourthColor};
   color: white;
   align-self: flex-end;
   justify-self: flex-end;

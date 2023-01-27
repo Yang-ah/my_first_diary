@@ -47,7 +47,7 @@ function DateLine(date: number) {
   const onTracker = useRecoilValue(onTrackerAtom);
   const [done, setDone] = useState("");
   const doneToggle = () => {
-    done == "🖤" ? setDone("·") : setDone("🖤");
+    done == "♥" ? setDone("·") : setDone("♥");
   };
   const [onLock, setLock] = useState(false);
   const onClick = () => {

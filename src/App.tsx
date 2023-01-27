@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const BodyWrap = styled.div`
@@ -36,6 +36,12 @@ const Btn = styled.button`
   width: 80px;
   height: 50px;
   margin-bottom: 10px;
+  background-color: ${(props) => props.theme.fifthColor};
+  color: ${(props) => props.theme.firstColor};
+`;
+
+const SelectedBtn = styled(Btn)`
+  background-color: ${(props) => props.theme.thirdColor};
 `;
 
 export const Message = styled.h1`
@@ -63,14 +69,31 @@ function App() {
     navigate("/tracker");
   };
 
+  const addMatch = useMatch("/line/add");
+  const lineMatch = useMatch("/line");
+  const photoMatch = useMatch("/");
+  const trackerMatch = useMatch("/tracker");
+
   return (
     <BodyWrap>
       <AppWrap>
         <Outlet />
         <BtnWrap>
-          <Btn onClick={goHome}>Photo</Btn>
-          <Btn onClick={goSchedule}>Line</Btn>
-          <Btn onClick={goTracker}>Tracker</Btn>
+          {photoMatch ? (
+            <SelectedBtn onClick={goHome}>Photo</SelectedBtn>
+          ) : (
+            <Btn onClick={goHome}>Photo</Btn>
+          )}
+          {lineMatch || addMatch ? (
+            <SelectedBtn onClick={goSchedule}>Line</SelectedBtn>
+          ) : (
+            <Btn onClick={goSchedule}>Line</Btn>
+          )}
+          {trackerMatch ? (
+            <SelectedBtn onClick={goTracker}>Tracker</SelectedBtn>
+          ) : (
+            <Btn onClick={goTracker}>Tracker</Btn>
+          )}
         </BtnWrap>
         <Message>yangah.career@gmail.com</Message>
       </AppWrap>
