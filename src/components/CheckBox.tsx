@@ -10,8 +10,6 @@ const CheckContainer = styled.div`
   align-items: center;
   font-size: 12px;
   border-radius: 10px;
-
-  color: ${(props) => props.theme.firstColor};
   i {
     font-size: 13px;
     margin: 2px 1px 0 0;
@@ -38,7 +36,6 @@ const TrackerContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  color: ${(props) => props.theme.firstColor};
   font-size: 12px;
   position: relative;
   bottom: 15px;

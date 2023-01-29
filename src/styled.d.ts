@@ -7,6 +7,5 @@ declare module "styled-components" {
     secondColor: string;
     thirdColor: string;
     fourthColor: string;
-    fifthColor: string;
   }
 }

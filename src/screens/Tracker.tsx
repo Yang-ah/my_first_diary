@@ -24,7 +24,6 @@ const Date = styled.div`
   font-size: 12px;
   background-color: ${(props) => props.theme.thirdColor};
   border-radius: ${baseRadius};
-  color: ${(props) => props.theme.firstColor};
 `;
 
 const Month = styled(Date)`

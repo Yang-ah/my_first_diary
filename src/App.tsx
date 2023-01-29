@@ -6,6 +6,7 @@ const BodyWrap = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  color: ${(props) => props.theme.firstColor};
 `;
 
 const AppWrap = styled.div`
@@ -13,9 +14,8 @@ const AppWrap = styled.div`
   flex-direction: column;
   width: 760px;
   height: 700px;
-  color: ${(props) => props.theme.firstColor};
-  background-color: ${(props) => props.theme.fifthColor};
-  border: 1px solid ${(props) => props.theme.fourthColor};
+  background-color: ${(props) => props.theme.fourthColor};
+  border: 1px solid ${(props) => props.theme.thirdColor};
   margin: 10px 0;
   align-self: center;
   justify-content: space-between;
@@ -33,11 +33,11 @@ const BtnWrap = styled.div`
 `;
 
 const Btn = styled.button`
+  color: ${(props) => props.theme.firstColor};
   width: 80px;
   height: 50px;
   margin-bottom: 10px;
-  background-color: ${(props) => props.theme.fifthColor};
-  color: ${(props) => props.theme.firstColor};
+  background-color: ${(props) => props.theme.fourthColor};
 `;
 
 const SelectedBtn = styled(Btn)`
@@ -50,8 +50,8 @@ export const Message = styled.h1`
   justify-content: center;
   font-size: 11px;
   font-weight: 400;
-  color: ${(props) => props.theme.fourthColor};
   margin-top: 15px;
+  color: ${(props) => props.theme.secondColor};
 `;
 
 function App() {

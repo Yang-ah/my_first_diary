@@ -19,8 +19,3 @@ export const onWorkAtom = atom({
   key: "work",
   default: true,
 });
-
-export const onLockAtom = atom({
-  key: "lock",
-  default: false,
-});

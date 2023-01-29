@@ -21,7 +21,6 @@ export const Header = styled.div`
   font-size: 14px;
   display: flex;
   align-items: center;
-  color: ${(props) => props.theme.secondColor};
   line-height: 15px;
   margin-bottom: ${baseSpace};
 `;
@@ -30,7 +29,7 @@ export const ThemeIcon = styled.div`
   width: 5px;
   height: 15px;
   margin-right: 3px;
-  background-color: ${(props) => props.theme.secondColor};
+  background-color: ${(props) => props.theme.firstColor};
 `;
 
 export const Section = styled.section`
@@ -49,11 +48,11 @@ export const AddBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.fourthColor};
-  color: white;
+  background-color: ${(props) => props.theme.secondColor};
   align-self: flex-end;
   justify-self: flex-end;
   cursor: pointer;
+  color: ${(props) => props.theme.firstColor};
 `;
 
 export const SectionHeader = styled.header`

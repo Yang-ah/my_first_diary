@@ -12,7 +12,6 @@ export const MainBox = styled.input`
   border: none;
   outline: none;
   padding: 0 10px;
-  color: ${(props) => props.theme.secondColor};
   display: flex;
   align-items: center;
   font-size: 12px;
@@ -43,11 +42,11 @@ const SectionLine = styled.div<SectionLineProps>`
 
 function DateLine(date: number) {
   const onDiary = useRecoilValue(onDiaryAtom);
-
   const onTracker = useRecoilValue(onTrackerAtom);
+
   const [done, setDone] = useState("");
   const doneToggle = () => {
-    done == "♥" ? setDone("·") : setDone("♥");
+    done === "♥" ? setDone("·") : setDone("♥");
   };
   const [onLock, setLock] = useState(false);
   const onClick = () => {
@@ -67,10 +66,10 @@ function DateLine(date: number) {
         <MainBox
           type="text"
           onChange={setMain}
-          placeholder="오늘의 한 줄 일기를 써보세요. (최대 56자)"
+          placeholder="오늘의 한 줄 일기를 써보세요. (최대 46자)"
           value={mainContent ? mainContent : ""}
           disabled={onLock}
-          maxLength={56}
+          maxLength={46}
         />
       ) : (
         <MainBox as="div">{mainContent}</MainBox>

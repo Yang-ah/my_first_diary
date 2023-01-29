@@ -35,7 +35,6 @@ const AddScheduleBtn = styled(motion(AddBtn))`
   width: 50px;
   height: 50px;
   font-size: 25px;
-  background-color: ${(props) => props.theme.thirdColor};
   border-radius: ${baseRadius};
 `;
 
@@ -64,8 +63,7 @@ export const DateBox = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: ${(props) => props.theme.firstColor};
+  background-color: ${(props) => props.theme.thirdColor};
 `;
 
 export const SectionSide = styled.div<TrackerProps>`
@@ -85,9 +83,7 @@ export const SideBox = styled.div`
   justify-content: center;
   font-size: 17px;
   color: ${(props) => props.theme.firstColor};
-  span {
-    color: ${(props) => props.theme.firstColor};
-  }
+  cursor: pointer;
 `;
 
 interface TrackerProps {
@@ -107,7 +103,7 @@ const Overlay = styled(motion.div)`
 const AddPage = styled(motion.div)`
   width: 300px;
   height: 300px;
-  background-color: ${(props) => props.theme.fifthColor};
+  background-color: ${(props) => props.theme.fourthColor};
   position: absolute;
   z-index: 300;
   top: 120px;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { baseRadius } from "./Common";
 import { thisMonth, thisMonthEnd, thisYear } from "./Dates";
 
 const fontSize = "13px";
@@ -13,7 +12,6 @@ const Container = styled.form`
   justify-content: center;
   align-items: center;
   font-weight: 300;
-  color: ${(props) => props.theme.firstColor};
   font-size: ${fontSize};
 `;
 
@@ -42,7 +40,7 @@ const Btn = styled.div`
   :hover {
     transform: scale(1.3);
     cursor: pointer;
-    background-color: ${(props) => props.theme.fourthColor};
+    background-color: ${(props) => props.theme.secondColor};
   }
 `;
 
@@ -50,7 +48,7 @@ const ContentInput = styled.input`
   box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
   padding: 0 5px;
   font-size: 12px;
-  background-color: ${(props) => props.theme.fifthColor};
+  background-color: ${(props) => props.theme.fourthColor};
   ::placeholder {
     font-weight: 300;
     font-size: 12px;
@@ -65,6 +63,7 @@ const Label = styled.label`
   text-align: end;
   font-weight: 500;
   box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+  background-color: ${(props) => props.theme.thirdColor};
 `;
 
 const DateWrap = styled.div`
@@ -77,7 +76,7 @@ const DateWrap = styled.div`
 const DateInput = styled.input`
   width: 30px;
   height: 100%;
-  background-color: ${(props) => props.theme.fifthColor};
+  background-color: ${(props) => props.theme.fourthColor};
   font-size: ${fontSize};
   font-weight: 300;
   ::placeholder {
@@ -120,7 +119,7 @@ const SubmitBtn = styled.button`
   margin-top: 10px;
   border-radius: 5px;
   background-color: ${(props) => props.theme.firstColor};
-  color: white;
+  color: ${(props) => props.theme.fourthColor};
   font-weight: 300;
   :hover {
     transform: scale(1.2);
@@ -170,7 +169,7 @@ function Add() {
             id="rangeInput"
             type="range"
             min="0"
-            max="5"
+            max="4"
             list="markers"
           />
         </RangeWrap>
