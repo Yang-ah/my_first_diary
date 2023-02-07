@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { onTrackerAtom, onDiaryAtom } from "../atom";
-import { DateBox, SectionSide, SideBox } from "../screens/Line";
+import { DateBox, SectionSide, SideBox } from "../screens/List";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
@@ -40,7 +40,7 @@ const SectionLine = styled.div<SectionLineProps>`
   }
 `;
 
-function DateLine(date: number) {
+function ListLine(date: number) {
   const onDiary = useRecoilValue(onDiaryAtom);
   const onTracker = useRecoilValue(onTrackerAtom);
 
@@ -48,7 +48,7 @@ function DateLine(date: number) {
   const doneToggle = () => {
     done === "♥" ? setDone("·") : setDone("♥");
   };
-  const [onLock, setLock] = useState(false);
+  const [onLock, setLock] = useState(true);
   const onClick = () => {
     setLock((cur) => !cur);
   };
@@ -111,4 +111,4 @@ function DateLine(date: number) {
     </SectionLine>
   );
 }
-export default DateLine;
+export default ListLine;

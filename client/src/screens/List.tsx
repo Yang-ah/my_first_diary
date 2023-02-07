@@ -16,8 +16,9 @@ import {
   baseRadius,
 } from "../components/Common";
 
-import DateLine, { MainBox } from "../components/DateLine";
-import { Outlet, useMatch, useNavigate } from "react-router-dom";
+import ListLine, { MainBox } from "../components/ListLine";
+import { useMatch, useNavigate } from "react-router-dom";
+import Add from "./Add";
 
 const SectionTable = styled.div`
   width: 100%;
@@ -112,27 +113,29 @@ const AddPage = styled(motion.div)`
 
 // main
 
-function MonthlySchedule() {
-  const addMatch = useMatch("/line/add");
+function List() {
+  const addMatch = useMatch("/list/scheduler/add");
+  const diaryMatch = useMatch("/list/diary");
   const onTracker = useRecoilValue(onTrackerAtom);
   const navigate = useNavigate();
 
-  const clickedAdd = () => navigate("/line/add");
-  const goLine = () => navigate("/line");
-
-  console.log(addMatch);
+  const clickedAdd = () => navigate("/list/scheduler/add");
+  const goLine = () => navigate("/list/scheduler");
 
   return (
     <Wrap>
-      <AddScheduleBtn layoutId="addPage" onClick={clickedAdd}>
-        +
-      </AddScheduleBtn>
+      {diaryMatch ? null : (
+        <AddScheduleBtn layoutId="addPage" onClick={clickedAdd}>
+          +
+        </AddScheduleBtn>
+      )}
+
       <AnimatePresence>
         {addMatch ? (
           <>
             <Overlay onClick={goLine} animate={{ opacity: 1 }}></Overlay>
             <AddPage layoutId="addPage">
-              <Outlet />
+              <Add />
             </AddPage>
           </>
         ) : null}
@@ -140,7 +143,11 @@ function MonthlySchedule() {
 
       <Header>
         <ThemeIcon />
-        <p>{`LINE MONTHLY - ${thisMonthString}`}</p>
+        {diaryMatch ? (
+          <p>DIARY - {thisMonthString}</p>
+        ) : (
+          <p>SCHEDULER - {thisMonthString}</p>
+        )}
       </Header>
       <Section>
         <Tracker />
@@ -148,9 +155,7 @@ function MonthlySchedule() {
           <SectionTable>
             <TableHeader tracker={onTracker ? true : false}>
               <DateBox>DATE</DateBox>
-              <MainBox as="div">
-                <CheckBox />
-              </MainBox>
+              <MainBox as="div">{diaryMatch ? null : <CheckBox />}</MainBox>
               <SectionSide tracker={onTracker ? true : false}>
                 {onTracker ? (
                   <SideBox>
@@ -167,11 +172,11 @@ function MonthlySchedule() {
                 </SideBox>
               </SectionSide>
             </TableHeader>
-            {thisDates.map((date) => DateLine(date.getDate()))}
+            {thisDates.map((date) => ListLine(date.getDate()))}
           </SectionTable>
         </MainContainer>
       </Section>
     </Wrap>
   );
 }
-export default MonthlySchedule;
+export default List;

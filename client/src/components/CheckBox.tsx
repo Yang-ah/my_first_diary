@@ -1,6 +1,8 @@
 import { useRecoilState } from "recoil";
-import { onTrackerAtom, onDiaryAtom, onPlanAtom, onWorkAtom } from "./../atom";
+import { onTrackerAtom } from "./../atom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const CheckContainer = styled.div`
   width: 100%;
@@ -76,61 +78,62 @@ export function Tracker() {
 }
 
 function CheckBox() {
-  const [onDiary, setDiary] = useRecoilState(onDiaryAtom);
-  const [onPlan, setPlan] = useRecoilState(onPlanAtom);
-  const [onWork, setWork] = useRecoilState(onWorkAtom);
+  const navigate = useNavigate();
 
-  const toggleDiaryAtom = () => {
-    setDiary((prev) => !prev);
+  const [onPlan, setPlan] = useState(false);
+  const [onWork, setWork] = useState(false);
+
+  const planToggle = () => {
+    setPlan((cur) => !cur);
   };
-  const togglePlanAtom = () => {
-    onDiary
-      ? alert("다이어리 해제 후 다시 클릭해주세요.")
-      : setPlan((prev) => !prev);
+  const workToggle = () => {
+    setWork((cur) => !cur);
   };
-  const toggleWorkAtom = () => {
-    onDiary
-      ? alert("다이어리 해제 후 다시 클릭해주세요.")
-      : setWork((prev) => !prev);
+
+  const goScheduler = () => {
+    navigate("/list/scheduler");
   };
+
+  const goPlan = () => {
+    navigate("/list/scheduler/plan");
+  };
+
+  const goWork = () => {
+    navigate("/list/scheduler/work");
+  };
+
+  useEffect(() => {
+    if (onPlan === onWork) {
+      goScheduler();
+    } else if (onPlan && !onWork) {
+      goPlan();
+    } else if (!onPlan && onWork) {
+      goWork();
+    }
+  }, [onPlan, onWork]);
 
   return (
     <CheckContainer>
       <div>
-        <input id="plan" type="checkbox" onClick={togglePlanAtom} />
+        <input type="checkbox" id="plan" onClick={planToggle} />
         <label htmlFor="plan">
-          {onDiary ? (
-            <i className="fa-regular fa-square"></i>
-          ) : onPlan ? (
+          {onPlan ? (
             <i className="fa-solid fa-square-check"></i>
           ) : (
             <i className="fa-regular fa-square"></i>
           )}
-          PLAN
+          <span>PLAN</span>
         </label>
       </div>
       <div>
-        <input id="work" type="checkbox" onClick={toggleWorkAtom} />
+        <input type="checkbox" id="work" onClick={workToggle} />
         <label htmlFor="work">
-          {onDiary ? (
-            <i className="fa-regular fa-square"></i>
-          ) : onWork ? (
+          {onWork ? (
             <i className="fa-solid fa-square-check"></i>
           ) : (
             <i className="fa-regular fa-square"></i>
           )}
-          WORK
-        </label>
-      </div>
-      <div>
-        <input id="diary" type="checkbox" onClick={toggleDiaryAtom} />
-        <label htmlFor="diary">
-          {onDiary ? (
-            <i className="fa-solid fa-square-check"></i>
-          ) : (
-            <i className="fa-regular fa-square"></i>
-          )}
-          DIARY
+          <span>WORK</span>
         </label>
       </div>
     </CheckContainer>

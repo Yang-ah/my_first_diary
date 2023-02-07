@@ -1,0 +1,21 @@
+{
+  "planner": [
+    {
+      "Jan": [
+        {
+          "date": 1,
+          "photoUrl": "url",
+          "diary": "string",
+          "schedule": {
+            "work": [{ "content": "string", "importance": 5 }],
+            "plan": [{ "content": "string", "importance": 5 }]
+          },
+          "emotion": "string",
+          "exercise": false,
+          "lock": true
+        }
+      ]
+    },
+    { "Feb": [] }
+  ]
+}

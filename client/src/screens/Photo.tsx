@@ -79,12 +79,10 @@ function Photo() {
     <Wrap>
       <Header>
         <ThemeIcon />
-        <p>PHOTO MONTHLY</p>
+        <p>PHOTO - {thisMonthString}</p>
       </Header>
       <PhotoSection>
-        <SectionHeader>
-          <Title>{thisMonthString}</Title>
-        </SectionHeader>
+        <SectionHeader></SectionHeader>
 
         <MainContainer>
           <Calendar>

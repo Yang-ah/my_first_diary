@@ -63,15 +63,24 @@ function App() {
   };
 
   const goSchedule = () => {
-    navigate("/line");
+    navigate("/list/scheduler");
   };
 
   const goTracker = () => {
     navigate("/tracker");
   };
 
-  const addMatch = useMatch("/line/add");
-  const lineMatch = useMatch("/line");
+  const goDiary = () => {
+    navigate("/list/diary");
+  };
+
+  const schedulerMatch = useMatch("/list/scheduler");
+  const planMatch = useMatch("/list/scheduler/plan");
+  const workMatch = useMatch("/list/scheduler/work");
+
+  const diaryMatch = useMatch("/list/diary");
+  const addMatch = useMatch("/list/scheduler/add");
+
   const photoMatch = useMatch("/");
   const trackerMatch = useMatch("/tracker");
 
@@ -85,11 +94,17 @@ function App() {
           ) : (
             <Btn onClick={goHome}>Photo</Btn>
           )}
-          {lineMatch || addMatch ? (
-            <SelectedBtn onClick={goSchedule}>Line</SelectedBtn>
+          {schedulerMatch || addMatch || planMatch || workMatch ? (
+            <SelectedBtn onClick={goSchedule}>Scheduler</SelectedBtn>
           ) : (
-            <Btn onClick={goSchedule}>Line</Btn>
+            <Btn onClick={goSchedule}>Scheduler</Btn>
           )}
+          {diaryMatch ? (
+            <SelectedBtn onClick={goDiary}>Diary</SelectedBtn>
+          ) : (
+            <Btn onClick={goDiary}>Diary</Btn>
+          )}
+
           {trackerMatch ? (
             <SelectedBtn onClick={goTracker}>Tracker</SelectedBtn>
           ) : (
