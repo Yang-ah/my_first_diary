@@ -1,5 +1,5 @@
 function Work() {
-  return <div></div>;
+  return null;
 }
 
 export default Work;

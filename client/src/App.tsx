@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Pastel, Grape, Tree, Peach } from "./theme";
+import { ThemeProvider } from "styled-components";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 const BodyWrap = styled.div`
   width: 100vw;
@@ -24,6 +27,7 @@ const AppWrap = styled.div`
   padding: 30px;
   position: relative;
   align-items: center;
+  box-shadow: 5px 5px 10px #0000006b;
 `;
 
 const BtnWrap = styled.div`
@@ -39,10 +43,20 @@ const Btn = styled.button`
   height: 50px;
   margin-bottom: 10px;
   background-color: ${(props) => props.theme.fourthColor};
+  box-shadow: 2px 2px 5px #0000006b;
 `;
 
 const SelectedBtn = styled(Btn)`
   background-color: ${(props) => props.theme.thirdColor};
+`;
+
+const ThemeContainer = styled.div`
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 2px 2px 5px #0000006b;
 `;
 
 export const Message = styled.h1`
@@ -55,7 +69,43 @@ export const Message = styled.h1`
   color: ${(props) => props.theme.secondColor};
 `;
 
+interface ThemeProps {
+  themeColor: string;
+}
+
+const ThemeBtn = styled(motion.button)<ThemeProps>`
+  background-color: ${(props) => props.themeColor};
+  font-size: 20px;
+  opacity: 0.8;
+  overflow: hidden;
+  :hover {
+    opacity: 1;
+    box-shadow: 2px 2px 5px #0000006b;
+  }
+  :hover span {
+    font-size: 28px;
+  }
+`;
+
 function App() {
+  const [theme, setTheme] = useState(Tree);
+  const changeTheme = (e: React.FormEvent<HTMLButtonElement>) => {
+    const theme = e.currentTarget.value;
+
+    if (theme === "tree") {
+      setTheme(Tree);
+    }
+    if (theme === "peach") {
+      setTheme(Peach);
+    }
+    if (theme === "pastel") {
+      setTheme(Pastel);
+    }
+    if (theme === "grape") {
+      setTheme(Grape);
+    }
+  };
+
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -85,35 +135,70 @@ function App() {
   const trackerMatch = useMatch("/tracker");
 
   return (
-    <BodyWrap>
-      <AppWrap>
-        <Outlet />
-        <BtnWrap>
-          {photoMatch ? (
-            <SelectedBtn onClick={goHome}>Photo</SelectedBtn>
-          ) : (
-            <Btn onClick={goHome}>Photo</Btn>
-          )}
-          {schedulerMatch || addMatch || planMatch || workMatch ? (
-            <SelectedBtn onClick={goSchedule}>Scheduler</SelectedBtn>
-          ) : (
-            <Btn onClick={goSchedule}>Scheduler</Btn>
-          )}
-          {diaryMatch ? (
-            <SelectedBtn onClick={goDiary}>Diary</SelectedBtn>
-          ) : (
-            <Btn onClick={goDiary}>Diary</Btn>
-          )}
+    <>
+      <ThemeProvider theme={theme}>
+        <BodyWrap>
+          <AppWrap>
+            <Outlet />
+            <BtnWrap>
+              {photoMatch ? (
+                <SelectedBtn onClick={goHome}>Photo</SelectedBtn>
+              ) : (
+                <Btn onClick={goHome}>Photo</Btn>
+              )}
+              {schedulerMatch || addMatch || planMatch || workMatch ? (
+                <SelectedBtn onClick={goSchedule}>Scheduler</SelectedBtn>
+              ) : (
+                <Btn onClick={goSchedule}>Scheduler</Btn>
+              )}
+              {diaryMatch ? (
+                <SelectedBtn onClick={goDiary}>Diary</SelectedBtn>
+              ) : (
+                <Btn onClick={goDiary}>Diary</Btn>
+              )}
 
-          {trackerMatch ? (
-            <SelectedBtn onClick={goTracker}>Tracker</SelectedBtn>
-          ) : (
-            <Btn onClick={goTracker}>Tracker</Btn>
-          )}
-        </BtnWrap>
-        <Message>yangah.career@gmail.com</Message>
-      </AppWrap>
-    </BodyWrap>
+              {trackerMatch ? (
+                <SelectedBtn onClick={goTracker}>Tracker</SelectedBtn>
+              ) : (
+                <Btn onClick={goTracker}>Tracker</Btn>
+              )}
+              <ThemeContainer as="div">
+                <ThemeBtn
+                  themeColor={Peach.secondColor}
+                  onClick={changeTheme}
+                  value="peach"
+                >
+                  <span>🍑</span>
+                </ThemeBtn>
+                <ThemeBtn
+                  themeColor={Grape.thirdColor}
+                  onClick={changeTheme}
+                  value="grape"
+                >
+                  <span>🍇</span>
+                </ThemeBtn>
+                <ThemeBtn
+                  themeColor={Tree.thirdColor}
+                  onClick={changeTheme}
+                  value="tree"
+                >
+                  <span>🌳</span>
+                </ThemeBtn>
+
+                <ThemeBtn
+                  themeColor={Pastel.secondColor}
+                  onClick={changeTheme}
+                  value="pastel"
+                >
+                  <span>🦄</span>
+                </ThemeBtn>
+              </ThemeContainer>
+            </BtnWrap>
+            <Message>yangah.career@gmail.com</Message>
+          </AppWrap>
+        </BodyWrap>
+      </ThemeProvider>
+    </>
   );
 }
 

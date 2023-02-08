@@ -47,7 +47,7 @@ const TableHeader = styled.div<TrackerProps>`
   top: 0;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.tracker ? `40px 1fr 120px` : `40px 1fr 40px`};
+    props.tracker ? `40px 1fr 120px` : `40px 1fr 38px`};
   grid-gap: 2px;
 
   div:first-child,

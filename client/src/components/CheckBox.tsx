@@ -40,7 +40,8 @@ const TrackerContainer = styled.div`
   justify-content: flex-end;
   font-size: 12px;
   position: relative;
-  bottom: 15px;
+  bottom: 20px;
+  right: 5px;
   z-index: 100;
   height: 20px;
   input {

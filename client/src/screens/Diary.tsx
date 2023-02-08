@@ -1,5 +1,5 @@
 function Diary() {
-  return <div></div>;
+  return null;
 }
 
 export default Diary;

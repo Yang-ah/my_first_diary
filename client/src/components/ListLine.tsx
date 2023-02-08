@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { onTrackerAtom, onDiaryAtom } from "../atom";
+import { onTrackerAtom } from "../atom";
 import { DateBox, SectionSide, SideBox } from "../screens/List";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { useMatch } from "react-router-dom";
 
 export const MainBox = styled.input`
   width: 100%;
@@ -32,7 +33,7 @@ const SectionLine = styled.div<SectionLineProps>`
   grid-gap: 2px;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.tracker ? `40px 1fr 120px` : `40px 1fr 40px`};
+    props.tracker ? `40px 1fr 120px` : `40px 1fr 38px`};
   margin-bottom: 5px;
   height: 40px;
   :last-child {
@@ -41,8 +42,8 @@ const SectionLine = styled.div<SectionLineProps>`
 `;
 
 function ListLine(date: number) {
-  const onDiary = useRecoilValue(onDiaryAtom);
   const onTracker = useRecoilValue(onTrackerAtom);
+  const diaryMatch = useMatch("/list/diary");
 
   const [done, setDone] = useState("");
   const doneToggle = () => {
@@ -62,7 +63,7 @@ function ListLine(date: number) {
     <SectionLine key={date} tracker={onTracker ? true : false}>
       <DateBox>{date}</DateBox>
 
-      {onDiary ? (
+      {diaryMatch ? (
         <MainBox
           type="text"
           onChange={setMain}
