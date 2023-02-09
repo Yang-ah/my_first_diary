@@ -70,11 +70,11 @@ export const Message = styled.h1`
 `;
 
 interface ThemeProps {
-  themeColor: string;
+  themecolor: string;
 }
 
 const ThemeBtn = styled(motion.button)<ThemeProps>`
-  background-color: ${(props) => props.themeColor};
+  background-color: ${(props) => props.themecolor};
   font-size: 20px;
   opacity: 0.8;
   overflow: hidden;
@@ -164,21 +164,21 @@ function App() {
               )}
               <ThemeContainer as="div">
                 <ThemeBtn
-                  themeColor={Peach.secondColor}
+                  themecolor={Peach.secondColor}
                   onClick={changeTheme}
                   value="peach"
                 >
                   <span>🍑</span>
                 </ThemeBtn>
                 <ThemeBtn
-                  themeColor={Grape.thirdColor}
+                  themecolor={Grape.thirdColor}
                   onClick={changeTheme}
                   value="grape"
                 >
                   <span>🍇</span>
                 </ThemeBtn>
                 <ThemeBtn
-                  themeColor={Tree.thirdColor}
+                  themecolor={Tree.thirdColor}
                   onClick={changeTheme}
                   value="tree"
                 >
@@ -186,7 +186,7 @@ function App() {
                 </ThemeBtn>
 
                 <ThemeBtn
-                  themeColor={Pastel.secondColor}
+                  themecolor={Pastel.secondColor}
                   onClick={changeTheme}
                   value="pastel"
                 >

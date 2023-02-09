@@ -22,7 +22,7 @@ const thisMonthEndDay = new Date(thisYear, thisMonth + 1, 0).getDay();
 const lastMonthLastDate = new Date(thisYear, thisMonth + 1, 0).getDate();
 
 export const thisMonthString = new Date()
-  .toLocaleString("en-US", { month: "long" })
+  .toLocaleString("en-US", { month: "short" })
   .toUpperCase();
 
 export const prevDates: Date[] = [];
