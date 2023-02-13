@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
 import { thisMonthString } from "./Dates";
+import LineCell from "../screens/Scheduler/LineCell";
 
 export const MainBox = styled.input`
   width: 100%;
@@ -17,6 +18,7 @@ export const MainBox = styled.input`
   display: flex;
   align-items: center;
   font-size: 12px;
+  overflow: hidden;
 `;
 
 interface SectionLineProps {
@@ -36,18 +38,19 @@ const SectionLine = styled.div<SectionLineProps>`
   }
 `;
 
-function ListLine(date: Date) {
+const ListLine = (date: Date) => {
   const dataMonth = thisMonthString.toLocaleLowerCase();
 
   // management state : useState, recoil
   const onTracker = useRecoilValue(onTrackerAtom);
   const [emoji, setEmotion] = useState("");
   const [onLock, setLock] = useState(true);
-  const [mainContent, setDiary] = useState("");
+  const [Diary, setDiary] = useState("");
   const [exercise, setExercise] = useState("·");
+  const [plans, setPlans] = useState([]);
+  const [works, setWorks] = useState([]);
 
   // change state functions
-
   const exerciseToggle = () =>
     exercise === "♥" ? setExercise("·") : setExercise("♥");
   const changeLock = () => setLock((cur) => !cur);
@@ -56,10 +59,14 @@ function ListLine(date: Date) {
 
   const changeEmotion = (e: React.FormEvent<HTMLSelectElement>) => {
     setEmotion(e.currentTarget.value);
-    console.log(emoji);
+    // console.log(emoji);
   };
+
   // match
   const diaryMatch = useMatch("/list/diary");
+  const schedulerMatch = useMatch("/list/scheduler");
+  const planMatch = useMatch("/list/scheduler/plan");
+  const workMatch = useMatch("/list/scheduler/work");
 
   // fetch data
   const fetchData = () =>
@@ -74,13 +81,15 @@ function ListLine(date: Date) {
     setExercise(planner.exercise ? "♥" : "·");
     setDiary(planner.diary);
     setLock(planner.lock);
+    setPlans(planner.schedule.plan);
+    setWorks(planner.schedule.work);
   };
 
   useEffect(() => {
     fetchData();
-  }, [emoji]);
+  }, []);
 
-  // jsx
+  // tsx
   return (
     <SectionLine key={date.getDate()} tracker={onTracker ? true : false}>
       <DateBox>{date.getDate()}</DateBox>
@@ -90,29 +99,41 @@ function ListLine(date: Date) {
           type="text"
           onChange={changeDiary}
           placeholder="오늘의 한 줄 일기를 써보세요. (최대 46자)"
-          value={mainContent ? mainContent : ""}
+          value={Diary ? Diary : ""}
           disabled={onLock}
           maxLength={46}
         />
       ) : (
-        <MainBox as="div">{mainContent}</MainBox>
+        <MainBox as="div">
+          {schedulerMatch || planMatch
+            ? plans.map((plan) => LineCell(plan))
+            : null}
+          {schedulerMatch || workMatch
+            ? works.map((work) => LineCell(work))
+            : null}
+        </MainBox>
       )}
 
       <SectionSide tracker={onTracker ? true : false}>
         {onTracker ? (
-          <select onChange={changeEmotion} key={emoji} defaultValue={emoji}>
-            <option value="none"></option>
-            <option value="🥰">🥰</option>
-          </select>
-        ) : null}
-        {onTracker ? (
-          <SideBox
-            as="input"
-            disabled={onLock}
-            type="button"
-            onClick={exerciseToggle}
-            value={exercise}
-          />
+          <>
+            {onLock ? (
+              <SideBox>{emoji}</SideBox>
+            ) : (
+              <select onChange={changeEmotion} key={emoji} defaultValue={emoji}>
+                <option value="none"></option>
+                <option value="🥰">🥰</option>
+              </select>
+            )}
+
+            <SideBox
+              as="input"
+              disabled={onLock}
+              type="button"
+              onClick={exerciseToggle}
+              value={exercise}
+            />
+          </>
         ) : null}
 
         <SideBox as="button" onClick={changeLock}>
@@ -125,5 +146,5 @@ function ListLine(date: Date) {
       </SectionSide>
     </SectionLine>
   );
-}
+};
 export default ListLine;

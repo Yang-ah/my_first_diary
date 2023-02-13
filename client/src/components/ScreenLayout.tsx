@@ -197,7 +197,7 @@ function ScreenLayout() {
   const trackerMatch = useMatch("/tracker");
 
   const titleMaker = () => {
-    let title = "SCHEDULE";
+    let title = "SCHEDULER";
 
     if (diaryMatch) {
       title = "DIARY";

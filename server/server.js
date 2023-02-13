@@ -12,8 +12,11 @@ const fakeDB = {
         photoUrl: "",
         diary: "string",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [
+            { content: "streeing", importance: 4 },
+            { content: "strieng", importance: 4 },
+          ],
+          plan: [{ content: "strieng", importance: 3 }],
         },
         emotion: "string",
         exercise: false,
@@ -24,8 +27,8 @@ const fakeDB = {
         photoUrl: "url",
         diary: "string",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [{ content: "striteteng", importance: 2 }],
+          plan: [{ content: "streeing", importance: 1 }],
         },
         emotion: "string",
         exercise: false,
@@ -38,8 +41,16 @@ const fakeDB = {
         photoUrl: "good",
         diary: "hry",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [
+            { content: "rwtywtw", importance: 1 },
+            { content: "wtwtw", importance: 3 },
+            { content: "wtwt", importance: 2 },
+          ],
+          plan: [
+            { content: "seeetring", importance: 2 },
+            { content: "stwtwtwtring", importance: 3 },
+            { content: "streeing", importance: 2 },
+          ],
         },
         emotion: "🥰",
         exercise: true,
@@ -50,8 +61,8 @@ const fakeDB = {
         photoUrl: "hey",
         diary: "string",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [{ content: "streeeeing", importance: 3 }],
+          plan: [{ content: "streeing", importance: 4 }],
         },
         emotion: "🥰",
         exercise: true,
@@ -62,8 +73,8 @@ const fakeDB = {
         photoUrl: "hey",
         diary: "string",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [{ content: "strieewttwtng", importance: 2 }],
+          plan: [{ content: "strwtwtwing", importance: 3 }],
         },
         emotion: "🥰",
         exercise: true,
@@ -74,8 +85,8 @@ const fakeDB = {
         photoUrl: "hey",
         diary: "string",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [{ content: "strwtwting", importance: 5 }],
+          plan: [{ content: "strwtwtwing", importance: 5 }],
         },
         emotion: "string",
         exercise: false,
@@ -86,8 +97,8 @@ const fakeDB = {
         photoUrl: "hey",
         diary: "diary",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [{ content: "strwtwtwng", importance: 5 }],
+          plan: [{ content: "strwtwting", importance: 5 }],
         },
         emotion: "string",
         exercise: false,
@@ -98,8 +109,8 @@ const fakeDB = {
         photoUrl: "hey",
         diary: "string",
         schedule: {
-          work: [{ content: "string", importance: 5 }],
-          plan: [{ content: "string", importance: 5 }],
+          work: [{ content: "strwtwtwtwing", importance: 5 }],
+          plan: [{ content: "strwtwing", importance: 5 }],
         },
         emotion: "string",
         exercise: false,

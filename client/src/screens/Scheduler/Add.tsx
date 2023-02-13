@@ -1,9 +1,10 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { thisMonth, thisMonthEnd, thisYear } from "../../components/Dates";
 
 const fontSize = "13px";
 
-const Container = styled.form`
+const Container = styled.section`
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -15,7 +16,7 @@ const Container = styled.form`
   font-size: ${fontSize};
 `;
 
-const Wrap = styled.div`
+const Form = styled.form`
   width: 100%;
   height: 70%;
   display: grid;
@@ -24,18 +25,29 @@ const Wrap = styled.div`
   margin-bottom: 30px;
 `;
 
-const BtnWrap = styled.div`
+// category
+const CategoryWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5px;
 `;
 
-const Btn = styled.div`
+const CategoryInput = styled.input`
+  display: none;
+`;
+
+interface ICategory {
+  checked: boolean;
+}
+
+const CategoryLabel = styled.label<ICategory>`
   display: flex;
   border-bottom: 1px solid black;
   justify-content: center;
   align-items: center;
   box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
+  background-color: ${(props) =>
+    props.checked ? props.theme.secondColor : "inherit"};
 
   :hover {
     transform: scale(1.3);
@@ -43,6 +55,7 @@ const Btn = styled.div`
     background-color: ${(props) => props.theme.secondColor};
   }
 `;
+//
 
 const ContentInput = styled.input`
   box-shadow: 1px 1px 1px #0000006b, 0px 0px 1px #0d0d0d88;
@@ -120,25 +133,47 @@ const SubmitBtn = styled.button`
   border-radius: 5px;
   background-color: ${(props) => props.theme.firstColor};
   color: ${(props) => props.theme.fourthColor};
+
   font-weight: 300;
   :hover {
     transform: scale(1.2);
   }
 `;
 
-function Add() {
+const Add = () => {
   const month = thisMonth < 9 ? `0${thisMonth + 1}` : thisMonth + 1;
   const today = new Date().getDate();
+  const [isWork, setWork] = useState(true);
+
+  const ChangeCategory = (e: React.FormEvent<HTMLInputElement>) => {
+    e.currentTarget.name === "work" ? setWork(true) : setWork(false);
+  };
 
   return (
     <Container>
-      <Wrap>
+      <Form>
         <Label>Category</Label>
 
-        <BtnWrap>
-          <Btn>work</Btn>
-          <Btn>plan</Btn>
-        </BtnWrap>
+        <CategoryWrap>
+          <CategoryInput
+            id="work"
+            type="radio"
+            onClick={ChangeCategory}
+            name="work"
+          />
+          <CategoryInput
+            id="plan"
+            type="radio"
+            onClick={ChangeCategory}
+            name="plan"
+          />
+          <CategoryLabel htmlFor="work" as="label" checked={isWork}>
+            work
+          </CategoryLabel>
+          <CategoryLabel htmlFor="plan" as="label" checked={!isWork}>
+            plan
+          </CategoryLabel>
+        </CategoryWrap>
 
         <Label htmlFor="dateInput">Date</Label>
 
@@ -168,16 +203,16 @@ function Add() {
           <InputRange
             id="rangeInput"
             type="range"
-            min="0"
+            min="1"
             max="4"
             list="markers"
           />
         </RangeWrap>
-      </Wrap>
+      </Form>
 
-      <SubmitBtn>Add work</SubmitBtn>
+      <SubmitBtn>Add {isWork ? "Work" : "Plan"}</SubmitBtn>
     </Container>
   );
-}
+};
 
 export default Add;

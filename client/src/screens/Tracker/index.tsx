@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import {
-  Header,
-  Wrap,
-  ThemeIcon,
-  Section,
-  baseRadius,
-} from "../../components/Tag";
+import { Wrap, Section, baseRadius } from "../../components/Tag";
 import { months } from "../../components/Dates";
 
 const TrackerSection = styled(Section)`
