@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { onTrackerAtom } from "./../atom";
+import { onTrackerAtom } from "../../atom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";

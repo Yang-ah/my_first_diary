@@ -7,5 +7,6 @@ declare module "styled-components" {
     secondColor: string;
     thirdColor: string;
     fourthColor: string;
+    icon: string;
   }
 }

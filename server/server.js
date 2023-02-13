@@ -35,8 +35,43 @@ const fakeDB = {
     feb: [
       {
         date: 1,
-        photoUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
+        photoUrl: "good",
+        diary: "hry",
+        schedule: {
+          work: [{ content: "string", importance: 5 }],
+          plan: [{ content: "string", importance: 5 }],
+        },
+        emotion: "🥰",
+        exercise: true,
+        lock: true,
+      },
+      {
+        date: 2,
+        photoUrl: "hey",
+        diary: "string",
+        schedule: {
+          work: [{ content: "string", importance: 5 }],
+          plan: [{ content: "string", importance: 5 }],
+        },
+        emotion: "🥰",
+        exercise: true,
+        lock: false,
+      },
+      {
+        date: 3,
+        photoUrl: "hey",
+        diary: "string",
+        schedule: {
+          work: [{ content: "string", importance: 5 }],
+          plan: [{ content: "string", importance: 5 }],
+        },
+        emotion: "🥰",
+        exercise: true,
+        lock: true,
+      },
+      {
+        date: 4,
+        photoUrl: "hey",
         diary: "string",
         schedule: {
           work: [{ content: "string", importance: 5 }],
@@ -47,8 +82,20 @@ const fakeDB = {
         lock: true,
       },
       {
-        date: 2,
-        photoUrl: "",
+        date: 5,
+        photoUrl: "hey",
+        diary: "diary",
+        schedule: {
+          work: [{ content: "string", importance: 5 }],
+          plan: [{ content: "string", importance: 5 }],
+        },
+        emotion: "string",
+        exercise: false,
+        lock: true,
+      },
+      {
+        date: 6,
+        photoUrl: "hey",
         diary: "string",
         schedule: {
           work: [{ content: "string", importance: 5 }],
@@ -66,6 +113,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 const getData = (req, res) => res.json(fakeDB);
+
 app.get("/api/planner", getData);
 
 const handleListening = () =>

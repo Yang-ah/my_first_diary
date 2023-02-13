@@ -5,8 +5,8 @@ import {
   ThemeIcon,
   Section,
   baseRadius,
-} from "../components/Common";
-import { months } from "../components/Dates";
+} from "../../components/Tag";
+import { months } from "../../components/Dates";
 
 const TrackerSection = styled(Section)`
   display: grid;
@@ -54,10 +54,6 @@ const Column = styled.div`
 function Tracker() {
   return (
     <Wrap>
-      <Header>
-        <ThemeIcon />
-        <p>TRACKER</p>
-      </Header>
       <TrackerSection>
         <Column>
           <Month></Month>

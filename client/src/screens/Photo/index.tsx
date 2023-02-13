@@ -1,23 +1,15 @@
 import styled from "styled-components";
 import {
-  Header,
   Wrap,
-  ThemeIcon,
   Section,
   SectionHeader,
   MainContainer,
   baseRadius,
   baseSpace,
-} from "../components/Common";
+} from "../../components/Tag";
 
-import {
-  thisDates,
-  thisMonthString,
-  weeks,
-  prevDates,
-  nextDates,
-} from "../components/Dates";
-import PhotoBox from "../components/PhotoBox";
+import { thisDates, weeks, prevDates, nextDates } from "../../components/Dates";
+import PhotoBox from "./PhotoBox";
 
 const PhotoSection = styled(Section)`
   height: 100%;
@@ -56,10 +48,6 @@ const OtherDateDiv = styled.div`
 function Photo() {
   return (
     <Wrap>
-      <Header>
-        <ThemeIcon />
-        <p>PHOTO ({thisMonthString})</p>
-      </Header>
       <SectionHeader></SectionHeader>
       <PhotoSection>
         <MainContainer>

@@ -1,9 +1,28 @@
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Pastel, Grape, Tree, Peach } from "./theme";
+import { Pastel, Grape, Tree, Peach } from "../theme";
 import { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { baseSpace } from "./Tag";
+import { thisMonthString, thisYear } from "./Dates";
+
+const Header = styled.div`
+  width: 100%;
+  height: 15px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  line-height: 15px;
+  margin-bottom: ${baseSpace};
+`;
+
+const ThemeIcon = styled.div`
+  width: 5px;
+  height: 15px;
+  margin-right: 3px;
+  background-color: ${(props) => props.theme.firstColor};
+`;
 
 const BodyWrap = styled.div`
   width: 100vw;
@@ -87,22 +106,61 @@ const ThemeBtn = styled(motion.button)<ThemeProps>`
   }
 `;
 
-function App() {
+const IconDiv = styled.div`
+  padding: 0 5px;
+`;
+
+interface IThemeBtn {
+  themecolor: string;
+  value: string;
+  icon: string;
+}
+
+const ThemeBtns: IThemeBtn[] = [
+  {
+    themecolor: Peach.secondColor,
+    value: "peach",
+    icon: Peach.icon,
+  },
+  {
+    themecolor: Grape.thirdColor,
+    value: "grape",
+    icon: Grape.icon,
+  },
+  {
+    themecolor: Tree.thirdColor,
+    value: "tree",
+    icon: Tree.icon,
+  },
+  {
+    themecolor: Pastel.secondColor,
+    value: "pastel",
+    icon: Pastel.icon,
+  },
+];
+
+function ScreenLayout() {
   const [theme, setTheme] = useState(Tree);
+  const [titleIcon, setIcon] = useState(Tree.icon);
+
   const changeTheme = (e: React.FormEvent<HTMLButtonElement>) => {
     const theme = e.currentTarget.value;
 
     if (theme === "tree") {
       setTheme(Tree);
+      setIcon(Tree.icon);
     }
     if (theme === "peach") {
       setTheme(Peach);
+      setIcon(Peach.icon);
     }
     if (theme === "pastel") {
       setTheme(Pastel);
+      setIcon(Pastel.icon);
     }
     if (theme === "grape") {
       setTheme(Grape);
+      setIcon(Grape.icon);
     }
   };
 
@@ -112,6 +170,9 @@ function App() {
     navigate("/");
   };
 
+  const goPhoto = () => {
+    navigate("/photo");
+  };
   const goSchedule = () => {
     navigate("/list/scheduler");
   };
@@ -124,6 +185,7 @@ function App() {
     navigate("/list/diary");
   };
 
+  const homeMatch = useMatch("/");
   const schedulerMatch = useMatch("/list/scheduler");
   const planMatch = useMatch("/list/scheduler/plan");
   const workMatch = useMatch("/list/scheduler/work");
@@ -131,20 +193,46 @@ function App() {
   const diaryMatch = useMatch("/list/diary");
   const addMatch = useMatch("/list/scheduler/add");
 
-  const photoMatch = useMatch("/");
+  const photoMatch = useMatch("/photo");
   const trackerMatch = useMatch("/tracker");
+
+  const titleMaker = () => {
+    let title = "SCHEDULE";
+
+    if (diaryMatch) {
+      title = "DIARY";
+    } else if (photoMatch) {
+      title = "PHOTO";
+    } else if (trackerMatch) {
+      title = "TRACKER";
+    }
+
+    return <div>{title}</div>;
+  };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <BodyWrap>
           <AppWrap>
+            {homeMatch ? null : (
+              <Header>
+                <ThemeIcon />
+                {titleMaker()}
+                <IconDiv>{titleIcon}</IconDiv>
+                {trackerMatch ? (
+                  <span>{thisYear}</span>
+                ) : (
+                  <span>{thisMonthString}</span>
+                )}
+              </Header>
+            )}
             <Outlet />
             <BtnWrap>
               {photoMatch ? (
-                <SelectedBtn onClick={goHome}>Photo</SelectedBtn>
+                <SelectedBtn onClick={goPhoto}>Photo</SelectedBtn>
               ) : (
-                <Btn onClick={goHome}>Photo</Btn>
+                <Btn onClick={goPhoto}>Photo</Btn>
               )}
               {schedulerMatch || addMatch || planMatch || workMatch ? (
                 <SelectedBtn onClick={goSchedule}>Scheduler</SelectedBtn>
@@ -163,35 +251,16 @@ function App() {
                 <Btn onClick={goTracker}>Tracker</Btn>
               )}
               <ThemeContainer as="div">
-                <ThemeBtn
-                  themecolor={Peach.secondColor}
-                  onClick={changeTheme}
-                  value="peach"
-                >
-                  <span>🍑</span>
-                </ThemeBtn>
-                <ThemeBtn
-                  themecolor={Grape.thirdColor}
-                  onClick={changeTheme}
-                  value="grape"
-                >
-                  <span>🍇</span>
-                </ThemeBtn>
-                <ThemeBtn
-                  themecolor={Tree.thirdColor}
-                  onClick={changeTheme}
-                  value="tree"
-                >
-                  <span>🌳</span>
-                </ThemeBtn>
-
-                <ThemeBtn
-                  themecolor={Pastel.secondColor}
-                  onClick={changeTheme}
-                  value="pastel"
-                >
-                  <span>🦄</span>
-                </ThemeBtn>
+                {ThemeBtns.map((theme) => (
+                  <ThemeBtn
+                    key={theme.value}
+                    themecolor={theme.themecolor}
+                    onClick={changeTheme}
+                    value={theme.value}
+                  >
+                    <span>{theme.icon}</span>
+                  </ThemeBtn>
+                ))}
               </ThemeContainer>
             </BtnWrap>
             <Message>yangah.career@gmail.com</Message>
@@ -202,4 +271,4 @@ function App() {
   );
 }
 
-export default App;
+export default ScreenLayout;

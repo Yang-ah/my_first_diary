@@ -2,23 +2,21 @@ import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../atom";
-import CheckBox, { Tracker } from "../components/CheckBox";
-import { thisDates, thisMonthString } from "../components/Dates";
+import CheckBox, { Tracker } from "../screens/Scheduler/CheckBox";
+import { thisDates } from "./Dates";
 
 import {
-  Header,
   AddBtn,
   Wrap,
-  ThemeIcon,
   Section,
   MainContainer,
   baseSpace,
   baseRadius,
-} from "../components/Common";
+} from "./Tag";
 
-import ListLine, { MainBox } from "../components/ListLine";
+import ListLine, { MainBox } from "./ListLine";
 import { useMatch, useNavigate } from "react-router-dom";
-import Add from "./Add";
+import Add from "../screens/Scheduler/Add";
 
 const SectionTable = styled.div`
   width: 100%;
@@ -113,7 +111,7 @@ const AddPage = styled(motion.div)`
 
 // main
 
-function List() {
+function ListLayout() {
   const addMatch = useMatch("/list/scheduler/add");
   const diaryMatch = useMatch("/list/diary");
   const onTracker = useRecoilValue(onTrackerAtom);
@@ -141,14 +139,6 @@ function List() {
         ) : null}
       </AnimatePresence>
 
-      <Header>
-        <ThemeIcon />
-        {diaryMatch ? (
-          <p>DIARY - {thisMonthString}</p>
-        ) : (
-          <p>SCHEDULER - {thisMonthString}</p>
-        )}
-      </Header>
       <Section>
         <Tracker />
         <MainContainer>
@@ -158,25 +148,26 @@ function List() {
               <MainBox as="div">{diaryMatch ? null : <CheckBox />}</MainBox>
               <SectionSide tracker={onTracker ? true : false}>
                 {onTracker ? (
-                  <SideBox>
-                    <i className="fas fa-smile-wink"></i>
-                  </SideBox>
+                  <>
+                    <SideBox>
+                      <i className="fas fa-smile-wink"></i>
+                    </SideBox>
+                    <SideBox>
+                      <i className="fas fa-running"></i>
+                    </SideBox>
+                  </>
                 ) : null}
-                {onTracker ? (
-                  <SideBox>
-                    <i className="fas fa-running"></i>
-                  </SideBox>
-                ) : null}
+
                 <SideBox>
                   <i className="fas fa-lock"></i>
                 </SideBox>
               </SectionSide>
             </TableHeader>
-            {thisDates.map((date) => ListLine(date.getDate()))}
+            {thisDates.map((date) => ListLine(date))}
           </SectionTable>
         </MainContainer>
       </Section>
     </Wrap>
   );
 }
-export default List;
+export default ListLayout;

@@ -15,23 +15,6 @@ export const Wrap = styled.div`
   align-items: center;
 `;
 
-export const Header = styled.div`
-  width: 100%;
-  height: 15px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  line-height: 15px;
-  margin-bottom: ${baseSpace};
-`;
-
-export const ThemeIcon = styled.div`
-  width: 5px;
-  height: 15px;
-  margin-right: 3px;
-  background-color: ${(props) => props.theme.firstColor};
-`;
-
 export const Section = styled.section`
   width: 100%;
   height: 550px;

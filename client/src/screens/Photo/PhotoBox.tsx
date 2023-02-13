@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { AddBtn, baseRadius } from "./Common";
-import { thisMonthString } from "./Dates";
+import { AddBtn, baseRadius } from "../../components/Tag";
+import { thisMonthString } from "../../components/Dates";
 
 interface urlProps {
   url: string;
@@ -16,7 +16,7 @@ const ImgInput = styled.input`
   display: none;
 `;
 
-const ThisDateDiv = styled.label<urlProps>`
+const DateForm = styled.form<urlProps>`
   background: ${(props) =>
     props.url ? `url(${props.url})` : `rgba(255, 255, 255, 0.8)`};
   background-size: cover;
@@ -35,23 +35,29 @@ const PhotoBox = ({ date }: dateProps) => {
   const dataMonth = thisMonthString.toLocaleLowerCase();
   const [photoUrl, setPhotoUrl] = useState("");
 
-  const urlMaker = (data: any) => {
-    setPhotoUrl(data[date.getDate()].photoUrl);
-    console.log(photoUrl);
-  };
-  useEffect(() => {
+  const fetchData = () =>
     fetch("http://localhost:4000/api/planner")
       .then((response) => response.json())
       .then((json) => json.planner[dataMonth])
       .then((data) => urlMaker(data));
+
+  const urlMaker = (data: any) => {
+    setPhotoUrl(data[date.getDate()].photoUrl);
+    console.log("photoUrl : ", photoUrl);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [photoUrl]);
 
   return (
-    <ThisDateDiv url={photoUrl} htmlFor={String(date.getDate())}>
+    <DateForm url={photoUrl}>
       <p>{date.getDate()}</p>
-      <AddBtn>+</AddBtn>
+      <AddBtn as="label" htmlFor={String(date.getDate())}>
+        +
+      </AddBtn>
       <ImgInput id={String(date.getDate())} type="file" accept="image" />
-    </ThisDateDiv>
+    </DateForm>
   );
 };
 

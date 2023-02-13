@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { onTrackerAtom } from "../atom";
-import { DateBox, SectionSide, SideBox } from "../screens/List";
+import { DateBox, SectionSide, SideBox } from "./ListLayout";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
+import { thisMonthString } from "./Dates";
 
 export const MainBox = styled.input`
   width: 100%;
@@ -16,12 +17,6 @@ export const MainBox = styled.input`
   display: flex;
   align-items: center;
   font-size: 12px;
-`;
-
-const Option = styled.option`
-  border: none;
-  outline: none;
-  font-size: 20px;
 `;
 
 interface SectionLineProps {
@@ -41,32 +36,59 @@ const SectionLine = styled.div<SectionLineProps>`
   }
 `;
 
-function ListLine(date: number) {
+function ListLine(date: Date) {
+  const dataMonth = thisMonthString.toLocaleLowerCase();
+
+  // management state : useState, recoil
   const onTracker = useRecoilValue(onTrackerAtom);
+  const [emoji, setEmotion] = useState("");
+  const [onLock, setLock] = useState(true);
+  const [mainContent, setDiary] = useState("");
+  const [exercise, setExercise] = useState("·");
+
+  // change state functions
+
+  const exerciseToggle = () =>
+    exercise === "♥" ? setExercise("·") : setExercise("♥");
+  const changeLock = () => setLock((cur) => !cur);
+  const changeDiary = (e: React.FormEvent<HTMLInputElement>) =>
+    setDiary(e.currentTarget.value);
+
+  const changeEmotion = (e: React.FormEvent<HTMLSelectElement>) => {
+    setEmotion(e.currentTarget.value);
+    console.log(emoji);
+  };
+  // match
   const diaryMatch = useMatch("/list/diary");
 
-  const [done, setDone] = useState("");
-  const doneToggle = () => {
-    done === "♥" ? setDone("·") : setDone("♥");
-  };
-  const [onLock, setLock] = useState(true);
-  const onClick = () => {
-    setLock((cur) => !cur);
+  // fetch data
+  const fetchData = () =>
+    fetch("http://localhost:4000/api/planner")
+      .then((response) => response.json())
+      .then((json) => json.planner[dataMonth])
+      .then((data) => setWholeData(data));
+
+  const setWholeData = (data: any) => {
+    const planner = data[date.getDate() - 1];
+    setEmotion(planner.emotion);
+    setExercise(planner.exercise ? "♥" : "·");
+    setDiary(planner.diary);
+    setLock(planner.lock);
   };
 
-  const [mainContent, mainChange] = useState("");
-  const setMain = (e: React.FormEvent<HTMLInputElement>) => {
-    mainChange(e.currentTarget.value);
-  };
+  useEffect(() => {
+    fetchData();
+  }, [emoji]);
 
+  // jsx
   return (
-    <SectionLine key={date} tracker={onTracker ? true : false}>
-      <DateBox>{date}</DateBox>
+    <SectionLine key={date.getDate()} tracker={onTracker ? true : false}>
+      <DateBox>{date.getDate()}</DateBox>
 
       {diaryMatch ? (
         <MainBox
           type="text"
-          onChange={setMain}
+          onChange={changeDiary}
           placeholder="오늘의 한 줄 일기를 써보세요. (최대 46자)"
           value={mainContent ? mainContent : ""}
           disabled={onLock}
@@ -78,30 +100,22 @@ function ListLine(date: number) {
 
       <SectionSide tracker={onTracker ? true : false}>
         {onTracker ? (
-          <SideBox as="select">
-            <Option value="none"></Option>
-            <Option value="happy">🥰</Option>
-            <Option value="good">🙂</Option>
-            <Option value="not bad">😐</Option>
-            <Option value="sad">☹️</Option>
-            <Option value="very sad">😭</Option>
-            <Option value="upset">🤯</Option>
-            <Option value="angry">🤬</Option>
-            <Option value="embarrassed">😰</Option>
-            <Option value="sick">🤒</Option>
-          </SideBox>
+          <select onChange={changeEmotion} key={emoji} defaultValue={emoji}>
+            <option value="none"></option>
+            <option value="🥰">🥰</option>
+          </select>
         ) : null}
         {onTracker ? (
           <SideBox
             as="input"
             disabled={onLock}
             type="button"
-            onClick={doneToggle}
-            value={done}
+            onClick={exerciseToggle}
+            value={exercise}
           />
         ) : null}
 
-        <SideBox as="button" onClick={onClick}>
+        <SideBox as="button" onClick={changeLock}>
           {onLock ? (
             <i className="fas fa-lock"></i>
           ) : (
