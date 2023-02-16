@@ -1,11 +1,11 @@
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Pastel, Grape, Tree, Peach } from "../theme";
+import { Pastel, Grape, Tree, Peach } from "../../theme";
 import { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { baseSpace } from "./Tag";
-import { thisMonthString, thisYear } from "./Dates";
+import { baseSpace } from "../Common";
+import { thisMonthString, thisYear } from "../Dates";
 
 const Header = styled.div`
   width: 100%;
@@ -139,7 +139,7 @@ const ThemeBtns: IThemeBtn[] = [
   },
 ];
 
-function ScreenLayout() {
+function Layout() {
   const [theme, setTheme] = useState(Tree);
   const [titleIcon, setIcon] = useState(Tree.icon);
 
@@ -271,4 +271,4 @@ function ScreenLayout() {
   );
 }
 
-export default ScreenLayout;
+export default Layout;

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRecoilValue } from "recoil";
-import { onTrackerAtom } from "../atom";
-import CheckBox, { Tracker } from "../screens/Scheduler/CheckBox";
-import { thisDates } from "./Dates";
+import { onTrackerAtom } from "../../atom";
+import CheckBox, { Tracker } from "../../pages/Scheduler/CheckBox";
+import { thisDates } from "../Dates";
 
 import {
   AddBtn,
@@ -12,11 +12,11 @@ import {
   MainContainer,
   baseSpace,
   baseRadius,
-} from "./Tag";
+} from "../Common";
 
-import ListLine, { MainBox } from "./ListLine";
+import Line, { MainBox } from "../Line";
 import { useMatch, useNavigate } from "react-router-dom";
-import Add from "../screens/Scheduler/Add";
+import Add from "../../pages/Scheduler/Add";
 
 const SectionTable = styled.div`
   width: 100%;
@@ -95,7 +95,7 @@ const Overlay = styled(motion.div)`
   background-color: rgba(1, 1, 1, 0.7);
   position: absolute;
   z-index: 200;
-  top: -40px;
+  top: -70px;
   opacity: 0;
 `;
 
@@ -111,7 +111,7 @@ const AddPage = styled(motion.div)`
 
 // main
 
-function ListLayout() {
+function List() {
   const addMatch = useMatch("/list/scheduler/add");
   const diaryMatch = useMatch("/list/diary");
   const onTracker = useRecoilValue(onTrackerAtom);
@@ -163,11 +163,11 @@ function ListLayout() {
                 </SideBox>
               </SectionSide>
             </TableHeader>
-            {thisDates.map((date) => ListLine(date))}
+            {thisDates.map((date) => Line(date))}
           </SectionTable>
         </MainContainer>
       </Section>
     </Wrap>
   );
 }
-export default ListLayout;
+export default List;

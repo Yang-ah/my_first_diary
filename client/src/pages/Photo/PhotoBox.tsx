@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { AddBtn, baseRadius } from "../../components/Tag";
+import { AddBtn, baseRadius } from "../../components/Common";
 import { thisMonthString } from "../../components/Dates";
 
 interface urlProps {

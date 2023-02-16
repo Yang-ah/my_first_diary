@@ -17,5 +17,5 @@
     "downlevelIteration": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "src/theme/index.ts"]
+  "include": ["src", "src/theme/index.ts", "./declaration.d.ts"]
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { baseRadius } from "../../components/Tag";
+import { baseRadius } from "../../components/Common";
 
 interface ISchedule {
   content?: string;

@@ -38,13 +38,6 @@ export const AddBtn = styled.button`
   color: ${(props) => props.theme.firstColor};
 `;
 
-export const SectionHeader = styled.header`
-  width: 100%;
-  height: 30px;
-  display: flex;
-  align-items: center;
-`;
-
 export const MainContainer = styled.main`
   width: 100%;
   height: 100%;

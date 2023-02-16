@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { onTrackerAtom } from "../atom";
-import { DateBox, SectionSide, SideBox } from "./ListLayout";
+import { DateBox, SectionSide, SideBox } from "./Layout/List";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
 import { thisMonthString } from "./Dates";
-import LineCell from "../screens/Scheduler/LineCell";
+import LineCell from "../pages/Scheduler/LineCell";
 
 export const MainBox = styled.input`
   width: 100%;
@@ -38,7 +38,7 @@ const SectionLine = styled.div<SectionLineProps>`
   }
 `;
 
-const ListLine = (date: Date) => {
+const Line = (date: Date) => {
   const dataMonth = thisMonthString.toLocaleLowerCase();
 
   // management state : useState, recoil
@@ -147,4 +147,4 @@ const ListLine = (date: Date) => {
     </SectionLine>
   );
 };
-export default ListLine;
+export default Line;

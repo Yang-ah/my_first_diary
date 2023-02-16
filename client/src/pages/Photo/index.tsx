@@ -2,11 +2,10 @@ import styled from "styled-components";
 import {
   Wrap,
   Section,
-  SectionHeader,
   MainContainer,
   baseRadius,
   baseSpace,
-} from "../../components/Tag";
+} from "../../components/Common";
 
 import { thisDates, weeks, prevDates, nextDates } from "../../components/Dates";
 import PhotoBox from "./PhotoBox";
@@ -48,7 +47,6 @@ const OtherDateDiv = styled.div`
 function Photo() {
   return (
     <Wrap>
-      <SectionHeader></SectionHeader>
       <PhotoSection>
         <MainContainer>
           <Calendar>

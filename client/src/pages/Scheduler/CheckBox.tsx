@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const CheckContainer = styled.div`
+export const CheckContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -79,29 +79,16 @@ export function Tracker() {
 }
 
 function CheckBox() {
+  const [onPlan, setPlan] = useState(true);
+  const [onWork, setWork] = useState(true);
+
+  const planToggle = () => setPlan((cur) => !cur);
+  const workToggle = () => setWork((cur) => !cur);
+
   const navigate = useNavigate();
-
-  const [onPlan, setPlan] = useState(false);
-  const [onWork, setWork] = useState(false);
-
-  const planToggle = () => {
-    setPlan((cur) => !cur);
-  };
-  const workToggle = () => {
-    setWork((cur) => !cur);
-  };
-
-  const goScheduler = () => {
-    navigate("/list/scheduler");
-  };
-
-  const goPlan = () => {
-    navigate("/list/scheduler/plan");
-  };
-
-  const goWork = () => {
-    navigate("/list/scheduler/work");
-  };
+  const goScheduler = () => navigate("/list/scheduler");
+  const goPlan = () => navigate("/list/scheduler/plan");
+  const goWork = () => navigate("/list/scheduler/work");
 
   useEffect(() => {
     if (onPlan === onWork) {

@@ -16,7 +16,7 @@ import {
   Plan,
   Add,
   Diary,
-} from "../screens";
+} from "../pages";
 
 const router = (
   <Route>
