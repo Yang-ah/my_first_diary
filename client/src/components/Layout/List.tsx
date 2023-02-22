@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../atom";
 import CheckBox, { Tracker } from "../../pages/Scheduler/CheckBox";
-import { thisDates } from "../Dates";
+import { thisDates } from "../Common/Dates";
 
 import {
   AddBtn,

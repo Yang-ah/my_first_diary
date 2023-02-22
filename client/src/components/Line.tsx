@@ -4,7 +4,7 @@ import { DateBox, SectionSide, SideBox } from "./Layout/List";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
-import { thisMonthString } from "./Dates";
+import { thisMonthString } from "./Common/Dates";
 import LineCell from "../pages/Scheduler/LineCell";
 
 export const MainBox = styled.input`

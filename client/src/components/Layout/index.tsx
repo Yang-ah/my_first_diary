@@ -1,113 +1,43 @@
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { Pastel, Grape, Tree, Peach } from "../../theme";
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { baseSpace } from "../Common";
-import { thisMonthString, thisYear } from "../Dates";
+import { thisMonthString, thisYear } from "../Common/Dates";
+import styles from "./layout.module.scss";
 
-const Header = styled.div`
-  width: 100%;
-  height: 15px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  line-height: 15px;
-  margin-bottom: ${baseSpace};
+const BodyWrap = styled.div`
+  color: ${(props) => props.theme.firstColor};
+  > main {
+    background-color: ${(props) => props.theme.fourthColor};
+    border: 1px solid ${(props) => props.theme.thirdColor};
+  }
 `;
 
-const ThemeIcon = styled.div`
-  width: 5px;
-  height: 15px;
-  margin-right: 3px;
+const IconDiv = styled.div`
   background-color: ${(props) => props.theme.firstColor};
 `;
 
-const BodyWrap = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: ${(props) => props.theme.firstColor};
-`;
-
-const AppWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 760px;
-  height: 700px;
-  background-color: ${(props) => props.theme.fourthColor};
-  border: 1px solid ${(props) => props.theme.thirdColor};
-  margin: 10px 0;
-  align-self: center;
-  justify-content: space-between;
-  border-radius: 10px;
-  padding: 30px;
-  position: relative;
-  align-items: center;
-  box-shadow: 5px 5px 10px #0000006b;
-`;
-
-const BtnWrap = styled.div`
-  position: absolute;
-  width: 100px;
-  top: 10px;
-  right: -101px;
-`;
-
-const Btn = styled.button`
-  color: ${(props) => props.theme.firstColor};
-  width: 80px;
-  height: 50px;
-  margin-bottom: 10px;
-  background-color: ${(props) => props.theme.fourthColor};
-  box-shadow: 2px 2px 5px #0000006b;
-`;
-
-const SelectedBtn = styled(Btn)`
-  background-color: ${(props) => props.theme.thirdColor};
-`;
-
-const ThemeContainer = styled.div`
-  width: 80px;
-  height: 80px;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  box-shadow: 2px 2px 5px #0000006b;
-`;
-
-export const Message = styled.h1`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 400;
-  margin-top: 15px;
+const Message = styled.p`
   color: ${(props) => props.theme.secondColor};
+`;
+
+const Nav = styled.nav`
+  > button {
+    color: ${(props) => props.theme.firstColor};
+    background-color: ${(props) => props.theme.fourthColor};
+  }
+
+  .selected_button {
+    background-color: ${(props) => props.theme.thirdColor};
+  }
 `;
 
 interface ThemeProps {
   themecolor: string;
 }
 
-const ThemeBtn = styled(motion.button)<ThemeProps>`
+const ThemeBtn = styled.button<ThemeProps>`
   background-color: ${(props) => props.themecolor};
-  font-size: 20px;
-  opacity: 0.8;
-  overflow: hidden;
-  :hover {
-    opacity: 1;
-    box-shadow: 2px 2px 5px #0000006b;
-  }
-  :hover span {
-    font-size: 28px;
-  }
-`;
-
-const IconDiv = styled.div`
-  padding: 0 5px;
 `;
 
 interface IThemeBtn {
@@ -166,10 +96,6 @@ function Layout() {
 
   const navigate = useNavigate();
 
-  const goHome = () => {
-    navigate("/");
-  };
-
   const goPhoto = () => {
     navigate("/photo");
   };
@@ -213,58 +139,69 @@ function Layout() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <BodyWrap>
-          <AppWrap>
-            {homeMatch ? null : (
-              <Header>
-                <ThemeIcon />
+        <BodyWrap className={styles.body}>
+          <main className={styles.wrap}>
+            {!homeMatch && (
+              <header className={styles.header}>
+                <IconDiv className={styles.icon_div} />
                 {titleMaker()}
-                <IconDiv>{titleIcon}</IconDiv>
-                {trackerMatch ? (
-                  <span>{thisYear}</span>
-                ) : (
-                  <span>{thisMonthString}</span>
-                )}
-              </Header>
+
+                <div className={styles.icon}>{titleIcon}</div>
+                <span>{trackerMatch ? thisYear : thisMonthString}</span>
+              </header>
             )}
             <Outlet />
-            <BtnWrap>
-              {photoMatch ? (
-                <SelectedBtn onClick={goPhoto}>Photo</SelectedBtn>
-              ) : (
-                <Btn onClick={goPhoto}>Photo</Btn>
-              )}
-              {schedulerMatch || addMatch || planMatch || workMatch ? (
-                <SelectedBtn onClick={goSchedule}>Scheduler</SelectedBtn>
-              ) : (
-                <Btn onClick={goSchedule}>Scheduler</Btn>
-              )}
-              {diaryMatch ? (
-                <SelectedBtn onClick={goDiary}>Diary</SelectedBtn>
-              ) : (
-                <Btn onClick={goDiary}>Diary</Btn>
-              )}
+            <Nav className={styles.button_wrap}>
+              <button
+                className={photoMatch ? "selected_button" : ""}
+                onClick={goPhoto}
+              >
+                Photo
+              </button>
 
-              {trackerMatch ? (
-                <SelectedBtn onClick={goTracker}>Tracker</SelectedBtn>
-              ) : (
-                <Btn onClick={goTracker}>Tracker</Btn>
-              )}
-              <ThemeContainer as="div">
+              <button
+                className={
+                  schedulerMatch || addMatch || planMatch || workMatch
+                    ? "selected_button"
+                    : ""
+                }
+                onClick={goSchedule}
+              >
+                Scheduler
+              </button>
+
+              <button
+                className={diaryMatch ? "selected_button" : ""}
+                onClick={goDiary}
+              >
+                Diary
+              </button>
+
+              <button
+                className={trackerMatch ? "selected_button" : ""}
+                onClick={goTracker}
+              >
+                Tracker
+              </button>
+
+              <div className={styles.theme_button_container}>
                 {ThemeBtns.map((theme) => (
                   <ThemeBtn
                     key={theme.value}
                     themecolor={theme.themecolor}
                     onClick={changeTheme}
                     value={theme.value}
+                    className={styles.theme_button}
                   >
                     <span>{theme.icon}</span>
                   </ThemeBtn>
                 ))}
-              </ThemeContainer>
-            </BtnWrap>
-            <Message>yangah.career@gmail.com</Message>
-          </AppWrap>
+              </div>
+            </Nav>
+            <Message className={styles.message}>
+              yangah.career@gmail.com
+            </Message>
+          </main>
         </BodyWrap>
       </ThemeProvider>
     </>

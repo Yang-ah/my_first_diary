@@ -7,7 +7,12 @@ import {
   baseSpace,
 } from "../../components/Common";
 
-import { thisDates, weeks, prevDates, nextDates } from "../../components/Dates";
+import {
+  thisDates,
+  weeks,
+  prevDates,
+  nextDates,
+} from "../../components/Common/Dates";
 import PhotoBox from "./PhotoBox";
 
 const PhotoSection = styled(Section)`

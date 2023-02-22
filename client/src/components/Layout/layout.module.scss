@@ -1,0 +1,91 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/constants/size" as s;
+@use "../../styles/constants/themes" as c;
+
+.body {
+  @include m.flex(center, center, column);
+  width: 100vw;
+  height: 100vh;
+
+  > .wrap {
+    @include m.flex(space-between, center, column);
+    width: 760px;
+    height: 700px;
+    margin: 10px 0;
+    border-radius: 10px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 5px 5px 10px #0000006b;
+  }
+}
+
+.header {
+  @include m.flex(flex-start);
+  width: 100%;
+  height: 15px;
+  font-size: 14px;
+  line-height: 15px;
+  margin-bottom: s.$S_SPACE;
+
+  .icon {
+    padding: 0 5px;
+  }
+
+  .icon_div {
+    width: 5px;
+    height: 15px;
+    margin-right: 3px;
+  }
+}
+
+.message {
+  @include m.flex();
+  width: 100%;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 15px;
+}
+
+.button_wrap {
+  position: absolute;
+  width: 100px;
+  top: 10px;
+  right: -101px;
+
+  > button {
+    width: 80px;
+    height: 50px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 5px #0000006b;
+    &:hover {
+      transform: translateX(20px);
+    }
+  }
+}
+
+.theme_button_container {
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 2px 2px 5px #0000006b;
+}
+
+.theme_button {
+  font-size: 20px;
+  opacity: 0.8;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+    box-shadow: 2px 2px 5px #0000006b;
+    transform: scale(1.3);
+    position: relative;
+    z-index: 99;
+    border-radius: 3px;
+  }
+
+  //  :hover span {}
+}
