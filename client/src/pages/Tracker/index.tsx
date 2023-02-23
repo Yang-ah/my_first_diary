@@ -1,16 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Wrap, Section, baseRadius } from "../../components/Common";
-import { CheckContainer } from "../Scheduler/CheckBox";
+import { Wrap, Section, CheckContainer } from "../../components/Common";
 
-const CheckHeader = styled.header`
-  width: 100%;
-  padding: 0 15px 5px 0;
-
-  > div {
-    justify-content: flex-end;
-  }
-`;
+import styles from "./tracker.module.scss";
 
 const TrackerSection = styled(Section)`
   display: grid;
@@ -21,13 +13,7 @@ const TrackerSection = styled(Section)`
 `;
 
 const Date = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
   background-color: ${(props) => props.theme.thirdColor};
-  border-radius: ${baseRadius};
 `;
 
 const Month = styled(Date)`
@@ -36,50 +22,12 @@ const Month = styled(Date)`
   top: 0;
 `;
 
-const Trackers = styled.div`
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: ${baseRadius};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  > div {
-    font-size: 18px;
-  }
-  > div:first-of-type {
-    margin-right: 3px;
-  }
-`;
-
 const dates = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
   23, 24, 25, 26, 27, 28, 29, 30, 31,
 ];
-const months = [
-  "jan",
-  "feb",
-  "mar",
-  "apr",
-  "may",
-  "jun",
-  "jul",
-  "aug",
-  "sep",
-  "oct",
-  "nov",
-  "dec",
-];
 
-const Column = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 20px repeat(31, 35px);
-  grid-gap: 5px;
-`;
-
-function Tracker() {
+const Tracker = () => {
   const [emotion, setEmotion] = useState(true);
   const [exercise, setExercise] = useState(true);
 
@@ -114,7 +62,7 @@ function Tracker() {
 
   return (
     <Wrap>
-      <CheckHeader>
+      <header className={styles.header}>
         <CheckContainer>
           <div>
             <input type="checkbox" id="emotion" onClick={emotionToggle} />
@@ -139,97 +87,99 @@ function Tracker() {
             </label>
           </div>
         </CheckContainer>
-      </CheckHeader>
-      <TrackerSection>
-        <Column>
-          <Month></Month>
+      </header>
+      <TrackerSection className={styles.section}>
+        <div className={styles.column}>
+          <Month className={styles.date}></Month>
           {dates.map((date) => (
-            <Date key={date}>{date}</Date>
+            <Date className={styles.date} key={date}>
+              {date}
+            </Date>
           ))}
-        </Column>
+        </div>
 
-        <Column>
-          <Month>JAN</Month>
+        <div className={styles.column}>
+          <Month className={styles.date}>JAN</Month>
           {tracker.jan.map((dateObj, index) => (
-            <Trackers key={`jan${index}`}>
+            <div className={styles.trackers} key={`jan${index}`}>
               {emotion ? <div>{dateObj["emotion"]}</div> : null}
               {exercise ? <div>{dateObj["exercise"] ? "♥" : "·"}</div> : null}
-            </Trackers>
+            </div>
           ))}
-        </Column>
+        </div>
 
-        <Column>
-          <Month>FEB</Month>
+        <div className={styles.column}>
+          <Month className={styles.date}>FEB</Month>
           {tracker.feb.map((dateObj, index) => (
-            <Trackers key={`feb${index}`}>
+            <div className={styles.trackers} key={`feb${index}`}>
               {emotion ? <div>{dateObj["emotion"]}</div> : null}
               {exercise ? <div>{dateObj["exercise"] ? "♥" : "·"}</div> : null}
-            </Trackers>
+            </div>
           ))}
-        </Column>
-        <Column>
-          <Month>MAR</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>MAR</Month>
           {tracker.mar.map((dateObj, index) => (
-            <Trackers key={`mar${index}`}></Trackers>
+            <div className={styles.trackers} key={`mar${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>APR</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>APR</Month>
           {tracker.apr.map((dateObj, index) => (
-            <Trackers key={`apr${index}`}></Trackers>
+            <div className={styles.trackers} key={`apr${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>MAY</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>MAY</Month>
           {tracker.may.map((dateObj, index) => (
-            <Trackers key={`may${index}`}></Trackers>
+            <div className={styles.trackers} key={`may${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>JUN</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>JUN</Month>
           {tracker.jun.map((dateObj, index) => (
-            <Trackers key={`jun${index}`}></Trackers>
+            <div className={styles.trackers} key={`jun${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>JUL</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>JUL</Month>
           {tracker.jul.map((dateObj, index) => (
-            <Trackers key={`jul${index}`}></Trackers>
+            <div className={styles.trackers} key={`jul${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>AUG</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>AUG</Month>
           {tracker.aug.map((dateObj, index) => (
-            <Trackers key={`aug${index}`}></Trackers>
+            <div className={styles.trackers} key={`aug${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>SEP</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>SEP</Month>
           {tracker.sep.map((dateObj, index) => (
-            <Trackers key={`sep${index}`}></Trackers>
+            <div className={styles.trackers} key={`sep${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>OCT</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>OCT</Month>
           {tracker.oct.map((dateObj, index) => (
-            <Trackers key={`oct${index}`}></Trackers>
+            <div className={styles.trackers} key={`oct${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>NOV</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>NOV</Month>
           {tracker.nov.map((dateObj, index) => (
-            <Trackers key={`nov${index}`}></Trackers>
+            <div className={styles.trackers} key={`nov${index}`}></div>
           ))}
-        </Column>
-        <Column>
-          <Month>DEC</Month>
+        </div>
+        <div className={styles.column}>
+          <Month className={styles.date}>DEC</Month>
           {tracker.dec.map((dateObj, index) => (
-            <Trackers key={`dec${index}`}></Trackers>
+            <div className={styles.trackers} key={`dec${index}`}></div>
           ))}
-        </Column>
+        </div>
       </TrackerSection>
     </Wrap>
   );
-}
+};
 
 export default Tracker;

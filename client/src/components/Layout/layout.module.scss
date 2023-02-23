@@ -1,15 +1,40 @@
 @use "../../styles/mixins" as m;
 @use "../../styles/constants/size" as s;
-@use "../../styles/constants/themes" as c;
+
+@include m.desktop {
+  .body {
+    padding-left: 20px;
+  }
+  .wrap {
+    width: 90%;
+  }
+}
+
+@include m.tablet {
+  .body {
+    padding-left: 20px;
+  }
+  .wrap {
+    width: 90%;
+  }
+}
+
+@include m.mobile {
+  .body {
+    padding-left: 20px;
+  }
+  .wrap {
+    width: 90%;
+  }
+}
 
 .body {
-  @include m.flex(center, center, column);
+  @include m.flex(center, flex-start, column);
   width: 100vw;
   height: 100vh;
 
   > .wrap {
     @include m.flex(space-between, center, column);
-    width: 760px;
     height: 700px;
     margin: 10px 0;
     border-radius: 10px;
@@ -57,8 +82,11 @@
     height: 50px;
     margin-bottom: 10px;
     box-shadow: 2px 2px 5px #0000006b;
+    transition: padding-left 0.3s ease-in-out;
+    box-sizing: content-box;
+
     &:hover {
-      transform: translateX(20px);
+      padding-left: 20px;
     }
   }
 }

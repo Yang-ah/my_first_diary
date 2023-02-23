@@ -17,7 +17,7 @@ export const Wrap = styled.div`
 
 export const Section = styled.section`
   width: 100%;
-  height: 550px;
+  height: 560px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,10 +31,10 @@ export const AddBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.secondColor};
   align-self: flex-end;
   justify-self: flex-end;
   cursor: pointer;
+  background-color: ${(props) => props.theme.secondColor};
   color: ${(props) => props.theme.firstColor};
 `;
 
@@ -43,4 +43,81 @@ export const MainContainer = styled.main`
   height: 100%;
   display: flex;
   align-items: center;
+`;
+
+export const DateBox = styled.div`
+  width: 100%;
+  border-radius: ${baseRadius};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  background-color: ${(props) => props.theme.thirdColor};
+`;
+export interface TrackerProps {
+  tracker: boolean;
+}
+
+export const SectionSide = styled.div<TrackerProps>`
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: ${(props) =>
+    props.tracker ? `repeat(3, 1fr)` : `1fr`};
+`;
+
+export const SideBox = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: ${baseRadius};
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  color: ${(props) => props.theme.firstColor};
+  cursor: pointer;
+`;
+
+export const MainBox = styled.input`
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  outline: none;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  overflow: hidden;
+`;
+
+export const CheckContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border-radius: 10px;
+  i {
+    font-size: 13px;
+    margin: 2px 1px 0 0;
+  }
+
+  input {
+    display: none;
+  }
+
+  div {
+    margin-left: 10px;
+  }
+  label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    i {
+      margin: 2px 2px 0 0;
+    }
+  }
 `;

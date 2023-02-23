@@ -1,25 +1,11 @@
 import { useEffect, useState } from "react";
 import { onTrackerAtom } from "../atom";
-import { DateBox, SectionSide, SideBox } from "./Layout/List";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
 import { thisMonthString } from "./Common/Dates";
 import LineCell from "../pages/Scheduler/LineCell";
-
-export const MainBox = styled.input`
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  outline: none;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  overflow: hidden;
-`;
+import { DateBox, MainBox, SectionSide, SideBox } from "./Common";
 
 interface SectionLineProps {
   tracker: boolean;
@@ -33,6 +19,7 @@ const SectionLine = styled.div<SectionLineProps>`
     props.tracker ? `40px 1fr 120px` : `40px 1fr 38px`};
   margin-bottom: 5px;
   height: 40px;
+
   :last-child {
     margin: 0px;
   }
@@ -105,12 +92,8 @@ const Line = (date: Date) => {
         />
       ) : (
         <MainBox as="div">
-          {schedulerMatch || planMatch
-            ? plans.map((plan) => LineCell(plan))
-            : null}
-          {schedulerMatch || workMatch
-            ? works.map((work) => LineCell(work))
-            : null}
+          {(schedulerMatch || planMatch) && plans.map((plan) => LineCell(plan))}
+          {(schedulerMatch || workMatch) && works.map((work) => LineCell(work))}
         </MainBox>
       )}
 

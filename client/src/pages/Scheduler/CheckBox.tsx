@@ -3,64 +3,18 @@ import { onTrackerAtom } from "../../atom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { CheckContainer } from "../../components/Common";
 
-export const CheckContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  border-radius: 10px;
-  i {
-    font-size: 13px;
-    margin: 2px 1px 0 0;
-  }
-
-  input {
-    display: none;
-  }
-
-  div {
-    margin-left: 10px;
-  }
-  label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    p {
-      margin-bottom: 3px;
-    }
-  }
-`;
-
-const TrackerContainer = styled.div`
-  width: 100%;
-  display: flex;
+const TrackerContainer = styled(CheckContainer)`
   justify-content: flex-end;
-  font-size: 12px;
   position: relative;
   bottom: 20px;
   right: 5px;
   z-index: 100;
   height: 20px;
-  input {
-    display: none;
-  }
-  label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    i {
-      margin-right: 2px;
-    }
-    p {
-      margin-bottom: 3px;
-    }
-  }
 `;
 
-export function Tracker() {
+export const Tracker = () => {
   const [onTracker, SetTracker] = useRecoilState(onTrackerAtom);
   const toggleTrackerAtom = () => SetTracker((prev) => !prev);
   return (
@@ -76,9 +30,9 @@ export function Tracker() {
       </label>
     </TrackerContainer>
   );
-}
+};
 
-function CheckBox() {
+const CheckBox = () => {
   const [onPlan, setPlan] = useState(true);
   const [onWork, setWork] = useState(true);
 
@@ -126,6 +80,6 @@ function CheckBox() {
       </div>
     </CheckContainer>
   );
-}
+};
 
 export default CheckBox;

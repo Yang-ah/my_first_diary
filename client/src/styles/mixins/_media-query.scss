@@ -1,0 +1,19 @@
+@use "../constants/size" as s;
+
+@mixin mobile {
+  @media (min-width: #{s.$S_MOBILE}) and (max-width: #{s.$S_TABLET - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{s.$S_TABLET}) and (max-width: #{s.$S_DESKTOP - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{s.$S_DESKTOP}) {
+    @content;
+  }
+}
