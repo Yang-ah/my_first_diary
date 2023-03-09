@@ -18,7 +18,7 @@ import {
   MainBox,
 } from "../Common";
 
-import Line from "../Line";
+import Line from "./Line";
 import { useMatch, useNavigate } from "react-router-dom";
 import Add from "../../pages/Scheduler/Add";
 
@@ -57,17 +57,50 @@ const List = () => {
   const goLine = () => navigate("/list/scheduler");
 
   return (
-    <Wrap>
-      {!diaryMatch && (
-        <AddScheduleBtn
-          className={styles.add_button}
-          layoutId="addPage"
-          onClick={clickedAdd}
-        >
-          +
-        </AddScheduleBtn>
-      )}
+    <>
+      <Wrap>
+        {!diaryMatch && (
+          <AddScheduleBtn
+            className={styles.add_button}
+            layoutId="addPage"
+            onClick={clickedAdd}
+          >
+            +
+          </AddScheduleBtn>
+        )}
 
+        <Section className={styles.section}>
+          <Tracker />
+          <MainContainer>
+            <div className={styles.section_table}>
+              <TableHeader
+                className={styles.table_header}
+                tracker={onTracker ? true : false}
+              >
+                <DateBox className={styles.date}>DATE</DateBox>
+                <MainBox as="div">{!diaryMatch && <CheckBox />}</MainBox>
+                <SectionSide tracker={onTracker ? true : false}>
+                  {onTracker && (
+                    <>
+                      <SideBox>
+                        <i className="fas fa-smile-wink"></i>
+                      </SideBox>
+                      <SideBox>
+                        <i className="fas fa-running"></i>
+                      </SideBox>
+                    </>
+                  )}
+
+                  <SideBox>
+                    <i className="fas fa-lock"></i>
+                  </SideBox>
+                </SectionSide>
+              </TableHeader>
+              {thisDates.map((date) => Line(date))}
+            </div>
+          </MainContainer>
+        </Section>
+      </Wrap>
       <AnimatePresence>
         {addMatch && (
           <>
@@ -82,39 +115,7 @@ const List = () => {
           </>
         )}
       </AnimatePresence>
-
-      <Section className={styles.section}>
-        <Tracker />
-        <MainContainer>
-          <div className={styles.section_table}>
-            <TableHeader
-              className={styles.table_header}
-              tracker={onTracker ? true : false}
-            >
-              <DateBox className={styles.date}>DATE</DateBox>
-              <MainBox as="div">{!diaryMatch && <CheckBox />}</MainBox>
-              <SectionSide tracker={onTracker ? true : false}>
-                {onTracker && (
-                  <>
-                    <SideBox>
-                      <i className="fas fa-smile-wink"></i>
-                    </SideBox>
-                    <SideBox>
-                      <i className="fas fa-running"></i>
-                    </SideBox>
-                  </>
-                )}
-
-                <SideBox>
-                  <i className="fas fa-lock"></i>
-                </SideBox>
-              </SectionSide>
-            </TableHeader>
-            {thisDates.map((date) => Line(date))}
-          </div>
-        </MainContainer>
-      </Section>
-    </Wrap>
+    </>
   );
 };
 export default List;

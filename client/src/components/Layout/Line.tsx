@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { onTrackerAtom } from "../atom";
+import { onTrackerAtom } from "../../atom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
-import { thisMonthString } from "./Common/Dates";
-import LineCell from "../pages/Scheduler/LineCell";
-import { DateBox, MainBox, SectionSide, SideBox } from "./Common";
+import { thisMonthString } from "../Common/Dates";
+import LineCell from "../../pages/Scheduler/LineCell";
+import { DateBox, MainBox, SectionSide, SideBox } from "../Common";
 
 interface SectionLineProps {
   tracker: boolean;
@@ -59,9 +59,10 @@ const Line = (date: Date) => {
   const fetchData = () =>
     fetch("http://localhost:4000/api/planner")
       .then((response) => response.json())
-      .then((json) => json.planner[dataMonth])
-      .then((data) => setWholeData(data));
+      .then((json) => json.planner[dataMonth]);
+  //  .then((data) => setWholeData(data));
 
+  /*
   const setWholeData = (data: any) => {
     const planner = data[date.getDate() - 1];
     setEmotion(planner.emotion);
@@ -70,7 +71,7 @@ const Line = (date: Date) => {
     setLock(planner.lock);
     setPlans(planner.schedule.plan);
     setWorks(planner.schedule.work);
-  };
+  };*/
 
   useEffect(() => {
     fetchData();

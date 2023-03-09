@@ -140,7 +140,7 @@ function Layout() {
     <>
       <ThemeProvider theme={theme}>
         <BodyWrap className={styles.body}>
-          <main className={styles.wrap}>
+          <main className={styles.main}>
             {!homeMatch && (
               <header className={styles.header}>
                 <IconDiv className={styles.icon_div} />
@@ -151,57 +151,58 @@ function Layout() {
               </header>
             )}
             <Outlet />
-            <Nav className={styles.button_wrap}>
-              <button
-                className={photoMatch ? "selected_button" : ""}
-                onClick={goPhoto}
-              >
-                Photo
-              </button>
 
-              <button
-                className={
-                  schedulerMatch || addMatch || planMatch || workMatch
-                    ? "selected_button"
-                    : ""
-                }
-                onClick={goSchedule}
-              >
-                Scheduler
-              </button>
-
-              <button
-                className={diaryMatch ? "selected_button" : ""}
-                onClick={goDiary}
-              >
-                Diary
-              </button>
-
-              <button
-                className={trackerMatch ? "selected_button" : ""}
-                onClick={goTracker}
-              >
-                Tracker
-              </button>
-
-              <div className={styles.theme_button_container}>
-                {ThemeBtns.map((theme) => (
-                  <ThemeBtn
-                    key={theme.value}
-                    themecolor={theme.themecolor}
-                    onClick={changeTheme}
-                    value={theme.value}
-                    className={styles.theme_button}
-                  >
-                    <span>{theme.icon}</span>
-                  </ThemeBtn>
-                ))}
-              </div>
-            </Nav>
             <Message className={styles.message}>
               yangah.career@gmail.com
             </Message>
           </main>
+          <Nav className={styles.nav}>
+            <button
+              className={photoMatch ? "selected_button" : ""}
+              onClick={goPhoto}
+            >
+              Photo
+            </button>
+
+            <button
+              className={
+                schedulerMatch || addMatch || planMatch || workMatch
+                  ? "selected_button"
+                  : ""
+              }
+              onClick={goSchedule}
+            >
+              Scheduler
+            </button>
+
+            <button
+              className={diaryMatch ? "selected_button" : ""}
+              onClick={goDiary}
+            >
+              Diary
+            </button>
+
+            <button
+              className={trackerMatch ? "selected_button" : ""}
+              onClick={goTracker}
+            >
+              Tracker
+            </button>
+
+            <div className={styles.theme_button_container}>
+              {ThemeBtns.map((theme) => (
+                <ThemeBtn
+                  key={theme.value}
+                  themecolor={theme.themecolor}
+                  onClick={changeTheme}
+                  value={theme.value}
+                  className={styles.theme_button}
+                >
+                  <span>{theme.icon}</span>
+                </ThemeBtn>
+              ))}
+            </div>
+          </Nav>
         </BodyWrap>
       </ThemeProvider>
     </>
