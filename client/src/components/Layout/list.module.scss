@@ -39,16 +39,16 @@
   margin-bottom: s.$S_SPACE;
   top: 0;
   display: grid;
-  grid-gap: 2px;
+  grid-gap: 5px;
 }
 
 .add_page {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   position: absolute;
   z-index: 300;
   border-radius: s.$S_RADIUS;
   top: 50%;
   left: 50%;
-  margin: -200px 0 0 -200px;
+  margin: -250px 0 0 -250px;
 }

@@ -12,7 +12,7 @@ import PhotoBox from "./PhotoBox";
 import styles from "./photo.module.scss";
 
 const DayDiv = styled.div`
-  background-color: ${(props) => props.theme.thirdColor};
+  background-color: ${(props) => props.theme.primaryColor};
 `;
 
 const Photo = () => {

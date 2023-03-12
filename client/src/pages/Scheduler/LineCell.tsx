@@ -2,11 +2,15 @@ import styled from "styled-components";
 import { baseRadius } from "../../components/Common";
 
 interface ISchedule {
-  content?: string;
-  importance?: number;
+  content: string;
+  importance: number;
 }
 
-const Cell = styled.div`
+interface ICell {
+  type: string;
+}
+
+const Cell = styled.div<ICell>`
   width: 100px;
   height: 80%;
   display: flex;
@@ -17,36 +21,63 @@ const Cell = styled.div`
 `;
 
 const FirstCell = styled(Cell)`
-  background-color: ${(props) => props.theme.fourthColor};
+  background-color: ${(props) =>
+    props.type === "plan"
+      ? (props) => props.theme.plan.firstColor
+      : (props) => props.theme.work.firstColor};
 `;
+
 const SecondCell = styled(Cell)`
-  background-color: ${(props) => props.theme.thirdColor};
+  background-color: ${(props) =>
+    props.type === "plan"
+      ? (props) => props.theme.plan.secondColor
+      : (props) => props.theme.work.secondColor};
 `;
 
 const ThirdCell = styled(Cell)`
-  background-color: ${(props) => props.theme.secondColor};
+  background-color: ${(props) =>
+    props.type === "plan"
+      ? (props) => props.theme.plan.thirdColor
+      : (props) => props.theme.work.thirdColor};
 `;
 
 const FourthCell = styled(Cell)`
-  background-color: ${(props) => props.theme.firstColor};
-  color: ${(props) => props.theme.fourthColor};
-  opacity: 0.8;
+  background-color: ${(props) =>
+    props.type === "plan"
+      ? (props) => props.theme.plan.fourthColor
+      : (props) => props.theme.work.fourthColor};
 `;
 
-const LineCell = (schedule: ISchedule) => {
+const LineCell = (schedule: ISchedule, type: string) => {
   const KEY = `${schedule.content}${schedule.importance}`;
 
   if (schedule.importance === 1) {
-    return <FirstCell key={KEY}>{schedule.content}</FirstCell>;
+    return (
+      <FirstCell key={KEY} type={type}>
+        {schedule.content}
+      </FirstCell>
+    );
   }
   if (schedule.importance === 2) {
-    return <SecondCell key={KEY}>{schedule.content}</SecondCell>;
+    return (
+      <SecondCell key={KEY} type={type}>
+        {schedule.content}
+      </SecondCell>
+    );
   }
   if (schedule.importance === 3) {
-    return <ThirdCell key={KEY}>{schedule.content}</ThirdCell>;
+    return (
+      <ThirdCell key={KEY} type={type}>
+        {schedule.content}
+      </ThirdCell>
+    );
   }
   if (schedule.importance === 4) {
-    return <FourthCell key={KEY}>{schedule.content}</FourthCell>;
+    return (
+      <FourthCell key={KEY} type={type}>
+        {schedule.content}
+      </FourthCell>
+    );
   }
 };
 

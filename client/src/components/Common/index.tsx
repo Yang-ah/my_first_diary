@@ -34,8 +34,8 @@ export const AddBtn = styled.button`
   align-self: flex-end;
   justify-self: flex-end;
   cursor: pointer;
-  background-color: ${(props) => props.theme.secondColor};
-  color: ${(props) => props.theme.firstColor};
+  background-color: ${(props) => props.theme.pointColor};
+  color: ${(props) => props.theme.fontColor};
 `;
 
 export const MainContainer = styled.main`
@@ -52,15 +52,16 @@ export const DateBox = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  background-color: ${(props) => props.theme.thirdColor};
+  background-color: ${(props) => props.theme.primaryColor};
 `;
+
 export interface TrackerProps {
   tracker: boolean;
 }
 
 export const SectionSide = styled.div<TrackerProps>`
   display: grid;
-  grid-gap: 2px;
+  grid-gap: 5px;
   grid-template-columns: ${(props) =>
     props.tracker ? `repeat(3, 1fr)` : `1fr`};
 `;
@@ -74,7 +75,7 @@ export const SideBox = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 17px;
-  color: ${(props) => props.theme.firstColor};
+  color: ${(props) => props.theme.fontColor};
   cursor: pointer;
 `;
 

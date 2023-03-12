@@ -21,6 +21,7 @@ import {
 import Line from "./Line";
 import { useMatch, useNavigate } from "react-router-dom";
 import Add from "../../pages/Scheduler/Add";
+import { Red } from "../../theme";
 
 const AddScheduleBtn = styled(motion(AddBtn))`
   width: 50px;
@@ -31,7 +32,7 @@ const AddScheduleBtn = styled(motion(AddBtn))`
 const Overlay = styled(motion.div)``;
 
 const AddPage = styled(motion.div)`
-  background-color: ${(props) => props.theme.fourthColor};
+  background-color: ${Red.backgroundColor};
 `;
 
 const TableHeader = styled.div<TrackerProps>`
@@ -41,7 +42,7 @@ const TableHeader = styled.div<TrackerProps>`
   div:first-child,
   div:nth-child(2),
   div > div {
-    background-color: ${(props) => props.theme.thirdColor};
+    background-color: ${(props) => props.theme.primaryColor};
   }
 `;
 

@@ -1,11 +1,74 @@
 import { useState } from "react";
 import styles from "./add.module.scss";
+import cx from "classnames";
+import styled from "styled-components";
+import { thisYear, thisMonth } from "../../components/Common/Dates";
+import { Red } from "../../theme";
 
-interface Ioption {
+const Container = styled.main`
+  color: ${Red.fontColor};
+
+  label {
+    background-color: ${Red.thirdColor};
+  }
+
+  button,
+  input {
+    color: ${Red.fontColor};
+    background-color: #ffffff8a;
+  }
+
+  input[type="range"] {
+    background-color: ${Red.thirdColor};
+    ::-webkit-slider-thumb {
+      background-color: ${Red.fontColor};
+    }
+  }
+`;
+
+const Category = styled.button`
+  color: ${Red.fontColor};
+  background-color: #ffffff8a;
+
+  &.selected,
+  &:hover {
+    background-color: ${Red.primaryColor};
+    color: white;
+  }
+`;
+
+const AddButton = styled.button`
+  background-color: ${Red.thirdColor};
+
+  &:hover {
+    background-color: ${Red.primaryColor};
+    color: white;
+  }
+`;
+
+const OptionButton = styled.button`
+  background-color: ${Red.backgroundColor};
+
+  &.plus {
+    background-color: ${Red.thirdColor};
+  }
+
+  > div {
+    background-color: ${Red.primaryColor};
+    color: white;
+  }
+`;
+
+interface IOption {
   [key: string]: boolean;
 }
 
 const Add = () => {
+  const date = (thisMonth + 1).toString().padStart(2, "0");
+  const day = new Date().getDate().toString().padStart(2, "0");
+  const today = `${thisYear}-${date}-${day}`;
+  const now = `${new Date().getHours()}:${new Date().getMinutes()}`;
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -13,16 +76,16 @@ const Add = () => {
   };
 
   const [form, setForm] = useState({
-    category: "work",
+    category: "Work",
     date: "",
     content: "",
-    importance: 1,
+    importance: 4,
     time: "",
     place: "",
     with: "",
   });
 
-  const [option, setOption] = useState<Ioption>({
+  const [option, setOption] = useState<IOption>({
     time: false,
     place: false,
     with: false,
@@ -42,40 +105,46 @@ const Add = () => {
     console.log({ form });
   };
 
-  const onClickRadio = (e: React.FormEvent<HTMLButtonElement>) => {
+  const onClickCategory = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
     setForm({ ...form, [name]: value });
   };
 
   return (
-    <main className={styles.container}>
+    <Container className={styles.container}>
       <form className={styles.form} id="addForm" onSubmit={onSubmit}>
         <label>Category</label>
-        <button
+        <Category
           type="button"
           id="work"
           name="category"
-          value="work"
-          onClick={onClickRadio}
+          value="Work"
+          onClick={onClickCategory}
+          className={
+            form.category === "Work" ? "selected" : styles.categoryButton
+          }
         >
           Work
-        </button>
-        <button
+        </Category>
+        <Category
           type="button"
           id="plan"
           name="category"
-          value="plan"
-          onClick={onClickRadio}
+          value="Plan"
+          onClick={onClickCategory}
+          className={
+            form.category === "Plan" ? "selected" : styles.categoryButton
+          }
         >
           Plan
-        </button>
+        </Category>
 
         <label>Date</label>
         <input
           type="date"
           name="date"
-          value={form.date}
+          value={form.date ? form.date : today}
           className={styles.two}
           onChange={onChange}
         />
@@ -89,17 +158,15 @@ const Add = () => {
           onChange={onChange}
         />
 
-        {/* TODO : range 스타일 추가하기 */}
-        <label>Importance</label>
+        <label>Importance : {form.importance}</label>
         <input
           type="range"
           name="importance"
-          className={styles.two}
+          className={cx(styles.two, styles.range)}
           min="1"
           max="4"
           onChange={onChange}
         />
-
         {option.time && (
           <>
             <label>Time</label>
@@ -108,6 +175,7 @@ const Add = () => {
               name="time"
               className={styles.two}
               onChange={onChange}
+              value={form.time ? form.time : now}
             />
           </>
         )}
@@ -135,22 +203,47 @@ const Add = () => {
           </>
         )}
 
-        {/* TODO : button 위에 +버튼 만들기 */}
-        <button type="button" name="time" onClick={onOption}>
+        <OptionButton
+          type="button"
+          name="time"
+          onClick={onOption}
+          className={styles.optionButton}
+        >
           Time
-        </button>
-        <button type="button" name="place" onClick={onOption}>
+          <div className={option.time ? "minus" : "plus"}>
+            {option.time ? "-" : "+"}
+          </div>
+        </OptionButton>
+
+        <OptionButton
+          type="button"
+          name="place"
+          onClick={onOption}
+          className={styles.optionButton}
+        >
           Place
-        </button>
-        <button type="button" name="with" onClick={onOption}>
+          <div className={option.place ? "minus" : "plus"}>
+            {option.place ? "-" : "+"}
+          </div>
+        </OptionButton>
+
+        <OptionButton
+          type="button"
+          name="with"
+          onClick={onOption}
+          className={styles.optionButton}
+        >
           With
-        </button>
+          <div className={option.with ? "minus" : "plus"}>
+            {option.with ? "-" : "+"}
+          </div>
+        </OptionButton>
       </form>
 
-      <button type="submit" form="addForm" className={styles.submit_button}>
-        Add
-      </button>
-    </main>
+      <AddButton type="submit" form="addForm">
+        Add {form.category}
+      </AddButton>
+    </Container>
   );
 };
 

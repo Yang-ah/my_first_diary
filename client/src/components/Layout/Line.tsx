@@ -13,7 +13,7 @@ interface SectionLineProps {
 
 const SectionLine = styled.div<SectionLineProps>`
   width: 100%;
-  grid-gap: 2px;
+  grid-gap: 5px;
   display: grid;
   grid-template-columns: ${(props) =>
     props.tracker ? `40px 1fr 120px` : `40px 1fr 38px`};
@@ -93,8 +93,10 @@ const Line = (date: Date) => {
         />
       ) : (
         <MainBox as="div">
-          {(schedulerMatch || planMatch) && plans.map((plan) => LineCell(plan))}
-          {(schedulerMatch || workMatch) && works.map((work) => LineCell(work))}
+          {(schedulerMatch || planMatch) &&
+            plans.map((plan) => LineCell(plan, "plan"))}
+          {(schedulerMatch || workMatch) &&
+            works.map((work) => LineCell(work, "work"))}
         </MainBox>
       )}
 

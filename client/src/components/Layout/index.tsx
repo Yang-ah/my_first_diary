@@ -6,29 +6,29 @@ import { thisMonthString, thisYear } from "../Common/Dates";
 import styles from "./layout.module.scss";
 
 const BodyWrap = styled.div`
-  color: ${(props) => props.theme.firstColor};
+  color: ${(props) => props.theme.fontColor};
   > main {
-    background-color: ${(props) => props.theme.fourthColor};
-    border: 1px solid ${(props) => props.theme.thirdColor};
+    background-color: ${(props) => props.theme.backgroundColor};
+    border: 1px solid ${(props) => props.theme.primaryColor};
   }
 `;
 
 const IconDiv = styled.div`
-  background-color: ${(props) => props.theme.firstColor};
+  background-color: ${(props) => props.theme.fontColor};
 `;
 
 const Message = styled.p`
-  color: ${(props) => props.theme.secondColor};
+  color: ${(props) => props.theme.primaryColor};
 `;
 
 const Nav = styled.nav`
   > button {
-    color: ${(props) => props.theme.firstColor};
-    background-color: ${(props) => props.theme.fourthColor};
+    color: ${(props) => props.theme.fontColor};
+    background-color: ${(props) => props.theme.backgroundColor};
   }
 
   .selected_button {
-    background-color: ${(props) => props.theme.thirdColor};
+    background-color: ${(props) => props.theme.primaryColor};
   }
 `;
 
@@ -48,22 +48,22 @@ interface IThemeBtn {
 
 const ThemeBtns: IThemeBtn[] = [
   {
-    themecolor: Peach.secondColor,
+    themecolor: Peach.pointColor,
     value: "peach",
     icon: Peach.icon,
   },
   {
-    themecolor: Grape.thirdColor,
+    themecolor: Grape.primaryColor,
     value: "grape",
     icon: Grape.icon,
   },
   {
-    themecolor: Tree.thirdColor,
+    themecolor: Tree.primaryColor,
     value: "tree",
     icon: Tree.icon,
   },
   {
-    themecolor: Pastel.secondColor,
+    themecolor: Pastel.pointColor,
     value: "pastel",
     icon: Pastel.icon,
   },

@@ -13,7 +13,7 @@ const TrackerSection = styled(Section)`
 `;
 
 const Date = styled.div`
-  background-color: ${(props) => props.theme.thirdColor};
+  background-color: ${(props) => props.theme.primaryColor};
 `;
 
 const Month = styled(Date)`
