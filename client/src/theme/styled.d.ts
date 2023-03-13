@@ -5,7 +5,6 @@ declare module "styled-components" {
   export interface DefaultTheme {
     fontColor: string;
     primaryColor: string;
-    thirdColor?: string;
     pointColor: string;
     backgroundColor: string;
     icon: string;
@@ -15,6 +14,7 @@ declare module "styled-components" {
       secondColor: string;
       thirdColor: string;
       fourthColor: string;
+      backgroundColor: string;
     };
 
     plan: {
@@ -22,6 +22,7 @@ declare module "styled-components" {
       secondColor: string;
       thirdColor: string;
       fourthColor: string;
+      backgroundColor: string;
     };
   }
 }

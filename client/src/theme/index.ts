@@ -8,18 +8,22 @@ export const Tree: DefaultTheme = {
   backgroundColor: "#F4FCD9",
   icon: "🌳",
 
+  // brown
   work: {
     firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    secondColor: "#90735f",
+    thirdColor: "#BB9981",
+    fourthColor: "#EFC3A4",
+    backgroundColor: "#fadfcb",
   },
 
+  // green
   plan: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
+    firstColor: "#596348",
+    secondColor: "#8A9C6B",
     thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    fourthColor: "#e4eec2",
+    backgroundColor: "#F4FCD9",
   },
 };
 
@@ -30,18 +34,22 @@ export const Peach: DefaultTheme = {
   backgroundColor: "#FFF5E4",
   icon: "🍑",
 
+  // peach (orange)
   work: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    firstColor: "#d19631",
+    secondColor: "#fabb4f",
+    thirdColor: "#ffd792",
+    fourthColor: "#fae2b9",
+    backgroundColor: "#FFF5E4",
   },
 
+  // pink
   plan: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    firstColor: "#e86c6c",
+    secondColor: "#FF9494",
+    thirdColor: "#fdb1b1",
+    fourthColor: "#FFD1D1",
+    backgroundColor: "#ffeae8",
   },
 };
 
@@ -52,18 +60,22 @@ export const Pastel: DefaultTheme = {
   backgroundColor: "#FFF2F2",
   icon: "🦄",
 
+  // pink
   work: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    firstColor: "#ea7171",
+    secondColor: "#f89393",
+    thirdColor: "#ffb3b3",
+    fourthColor: "#FFD1D1",
+    backgroundColor: "#FFF2F2",
   },
 
+  // purple
   plan: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    firstColor: "#4a61bc",
+    secondColor: "#7286D3",
+    thirdColor: "#8EA7E9",
+    fourthColor: "#c0d1ff",
+    backgroundColor: "#E5E0FF",
   },
 };
 
@@ -74,43 +86,21 @@ export const Grape: DefaultTheme = {
   backgroundColor: "#EBC7E6",
   icon: "🍇",
 
+  // pink
   work: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    firstColor: "#985ca1",
+    secondColor: "#c082c9",
+    thirdColor: "#eaafe2",
+    fourthColor: "#EBC7E6",
+    backgroundColor: "#ffe4fb",
   },
 
+  //purple
   plan: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
-  },
-};
-
-// schedule theme
-
-export const Red: DefaultTheme = {
-  fontColor: "#F47C7C",
-  primaryColor: "#EF9F9F",
-  thirdColor: "#FAD4D4",
-  pointColor: "#EF9F9F",
-
-  backgroundColor: "#FFF2F2",
-  icon: "",
-
-  work: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
-  },
-
-  plan: {
-    firstColor: "#534340",
-    secondColor: "#BB9981",
-    thirdColor: "#C5D8A4",
-    fourthColor: "#F4FCD9",
+    firstColor: "#645CBB",
+    secondColor: "#8871b9",
+    thirdColor: "#A084DC",
+    fourthColor: "#BFACE2",
+    backgroundColor: "#e1d0ff",
   },
 };

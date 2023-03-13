@@ -3,59 +3,61 @@ import styles from "./add.module.scss";
 import cx from "classnames";
 import styled from "styled-components";
 import { thisYear, thisMonth } from "../../components/Common/Dates";
-import { Red } from "../../theme";
 
 const Container = styled.main`
-  color: ${Red.fontColor};
+  color: ${(props) => props.theme.fontColor};
 
   label {
-    background-color: ${Red.thirdColor};
+    background-color: ${(props) => props.theme.primaryColor};
   }
 
   button,
   input {
-    color: ${Red.fontColor};
-    background-color: #ffffff8a;
+    color: ${(props) => props.theme.fontColor};
+    border: 1px solid ${(props) => props.theme.primaryColor};
   }
 
   input[type="range"] {
-    background-color: ${Red.thirdColor};
     ::-webkit-slider-thumb {
-      background-color: ${Red.fontColor};
+      background-color: ${(props) => props.theme.fontColor};
     }
   }
 `;
 
 const Category = styled.button`
-  color: ${Red.fontColor};
+  color: ${(props) => props.theme.fontColor};
   background-color: #ffffff8a;
+  border: 1px solid ${(props) => props.theme.primaryColor};
 
   &.selected,
   &:hover {
-    background-color: ${Red.primaryColor};
-    color: white;
+    background-color: ${(props) => props.theme.primaryColor};
   }
 `;
 
 const AddButton = styled.button`
-  background-color: ${Red.thirdColor};
+  background-color: ${(props) => props.theme.primaryColor};
 
   &:hover {
-    background-color: ${Red.primaryColor};
-    color: white;
+    background-color: ${(props) => props.theme.pointColor};
+    border-color: ${(props) => props.theme.pointColor};
   }
 `;
 
 const OptionButton = styled.button`
-  background-color: ${Red.backgroundColor};
-
-  &.plus {
-    background-color: ${Red.thirdColor};
+  background-color: #ffffff8a;
+  > div {
+    background-color: ${(props) => props.theme.primaryColor};
+    color: white;
   }
 
-  > div {
-    background-color: ${Red.primaryColor};
-    color: white;
+  &.minus {
+    background-color: ${(props) => props.theme.primaryColor};
+    > div {
+      background-color: white;
+      color: ${(props) => props.theme.primaryColor};
+      border: 1px solid ${(props) => props.theme.primaryColor};
+    }
   }
 `;
 
@@ -207,36 +209,30 @@ const Add = () => {
           type="button"
           name="time"
           onClick={onOption}
-          className={styles.optionButton}
+          className={cx(styles.optionButton, option.time ? "minus" : "plus")}
         >
           Time
-          <div className={option.time ? "minus" : "plus"}>
-            {option.time ? "-" : "+"}
-          </div>
+          <div>{option.time ? "-" : "+"}</div>
         </OptionButton>
 
         <OptionButton
           type="button"
           name="place"
           onClick={onOption}
-          className={styles.optionButton}
+          className={cx(styles.optionButton, option.place ? "minus" : "plus")}
         >
           Place
-          <div className={option.place ? "minus" : "plus"}>
-            {option.place ? "-" : "+"}
-          </div>
+          <div>{option.place ? "-" : "+"}</div>
         </OptionButton>
 
         <OptionButton
           type="button"
           name="with"
           onClick={onOption}
-          className={styles.optionButton}
+          className={cx(styles.optionButton, option.with ? "minus" : "plus")}
         >
           With
-          <div className={option.with ? "minus" : "plus"}>
-            {option.with ? "-" : "+"}
-          </div>
+          <div>{option.with ? "-" : "+"}</div>
         </OptionButton>
       </form>
 

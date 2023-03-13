@@ -11,7 +11,6 @@ export const Wrap = styled.div`
   align-self: center;
   justify-content: space-between;
   border-radius: 10px;
-  position: relative;
   align-items: center;
 `;
 

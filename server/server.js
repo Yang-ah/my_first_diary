@@ -4,6 +4,7 @@ import cors from "cors";
 const PORT = 4000;
 const app = express();
 
+// 3월을 기준으로, lock은 없애기
 const fakeDB = {
   planner: {
     jan: [
@@ -124,10 +125,41 @@ const fakeDB = {
         diary: "string",
         schedule: {
           work: [
-            { content: "streeing", importance: 4 },
-            { content: "strieng", importance: 4 },
+            {
+              content: "streeing",
+              importance: 1,
+              time: "15:33",
+              place: "우리집",
+              with: "엄마, 아빠",
+            },
+            {
+              content: "stridgdgeng",
+              importance: 2,
+              time: "15:33",
+              place: "우리집",
+              with: "엄마, 아빠",
+            },
+            {
+              content: "strsaaieng",
+              importance: 3,
+              time: "15:33",
+              place: "우리집",
+              with: "엄마, 아빠",
+            },
+            {
+              content: "striddeng",
+              importance: 4,
+              time: "15:33",
+              place: "우리집",
+              with: "엄마, 아빠",
+            },
           ],
-          plan: [{ content: "strieng", importance: 3 }],
+          plan: [
+            { content: "strieng", importance: 1 },
+            { content: "stridgdgeng", importance: 2 },
+            { content: "strsaaieng", importance: 3 },
+            { content: "striddeng", importance: 4 },
+          ],
         },
         emotion: "🐰",
         exercise: false,

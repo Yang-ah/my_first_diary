@@ -9,8 +9,6 @@ import styles from "./list.module.scss";
 import {
   AddBtn,
   Wrap,
-  Section,
-  MainContainer,
   DateBox,
   SideBox,
   TrackerProps,
@@ -21,7 +19,6 @@ import {
 import Line from "./Line";
 import { useMatch, useNavigate } from "react-router-dom";
 import Add from "../../pages/Scheduler/Add";
-import { Red } from "../../theme";
 
 const AddScheduleBtn = styled(motion(AddBtn))`
   width: 50px;
@@ -32,7 +29,7 @@ const AddScheduleBtn = styled(motion(AddBtn))`
 const Overlay = styled(motion.div)``;
 
 const AddPage = styled(motion.div)`
-  background-color: ${Red.backgroundColor};
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const TableHeader = styled.div<TrackerProps>`
@@ -59,7 +56,7 @@ const List = () => {
 
   return (
     <>
-      <Wrap>
+      <Wrap className={styles.wrap}>
         {!diaryMatch && (
           <AddScheduleBtn
             className={styles.add_button}
@@ -69,39 +66,35 @@ const List = () => {
             +
           </AddScheduleBtn>
         )}
-
-        <Section className={styles.section}>
-          <Tracker />
-          <MainContainer>
-            <div className={styles.section_table}>
-              <TableHeader
-                className={styles.table_header}
-                tracker={onTracker ? true : false}
-              >
-                <DateBox className={styles.date}>DATE</DateBox>
-                <MainBox as="div">{!diaryMatch && <CheckBox />}</MainBox>
-                <SectionSide tracker={onTracker ? true : false}>
-                  {onTracker && (
-                    <>
-                      <SideBox>
-                        <i className="fas fa-smile-wink"></i>
-                      </SideBox>
-                      <SideBox>
-                        <i className="fas fa-running"></i>
-                      </SideBox>
-                    </>
-                  )}
-
+        <Tracker />
+        <section className={styles.section_table}>
+          <TableHeader
+            className={styles.table_header}
+            tracker={onTracker ? true : false}
+          >
+            <DateBox className={styles.date}>DATE</DateBox>
+            <MainBox as="div">{!diaryMatch && <CheckBox />}</MainBox>
+            <SectionSide tracker={onTracker ? true : false}>
+              {onTracker && (
+                <>
                   <SideBox>
-                    <i className="fas fa-lock"></i>
+                    <i className="fas fa-smile-wink"></i>
                   </SideBox>
-                </SectionSide>
-              </TableHeader>
-              {thisDates.map((date) => Line(date))}
-            </div>
-          </MainContainer>
-        </Section>
+                  <SideBox>
+                    <i className="fas fa-running"></i>
+                  </SideBox>
+                </>
+              )}
+
+              <SideBox>
+                <i className="fas fa-lock"></i>
+              </SideBox>
+            </SectionSide>
+          </TableHeader>
+          {thisDates.map((date) => Line(date))}
+        </section>
       </Wrap>
+
       <AnimatePresence>
         {addMatch && (
           <>
