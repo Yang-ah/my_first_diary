@@ -11,6 +11,8 @@ interface SectionLineProps {
   tracker: boolean;
 }
 
+const EmojiOptions = ["😊", "😌", "😱", "🤯", "😢"];
+
 const SectionLine = styled.div<SectionLineProps>`
   width: 100%;
   grid-gap: 5px;
@@ -83,17 +85,16 @@ const Line = (date: Date) => {
         <MainBox
           type="text"
           onChange={changeDiary}
-          placeholder="오늘의 한 줄 일기를 써보세요. (최대 46자)"
+          placeholder="오늘의 한 줄 일기를 써보세요."
           value={Diary ? Diary : ""}
           disabled={onLock}
-          maxLength={46}
         />
       ) : (
         <MainBox as="div">
           {(schedulerMatch || planMatch) &&
-            plans.map((plan) => LineCell(plan, "plan"))}
+            plans.map((plan) => LineCell(plan, "plan", onLock))}
           {(schedulerMatch || workMatch) &&
-            works.map((work) => LineCell(work, "work"))}
+            works.map((work) => LineCell(work, "work", onLock))}
         </MainBox>
       )}
 
@@ -105,7 +106,11 @@ const Line = (date: Date) => {
             ) : (
               <select onChange={changeEmotion} key={emoji} defaultValue={emoji}>
                 <option value="none"></option>
-                <option value="🥰">🥰</option>
+                {EmojiOptions.map((emoji) => (
+                  <option key={emoji} value={emoji}>
+                    {emoji}
+                  </option>
+                ))}
               </select>
             )}
 
