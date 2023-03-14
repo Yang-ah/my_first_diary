@@ -78,11 +78,11 @@ const LineCell = (schedule: ISchedule, type: string, lock: boolean) => {
           </p>
           {schedule.time && <p>✷{schedule.time}</p>}
           {schedule.place && <p>@{schedule.place}</p>}
-          {lock || <p className={styles.deleteButton}>x</p>}
+          <p className={styles.deleteButton}>{lock || "x"}</p>
           <div className={cx(styles.cell, styles.coverCell)}>
             <p>{schedule.content}</p>
             {schedule.with && <p>w/{schedule.with}</p>}
-            {lock || <p className={styles.deleteButton}>x</p>}
+            <p className={styles.deleteButton}>{lock || "x"}</p>
           </div>
         </>
       ) : (
@@ -93,6 +93,7 @@ const LineCell = (schedule: ISchedule, type: string, lock: boolean) => {
             </i>
           </p>
           <p>{schedule.content}</p>
+          <p className={styles.deleteButton}>{lock || "x"}</p>
         </>
       )}
     </Cell>
