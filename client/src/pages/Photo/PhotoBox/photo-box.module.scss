@@ -1,0 +1,31 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/constants/size" as s;
+
+.form {
+  @include m.flex(space-between);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: s.$S_RADIUS;
+
+  p {
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  > input {
+    width: 100%;
+    display: none;
+  }
+}
+
+.add {
+  @include m.flex();
+
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  border-radius: 50%;
+
+  align-self: flex-end;
+  justify-self: flex-end;
+}

@@ -1,30 +1,24 @@
 import { useEffect, useState } from "react";
-import { onTrackerAtom } from "../../atom";
+import { onTrackerAtom } from "../../../atom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import styles from "./line.module.scss";
 import { useMatch } from "react-router-dom";
-import { thisMonthString } from "../Common/Dates";
-import LineCell from "../../pages/Scheduler/LineCell";
-import { DateBox, MainBox, SectionSide, SideBox } from "../Common";
-
-interface SectionLineProps {
-  tracker: boolean;
-}
+import { thisMonthString } from "../../Common/Dates";
+import LineCell from "../../../pages/Scheduler/LineCell";
+import {
+  DateBox,
+  MainBox,
+  SectionSide,
+  SideBox,
+  TrackerProps,
+} from "../../Common";
 
 const EmojiOptions = ["😊", "😌", "😱", "🤯", "😢"];
 
-const SectionLine = styled.div<SectionLineProps>`
-  width: 100%;
-  grid-gap: 5px;
-  display: grid;
+const SectionLine = styled.div<TrackerProps>`
   grid-template-columns: ${(props) =>
     props.tracker ? `40px 1fr 120px` : `40px 1fr 38px`};
-  margin-bottom: 5px;
-  height: 40px;
-
-  :last-child {
-    margin: 0px;
-  }
 `;
 
 const Line = (date: Date) => {
@@ -32,22 +26,36 @@ const Line = (date: Date) => {
 
   // management state : useState, recoil
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [emoji, setEmotion] = useState("");
+
   const [onLock, setLock] = useState(true);
-  const [Diary, setDiary] = useState("");
-  const [exercise, setExercise] = useState("·");
-  const [plans, setPlans] = useState([]);
-  const [works, setWorks] = useState([]);
-
-  // change state functions
-  const exerciseToggle = () =>
-    exercise === "♥" ? setExercise("·") : setExercise("♥");
   const changeLock = () => setLock((cur) => !cur);
-  const changeDiary = (e: React.FormEvent<HTMLInputElement>) =>
-    setDiary(e.currentTarget.value);
 
-  const changeEmotion = (e: React.FormEvent<HTMLSelectElement>) => {
-    setEmotion(e.currentTarget.value);
+  const [schedule, setSchedule] = useState({
+    plans: [],
+    works: [],
+    emotion: "",
+    diary: "",
+    exercise: "·",
+  });
+
+  const changeSchedule = (
+    e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>
+  ) => {
+    const { value, name } = e.currentTarget;
+
+    if (name === "exercise") {
+      value === "♥"
+        ? setSchedule((prev) => {
+            return { ...prev, [name]: "·" };
+          })
+        : setSchedule((prev) => {
+            return { ...prev, [name]: "♥" };
+          });
+    }
+
+    setSchedule((prev) => {
+      return { ...prev, [name]: value };
+    });
   };
 
   // match
@@ -65,46 +73,60 @@ const Line = (date: Date) => {
 
   const setWholeData = (data: any) => {
     const planner = data[date.getDate() - 1];
-    setEmotion(planner.emotion);
-    setExercise(planner.exercise ? "♥" : "·");
-    setDiary(planner.diary);
-    setPlans(planner.schedule.plan);
-    setWorks(planner.schedule.work);
+    setSchedule((prev) => {
+      return {
+        ...prev,
+        ["emotion"]: planner.emotion,
+        ["exercise"]: planner.exercise ? "♥" : "·",
+        ["diary"]: planner.diary,
+        ["plans"]: planner.schedule.plan,
+        ["works"]: planner.schedule.work,
+      };
+    });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  // tsx
   return (
-    <SectionLine key={date.getDate()} tracker={onTracker ? true : false}>
+    <SectionLine
+      className={styles.line}
+      key={date.getDate()}
+      tracker={onTracker ? true : false}
+    >
       <DateBox>{date.getDate()}</DateBox>
 
       {diaryMatch ? (
         <MainBox
           type="text"
-          onChange={changeDiary}
+          onChange={changeSchedule}
+          name="diary"
           placeholder="오늘의 한 줄 일기를 써보세요."
-          value={Diary ? Diary : ""}
+          value={schedule.diary ? schedule.diary : ""}
           disabled={onLock}
         />
       ) : (
         <MainBox as="div">
           {(schedulerMatch || planMatch) &&
-            plans.map((plan) => LineCell(plan, "plan", onLock))}
+            schedule.plans.map((plan) => LineCell(plan, "plan", onLock))}
           {(schedulerMatch || workMatch) &&
-            works.map((work) => LineCell(work, "work", onLock))}
+            schedule.works.map((work) => LineCell(work, "work", onLock))}
         </MainBox>
       )}
 
-      <SectionSide tracker={onTracker ? true : false}>
+      <SectionSide tracker={onTracker}>
         {onTracker ? (
           <>
             {onLock ? (
-              <SideBox>{emoji}</SideBox>
+              <SideBox>{schedule.emotion}</SideBox>
             ) : (
-              <select onChange={changeEmotion} key={emoji} defaultValue={emoji}>
+              <select
+                onChange={changeSchedule}
+                name="emotion"
+                key={schedule.emotion}
+                defaultValue={schedule.emotion}
+              >
                 <option value="none"></option>
                 {EmojiOptions.map((emoji) => (
                   <option key={emoji} value={emoji}>
@@ -118,8 +140,9 @@ const Line = (date: Date) => {
               as="input"
               disabled={onLock}
               type="button"
-              onClick={exerciseToggle}
-              value={exercise}
+              onClick={changeSchedule}
+              value={schedule.exercise}
+              name="exercise"
             />
           </>
         ) : null}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { AddBtn, baseRadius } from "../../components/Common";
-import { thisMonthString } from "../../components/Common/Dates";
+import styles from "./photo-box.module.scss";
+import { thisMonthString } from "../../../components/Common/Dates";
 
 interface urlProps {
   url: string;
@@ -11,23 +11,13 @@ interface dateProps {
   date: Date;
 }
 
-const ImgInput = styled.input`
-  width: 100%;
-  display: none;
-`;
-
 const DateForm = styled.form<urlProps>`
   background: ${(props) =>
     props.url ? `url(${props.url})` : `rgba(255, 255, 255, 0.8)`};
-  background-size: cover;
-  background-repeat: no-repeat;
-  border-radius: ${baseRadius};
-  display: flex;
-  justify-content: space-between;
 
-  p {
-    padding: 5px;
-    font-size: 12px;
+  > label {
+    background-color: ${(props) => props.theme.pointColor};
+    color: ${(props) => props.theme.fontColor};
   }
 `;
 
@@ -51,12 +41,12 @@ const PhotoBox = ({ date }: dateProps) => {
   }, [photoUrl]);
 
   return (
-    <DateForm url={photoUrl}>
+    <DateForm url={photoUrl} className={styles.form}>
       <p>{date.getDate()}</p>
-      <AddBtn as="label" htmlFor={String(date.getDate())}>
+      <label className={styles.add} htmlFor={String(date.getDate())}>
         +
-      </AddBtn>
-      <ImgInput id={String(date.getDate())} type="file" accept="image" />
+      </label>
+      <input id={String(date.getDate())} type="file" accept="image" />
     </DateForm>
   );
 };

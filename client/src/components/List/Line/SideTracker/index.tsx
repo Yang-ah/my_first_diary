@@ -1,20 +1,20 @@
 import { useRecoilState } from "recoil";
-import { onTrackerAtom } from "../../atom";
+import { onTrackerAtom } from "../../../../atom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { CheckContainer } from "../../components/Common";
+import { CheckContainer } from "../../../Common";
 
 const TrackerContainer = styled(CheckContainer)`
   justify-content: flex-end;
   position: relative;
-  bottom: 20px;
+  bottom: 10px;
   right: 5px;
   z-index: 100;
-  height: 20px;
+  height: 10px;
 `;
 
-export const Tracker = () => {
+export const TrackerToggle = () => {
   const [onTracker, SetTracker] = useRecoilState(onTrackerAtom);
   const toggleTrackerAtom = () => SetTracker((prev) => !prev);
   return (
@@ -32,7 +32,7 @@ export const Tracker = () => {
   );
 };
 
-const CheckBox = () => {
+const SideTracker = () => {
   const [onPlan, setPlan] = useState(true);
   const [onWork, setWork] = useState(true);
 
@@ -82,4 +82,4 @@ const CheckBox = () => {
   );
 };
 
-export default CheckBox;
+export default SideTracker;

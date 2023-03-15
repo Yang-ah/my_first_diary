@@ -1,29 +1,21 @@
 import styled from "styled-components";
+import styles from "./list.module.scss";
+import { useMatch, useNavigate } from "react-router-dom";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../atom";
-import CheckBox, { Tracker } from "../../pages/Scheduler/CheckBox";
+
+import SideTracker, { TrackerToggle } from "./Line/SideTracker";
 import { thisDates } from "../Common/Dates";
-import styles from "./list.module.scss";
+import { SideBox, TrackerProps, SectionSide } from "../Common";
 
-import {
-  AddBtn,
-  Wrap,
-  DateBox,
-  SideBox,
-  TrackerProps,
-  SectionSide,
-  MainBox,
-} from "../Common";
-
-import Line from "./Line";
-import { useMatch, useNavigate } from "react-router-dom";
+import Line from "./Line/index";
 import Add from "../../pages/Scheduler/Add";
 
-const AddScheduleBtn = styled(motion(AddBtn))`
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
+const AddScheduleBtn = styled(motion.button)`
+  background-color: ${(props) => props.theme.pointColor};
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const Overlay = styled(motion.div)``;
@@ -41,6 +33,11 @@ const TableHeader = styled.div<TrackerProps>`
   div > div {
     background-color: ${(props) => props.theme.primaryColor};
   }
+
+  // className : styles.date
+  > p {
+    background-color: ${(props) => props.theme.primaryColor};
+  }
 `;
 
 // main
@@ -56,24 +53,27 @@ const List = () => {
 
   return (
     <>
-      <Wrap className={styles.wrap}>
+      <div className={styles.wrap}>
         {!diaryMatch && (
           <AddScheduleBtn
-            className={styles.add_button}
+            className={styles.addButton}
             layoutId="addPage"
             onClick={clickedAdd}
           >
             +
           </AddScheduleBtn>
         )}
-        <Tracker />
-        <section className={styles.section_table}>
+        <TrackerToggle />
+        <section className={styles.section}>
           <TableHeader
-            className={styles.table_header}
+            className={styles.sectionHeader}
             tracker={onTracker ? true : false}
           >
-            <DateBox className={styles.date}>DATE</DateBox>
-            <MainBox as="div">{!diaryMatch && <CheckBox />}</MainBox>
+            <p className={styles.date}>DATE</p>
+            <div className={styles.mainBox}>
+              {!diaryMatch && <SideTracker />}
+            </div>
+
             <SectionSide tracker={onTracker ? true : false}>
               {onTracker && (
                 <>
@@ -93,7 +93,7 @@ const List = () => {
           </TableHeader>
           {thisDates.map((date) => Line(date))}
         </section>
-      </Wrap>
+      </div>
 
       <AnimatePresence>
         {addMatch && (
@@ -103,7 +103,7 @@ const List = () => {
               onClick={goLine}
               animate={{ opacity: 1 }}
             ></Overlay>
-            <AddPage layoutId="addPage" className={styles.add_page}>
+            <AddPage layoutId="addPage" className={styles.addPage}>
               <Add />
             </AddPage>
           </>

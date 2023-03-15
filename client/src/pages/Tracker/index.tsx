@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Wrap, Section, CheckContainer } from "../../components/Common";
+import { Section, CheckContainer } from "../../components/Common";
 
 import styles from "./tracker.module.scss";
 
@@ -61,7 +61,7 @@ const Tracker = () => {
   const exerciseToggle = () => setExercise((cur) => !cur);
 
   return (
-    <Wrap>
+    <div className={styles.wrap}>
       <header className={styles.header}>
         <CheckContainer>
           <div>
@@ -120,7 +120,10 @@ const Tracker = () => {
         <div className={styles.column}>
           <Month className={styles.date}>MAR</Month>
           {tracker.mar.map((dateObj, index) => (
-            <div className={styles.trackers} key={`mar${index}`}></div>
+            <div className={styles.trackers} key={`mar${index}`}>
+              {emotion ? <div>{dateObj["emotion"]}</div> : null}
+              {exercise ? <div>{dateObj["exercise"] ? "♥" : "·"}</div> : null}
+            </div>
           ))}
         </div>
         <div className={styles.column}>
@@ -178,7 +181,7 @@ const Tracker = () => {
           ))}
         </div>
       </TrackerSection>
-    </Wrap>
+    </div>
   );
 };
 

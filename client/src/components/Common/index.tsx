@@ -3,38 +3,12 @@ import styled from "styled-components";
 export const baseSpace = "15px";
 export const baseRadius = "5px";
 
-export const Wrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  justify-content: space-between;
-  border-radius: 10px;
-  align-items: center;
-`;
-
 export const Section = styled.section`
   width: 100%;
   height: 560px;
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-export const AddBtn = styled.button`
-  width: 30px;
-  height: 30px;
-  margin: 10px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: flex-end;
-  justify-self: flex-end;
-  cursor: pointer;
-  background-color: ${(props) => props.theme.pointColor};
-  color: ${(props) => props.theme.fontColor};
 `;
 
 export const MainContainer = styled.main`

@@ -1,5 +1,5 @@
-@use "../../styles/mixins" as m;
-@use "../../styles/constants/size" as s;
+@use "../../../styles/mixins" as m;
+@use "../../../styles/constants/size" as s;
 
 .container {
   @include m.flex(center, center, column);

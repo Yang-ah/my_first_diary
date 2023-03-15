@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Wrap, Section, MainContainer } from "../../components/Common";
+import { Section, MainContainer } from "../../components/Common";
 
 import {
   thisDates,
@@ -8,7 +8,7 @@ import {
   nextDates,
 } from "../../components/Common/Dates";
 
-import PhotoBox from "./PhotoBox";
+import PhotoBox from "./PhotoBox/index";
 import styles from "./photo.module.scss";
 
 const DayDiv = styled.div`
@@ -17,7 +17,7 @@ const DayDiv = styled.div`
 
 const Photo = () => {
   return (
-    <Wrap>
+    <div className={styles.wrap}>
       <Section>
         <MainContainer>
           <div className={styles.calendar}>
@@ -51,7 +51,7 @@ const Photo = () => {
           </div>
         </MainContainer>
       </Section>
-    </Wrap>
+    </div>
   );
 };
 export default Photo;
