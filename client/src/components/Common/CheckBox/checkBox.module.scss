@@ -1,0 +1,14 @@
+@use "../../../styles/constants/size" as s;
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: s.$S_RADIUS;
+
+  > input:not(:checked) + svg {
+    display: none;
+  }
+}

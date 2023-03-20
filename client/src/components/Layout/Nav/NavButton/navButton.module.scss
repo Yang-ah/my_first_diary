@@ -1,0 +1,28 @@
+@use "../../../../styles/constants/size" as s;
+@use "../../../../styles/mixins" as m;
+
+.button {
+  width: 76px;
+  padding: 8px;
+  text-align: start;
+  font-size: 12px;
+  box-sizing: content-box;
+  border-bottom: 1px solid white;
+  color: white;
+
+  &:first-of-type {
+    border-top-right-radius: s.$S_RADIUS;
+  }
+
+  // .theme
+  &:last-of-type {
+    @include m.flex();
+    border-bottom-right-radius: s.$S_RADIUS;
+    border: none;
+    font-size: 48px;
+
+    > span {
+      width: 48px;
+    }
+  }
+}

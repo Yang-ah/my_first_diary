@@ -1,0 +1,28 @@
+.nav {
+  position: relative;
+  margin-top: 60px;
+
+  &:has(input:checked) {
+    right: 80px;
+    transition: 0.2s right ease-in;
+    &:hover {
+      right: 0;
+    }
+  }
+
+  > .fixedCheckBox {
+    position: absolute;
+    width: 12px;
+    right: 30px;
+    top: 5px;
+    cursor: pointer;
+    transition: 0.1s transform ease-in;
+
+    &:hover {
+      transform: scale(1.1) translateY(-5px);
+    }
+    > input:checked + svg {
+      transform: rotate(30deg);
+    }
+  }
+}
