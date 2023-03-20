@@ -1,13 +1,18 @@
 import { useMatch, useNavigate } from "react-router-dom";
 import { IconThumbTack } from "../../../assets/icon";
 import styles from "./nav.module.scss";
-import NavButton from "./NavButton";
+import NavButton from "./Button/NavButton";
 import { Tree } from "../../../theme";
 import styled from "styled-components";
+import { useState } from "react";
+import ThemeButtons from "./Button/ThemeButtons";
 
 const GNB = styled.nav`
-  svg {
+  > svg {
     fill: ${(props) => props.theme.SECONDARY_50};
+  }
+  > button {
+    background-color: ${(props) => props.theme.PRIMARY_30};
   }
 `;
 
@@ -60,7 +65,10 @@ const Nav = () => {
         children="TRACKER"
         onClick={goTracker}
       />
-      <NavButton children={Tree.ICON} className="theme" />
+      <button className={styles.themeToggle}>
+        <p>{Tree.ICON}</p>
+        <ThemeButtons />
+      </button>
     </GNB>
   );
 };
