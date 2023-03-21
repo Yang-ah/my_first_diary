@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Button = styled.button`
   & .selectedButton,
   &:hover {
-    background-color: ${(props) => props.theme.SECONDARY_30};
+    background-color: ${(props) => props.theme.PRIMARY_40};
   }
 `;
 

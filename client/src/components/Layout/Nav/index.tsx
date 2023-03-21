@@ -1,22 +1,64 @@
 import { useMatch, useNavigate } from "react-router-dom";
-import { IconThumbTack } from "../../../assets/icon";
+import { IconMoon, IconThumbTack } from "../../../assets/icon";
 import styles from "./nav.module.scss";
 import NavButton from "./Button/NavButton";
-import { Tree } from "../../../theme";
+import { Tree, Peach, Apple, Dark } from "../../../theme";
 import styled from "styled-components";
-import { useState } from "react";
-import ThemeButtons from "./Button/ThemeButtons";
+import { IconApple } from "../../../assets/icon";
 
 const GNB = styled.nav`
-  > svg {
-    fill: ${(props) => props.theme.SECONDARY_50};
+  input[type="checkbox"] + svg {
+    fill: ${(props) => props.theme.PRIMARY_50};
   }
   > button {
     background-color: ${(props) => props.theme.PRIMARY_30};
   }
+  > button[name="themeToggle"] > p > svg {
+    fill: #fff;
+    margin-bottom: 8px;
+  }
+  .apple {
+    width: 36px;
+  }
+  .moon {
+    width: 48px;
+  }
 `;
 
-const Nav = () => {
+const ThemeButtons = styled.div`
+  > button > svg {
+    width: 16px;
+  }
+  > button[name="peach"] {
+    background-color: ${Peach.PRIMARY_10};
+  }
+
+  > button[name="tree"] {
+    background-color: ${Tree.PRIMARY_10};
+  }
+
+  > button[name="apple"] {
+    background-color: ${Apple.PRIMARY_10};
+    > svg {
+      fill: ${Apple.PRIMARY_50};
+    }
+  }
+
+  > button[name="dark"] {
+    background-color: ${Dark.PRIMARY_50};
+    > svg {
+      width: 20px;
+      fill: #fff;
+    }
+  }
+`;
+
+interface INav {
+  icon: string;
+  onClick: any;
+}
+
+const Nav = ({ icon, onClick }: INav) => {
   const navigate = useNavigate();
 
   const goPhoto = () => navigate("/photo");
@@ -65,9 +107,31 @@ const Nav = () => {
         children="TRACKER"
         onClick={goTracker}
       />
-      <button className={styles.themeToggle}>
-        <p>{Tree.ICON}</p>
-        <ThemeButtons />
+      <button name="themeToggle" className={styles.themeToggle}>
+        <p>
+          {icon === "apple" ? (
+            <IconApple className="apple" />
+          ) : icon === "dark" ? (
+            <IconMoon className="moon" />
+          ) : (
+            icon
+          )}
+        </p>
+
+        <ThemeButtons className={styles.themeButtons}>
+          <button onClick={() => onClick("peach")} name="peach">
+            {Peach.ICON}
+          </button>
+          <button onClick={() => onClick("tree")} name="tree">
+            {Tree.ICON}
+          </button>
+          <button onClick={() => onClick("apple")} name="apple">
+            <IconApple />
+          </button>
+          <button onClick={() => onClick("dark")} name="dark">
+            <IconMoon />
+          </button>
+        </ThemeButtons>
       </button>
     </GNB>
   );

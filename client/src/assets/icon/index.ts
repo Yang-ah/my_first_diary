@@ -1,3 +1,6 @@
+export { ReactComponent as IconApple } from "./apple.svg";
+export { ReactComponent as IconMoon } from "./moon.svg";
+
 export { ReactComponent as IconSquareCheck } from "./square-check.svg";
 export { ReactComponent as IconSquare } from "./square.svg";
 export { ReactComponent as IconDumbbell } from "./dumbbell.svg";

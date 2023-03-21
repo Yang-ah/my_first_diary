@@ -1,7 +1,8 @@
-import { Tree } from "../../theme";
+import { Apple, Dark, Peach, Tree } from "../../theme";
 import styles from "./layout.module.scss";
 import Nav from "./Nav";
 import styled, { ThemeProvider } from "styled-components";
+import { useEffect, useState } from "react";
 
 const Wrap = styled.div`
   > main {
@@ -14,12 +15,21 @@ const Wrap = styled.div`
 `;
 
 const Layout = () => {
+  const [theme, setTheme] = useState(Apple);
+
+  const onChangeTheme = (theme: string) => {
+    theme === "tree" && setTheme(Tree);
+    theme === "peach" && setTheme(Peach);
+    theme === "apple" && setTheme(Apple);
+    theme === "dark" && setTheme(Dark);
+  };
+
   return (
-    <ThemeProvider theme={Tree}>
+    <ThemeProvider theme={theme}>
       <Wrap className={styles.wrap}>
         <main></main>
         <aside>
-          <Nav />
+          <Nav onClick={onChangeTheme} icon={theme.ICON} />
         </aside>
       </Wrap>
     </ThemeProvider>
