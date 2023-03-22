@@ -2,11 +2,18 @@ import { Apple, Dark, Peach, Tree } from "../../theme";
 import styles from "./layout.module.scss";
 import Nav from "./Nav";
 import styled, { ThemeProvider } from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Header from "./Header";
+import { useLocation } from "react-router-dom";
+import Footer from "./Footer";
+// import Logo from "./Logo";
 
 const Wrap = styled.div`
   > main {
     background-color: white;
+    > header {
+      color: ${(props) => props.theme.PRIMARY_50};
+    }
   }
 
   > aside {
@@ -16,6 +23,8 @@ const Wrap = styled.div`
 
 const Layout = () => {
   const [theme, setTheme] = useState(Apple);
+  const location = useLocation();
+  const homePath = location.pathname === "/";
 
   const onChangeTheme = (theme: string) => {
     theme === "tree" && setTheme(Tree);
@@ -27,9 +36,15 @@ const Layout = () => {
   return (
     <ThemeProvider theme={theme}>
       <Wrap className={styles.wrap}>
-        <main></main>
+        <main>{!homePath && <Header />}</main>
         <aside>
-          <Nav onClick={onChangeTheme} icon={theme.ICON} />
+          {/*!homePath && <Logo className={styles.logo} />*/}
+          <Nav
+            onClick={onChangeTheme}
+            icon={theme.ICON}
+            path={location.pathname}
+          />
+          <Footer />
         </aside>
       </Wrap>
     </ThemeProvider>

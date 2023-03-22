@@ -1,8 +1,14 @@
 export { ReactComponent as IconApple } from "./apple.svg";
 export { ReactComponent as IconMoon } from "./moon.svg";
+export { ReactComponent as IconAt } from "./at.svg";
 
-export { ReactComponent as IconSquareCheck } from "./square-check.svg";
-export { ReactComponent as IconSquare } from "./square.svg";
+export { ReactComponent as IconGithub } from "./github.svg";
+export { ReactComponent as IconUser } from "./user.svg";
+export { ReactComponent as IconHome } from "./house.svg";
+
+export { ReactComponent as IconEmail } from "./envelop.svg";
+export { ReactComponent as IconPhone } from "./phone.svg";
+
 export { ReactComponent as IconDumbbell } from "./dumbbell.svg";
 export { ReactComponent as IconFire } from "./fire.svg";
 export { ReactComponent as IconLock } from "./lock.svg";

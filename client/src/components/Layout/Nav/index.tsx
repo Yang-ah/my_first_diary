@@ -1,7 +1,7 @@
-import { useMatch, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IconMoon, IconThumbTack } from "../../../assets/icon";
 import styles from "./nav.module.scss";
-import NavButton from "./Button/NavButton";
+import NavButton from "./NavButton";
 import { Tree, Peach, Apple, Dark } from "../../../theme";
 import styled from "styled-components";
 import { IconApple } from "../../../assets/icon";
@@ -12,10 +12,17 @@ const GNB = styled.nav`
   }
   > button {
     background-color: ${(props) => props.theme.PRIMARY_30};
+
+    &.selectedButton,
+    &:hover {
+      background-color: ${(props) => props.theme.PRIMARY_40};
+    }
   }
-  > button[name="themeToggle"] > p > svg {
-    fill: #fff;
-    margin-bottom: 8px;
+  > button[name="themeToggle"] {
+    > p > svg {
+      fill: #fff;
+      margin-bottom: 8px;
+    }
   }
   .apple {
     width: 36px;
@@ -56,25 +63,16 @@ const ThemeButtons = styled.div`
 interface INav {
   icon: string;
   onClick: any;
+  path: string;
 }
 
-const Nav = ({ icon, onClick }: INav) => {
+const Nav = ({ icon, onClick, path }: INav) => {
   const navigate = useNavigate();
 
   const goPhoto = () => navigate("/photo");
   const goSchedule = () => navigate("/list/scheduler");
   const goTracker = () => navigate("/tracker");
   const goDiary = () => navigate("/list/diary");
-
-  const schedulerMatch = useMatch("/list/scheduler");
-  const planMatch = useMatch("/list/scheduler/plan");
-  const workMatch = useMatch("/list/scheduler/work");
-
-  const diaryMatch = useMatch("/list/diary");
-  const addMatch = useMatch("/list/scheduler/add");
-
-  const photoMatch = useMatch("/photo");
-  const trackerMatch = useMatch("/tracker");
 
   return (
     <GNB className={styles.nav}>
@@ -84,26 +82,22 @@ const Nav = ({ icon, onClick }: INav) => {
       </label>
 
       <NavButton
-        className={photoMatch ? "selectedButton" : ""}
+        className={path.includes("photo") ? "selectedButton" : ""}
         children="PHOTO"
         onClick={goPhoto}
       />
       <NavButton
-        className={
-          schedulerMatch || addMatch || planMatch || workMatch
-            ? "selectedButton"
-            : ""
-        }
+        className={path.includes("scheduler") ? "selectedButton" : ""}
         children="SCHEDULER"
         onClick={goSchedule}
       />
       <NavButton
-        className={diaryMatch ? "selectedButton" : ""}
+        className={path.includes("diary") ? "selectedButton" : ""}
         children="DIARY"
         onClick={goDiary}
       />
       <NavButton
-        className={trackerMatch ? "selectedButton" : ""}
+        className={path.includes("tracker") ? "selectedButton" : ""}
         children="TRACKER"
         onClick={goTracker}
       />

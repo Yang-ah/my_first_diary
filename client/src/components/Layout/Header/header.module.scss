@@ -1,0 +1,8 @@
+@use "../../../styles/mixins/flexbox" as m;
+
+.header {
+  @include m.flex();
+  width: 100%;
+  font-family: "Island Moments";
+  font-size: 48px;
+}
