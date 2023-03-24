@@ -1,0 +1,10 @@
+.icon {
+  width: 40px;
+  &.right {
+    transform: rotate(270deg);
+  }
+
+  &.left {
+    transform: rotate(90deg);
+  }
+}
