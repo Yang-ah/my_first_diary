@@ -20,5 +20,6 @@ export { ReactComponent as IconPlus } from "./plus.svg";
 export { ReactComponent as IconMinus } from "./minus.svg";
 export { ReactComponent as IconStar } from "./star.svg";
 
-export { ReactComponent as ChevronDown } from "./chevron-down.svg";
+export { ReactComponent as Chevron } from "./chevron.svg";
 export { ReactComponent as IconThumbTack } from "./thumbtack.svg";
+export { ReactComponent as IconCheck } from "./check.svg";

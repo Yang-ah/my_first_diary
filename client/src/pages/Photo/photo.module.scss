@@ -1,10 +1,17 @@
-.icon {
-  width: 40px;
-  &.right {
-    transform: rotate(270deg);
-  }
+@use "../../styles/mixins" as m;
 
-  &.left {
-    transform: rotate(90deg);
+.wrap {
+  > section {
+    @include m.square();
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    > .dateWrap {
+      border: 1px solid black;
+
+      input {
+        display: none;
+      }
+    }
   }
 }

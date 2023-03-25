@@ -1,12 +1,12 @@
 import styles from "./header.module.scss";
 import { useLocation } from "react-router-dom";
 
-const Header = () => {
-  const month = new Date()
-    .toLocaleString("en-US", { month: "long" })
-    .toUpperCase();
+interface IMonth {
+  month: string;
+  year: string;
+}
 
-  const year = new Date().getFullYear() + "";
+const Header = ({ month, year }: IMonth) => {
   const location = useLocation();
 
   return (

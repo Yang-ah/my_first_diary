@@ -75,7 +75,7 @@
 }
 
 .themeButtons {
-  @include m.box(80%, 80%);
+  @include m.square(80%, 80%);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;

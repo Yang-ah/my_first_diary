@@ -1,31 +1,44 @@
-import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
-import { ChevronDown } from "../../assets/icon";
-import cx from "classnames";
 import styles from "./photo.module.scss";
-interface PhotoProps {
-  data: {
-    planner: any;
-  };
-}
+import { useRecoilValue } from "recoil";
+import { dataAtom } from "../../atom";
+import { useEffect, useState } from "react";
 
-// TODO : 이번 달 photoUrl만 받아오기. month 조절은 layout에서 하기 (chevron layout으로 이동)
+const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 const Photo = () => {
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth();
-  const [photoMonth, setMonth] = useState(month);
+  const data = useRecoilValue(dataAtom);
 
-  const monthStr = new Date(year, photoMonth, 1).toLocaleString("en-US", {
+  const monthStr = new Date(2023, 3, 1).toLocaleString("en-US", {
     month: "long",
   });
 
-  const { data } = useOutletContext<PhotoProps>();
-  console.log("photo", monthStr, data.planner[monthStr]);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
-    <main>
-      <ChevronDown className={cx(styles.icon, styles.left)} />
-      <ChevronDown className={cx(styles.icon, styles.right)} />
+    <main className={styles.wrap}>
+      <section>
+        {days.map((day) => {
+          return (
+            <p className={styles.days} key={day}>
+              {day}
+            </p>
+          );
+        })}
+
+        {[0, 1, 2, 3].map((item) => {
+          return (
+            <form className={styles.dateWrap} key={"day" + item}>
+              <label>
+                <p>{item}</p>
+                <input type="file" accept="image" />
+                <button type="button"></button>
+              </label>
+            </form>
+          );
+        })}
+      </section>
     </main>
   );
 };

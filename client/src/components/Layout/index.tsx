@@ -1,16 +1,22 @@
-import { Apple, Dark, Peach, Tree } from "../../theme";
-import styles from "./layout.module.scss";
-import Nav from "./Nav";
-import styled, { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
+import styled, { ThemeProvider } from "styled-components";
+import { Apple, Dark, Peach, Tree } from "../../theme";
+import { Outlet, useLocation } from "react-router-dom";
+import styles from "./layout.module.scss";
+import axios from "axios";
+import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Outlet, useLocation } from "react-router-dom";
-import axios from "axios";
+import { Chevron } from "../../assets/icon";
+import Trackers from "./Trackers";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { dataAtom, thisMonthAtom } from "../../atom";
 
 const Wrap = styled.div`
-  > main {
-    background-color: white;
+  .section {
+    .chevron {
+      fill: ${(props) => props.theme.PRIMARY_50};
+    }
     > header {
       color: ${(props) => props.theme.PRIMARY_50};
     }
@@ -22,11 +28,8 @@ const Wrap = styled.div`
 `;
 
 const Layout = () => {
+  // Change theme
   const [theme, setTheme] = useState(Apple);
-  const location = useLocation();
-  const homePath = location.pathname === "/";
-  const [data, setData] = useState({});
-
   const onChangeTheme = (theme: string) => {
     theme === "tree" && setTheme(Tree);
     theme === "peach" && setTheme(Peach);
@@ -34,11 +37,43 @@ const Layout = () => {
     theme === "dark" && setTheme(Dark);
   };
 
-  const thisMonth = new Date().getMonth();
+  // Check location
+  const location = useLocation();
+  const homePath = location.pathname === "/";
+  const trackerPath = location.pathname === "/tracker";
+
+  // Move month
+  const [thisMonth, setThisMonth] = useRecoilState(thisMonthAtom);
+
+  const onClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+
+    if (name === "left") {
+      if (thisMonth === 0) {
+        return;
+      }
+      setThisMonth((cur) => cur - 1);
+    }
+
+    if (name === "right") {
+      if (thisMonth === 11) {
+        return;
+      }
+      setThisMonth((cur) => cur + 1);
+    }
+  };
+
+  // Fetch data
+  const year = new Date().getFullYear();
+  const monthStr = new Date(year, thisMonth, 1).toLocaleString("en-US", {
+    month: "long",
+  });
+
+  const setData = useSetRecoilState(dataAtom);
 
   const getItems = async () => {
     const response = await axios.get("http://localhost:4000/api/planner");
-    setData(response.data);
+    setData(response.data.planner[monthStr]);
   };
 
   useEffect(() => {
@@ -48,10 +83,29 @@ const Layout = () => {
   return (
     <ThemeProvider theme={theme}>
       <Wrap className={styles.wrap}>
-        <main>
-          {!homePath && <Header />}
-          <Outlet context={{ data }} />
-        </main>
+        <section className="section">
+          {!homePath && <Header month={monthStr} year={year + ""} />}
+
+          <div className={styles.mainWrap}>
+            {homePath || trackerPath || (
+              <button name="left" className={styles.chevron} onClick={onClick}>
+                <Chevron className="chevron" />
+              </button>
+            )}
+
+            <section className={styles.center}>
+              <Trackers className={styles.tracker} />
+              <Outlet />
+            </section>
+
+            {homePath || trackerPath || (
+              <button name="right" className={styles.chevron} onClick={onClick}>
+                <Chevron className="chevron" />
+              </button>
+            )}
+          </div>
+        </section>
+
         <aside>
           <Nav
             onClick={onChangeTheme}
