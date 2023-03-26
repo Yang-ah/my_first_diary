@@ -78,7 +78,7 @@ const Layout = () => {
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, [monthStr]);
 
   return (
     <ThemeProvider theme={theme}>

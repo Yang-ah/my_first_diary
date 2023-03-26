@@ -1,16 +1,83 @@
 @use "../../styles/mixins" as m;
 
 .wrap {
+  @include m.square();
+
   > section {
-    @include m.square();
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  > .daysSection {
+    height: 24px;
+    margin-bottom: 2px;
+
+    > .day {
+      @include m.flex();
+      padding-top: 2px;
+      font-size: 14px;
+      border-radius: 4px;
+      color: white;
+    }
+  }
+
+  > .datesSection {
+    height: calc(100% - 26px);
+    font-weight: 600;
+
+    > .otherDateWrap {
+      border-radius: 4px;
+      padding: 8px;
+      opacity: 0.4;
+    }
 
     > .dateWrap {
-      border: 1px solid black;
+      @include m.square();
 
-      input {
-        display: none;
+      > label {
+        @include m.square();
+        display: block;
+        position: relative;
+        border-radius: 4px;
+        padding: 8px;
+        cursor: pointer;
+
+        &:hover {
+          > button {
+            opacity: 1;
+          }
+        }
+
+        > button {
+          @include m.flex();
+          position: absolute;
+          transition: 0.2s opacity ease-in;
+          opacity: 0.2;
+
+          > svg {
+            padding-left: 1px;
+            width: 12px;
+          }
+
+          &:not(.modify) {
+            bottom: 12px;
+            right: 12px;
+            padding: 4px;
+            border-radius: 50%;
+          }
+
+          &.modify {
+            background-color: transparent;
+            top: 5px;
+            right: 5px;
+
+            > svg {
+              fill: white;
+              width: 16px;
+            }
+          }
+        }
       }
     }
   }

@@ -1,45 +1,132 @@
 import styles from "./photo.module.scss";
 import { useRecoilValue } from "recoil";
-import { dataAtom } from "../../atom";
+import { dataAtom, thisMonthAtom } from "../../atom";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { IconModify, IconPlus } from "../../assets/icon";
+import cx from "classnames";
 
-const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const Main = styled.main`
+  color: ${(props) => props.theme.PRIMARY_50};
+  .day {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+  }
+  div {
+    background-color: ${(props) => props.theme.PRIMARY_10};
+  }
+`;
+
+interface ILabel {
+  photoUrl?: string;
+}
+
+const Label = styled.label<ILabel>`
+  &.nonePhoto {
+    background-color: ${(props) => props.theme.PRIMARY_10};
+    > .add {
+      background-color: ${(props) => props.theme.SECONDARY_30};
+    }
+  }
+
+  // have a photo
+  &:not(.nonePhoto) {
+    color: white;
+    background: no-repeat center/120% url(${(props) => props.photoUrl});
+    transition: 0.2s opacity ease-in;
+
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+`;
 
 const Photo = () => {
+  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const data = useRecoilValue(dataAtom);
+  const month = useRecoilValue(thisMonthAtom);
+  const year = new Date().getFullYear();
 
-  const monthStr = new Date(2023, 3, 1).toLocaleString("en-US", {
-    month: "long",
+  const [otherDates, setOtherDates] = useState({
+    prevDates: [1, 2],
+    nextDates: [3, 4],
   });
 
+  const changeOtherDates = () => {
+    const prev: number[] = [];
+    const next: number[] = [];
+
+    const thisMonthStart = new Date(year, month, 1).getDay();
+    const thisMonthEndDay = new Date(year, month + 1, 0).getDay();
+    const lastMonthLastDate = new Date(year, month, 0).getDate();
+
+    for (let i = thisMonthStart - 1; i >= 0; i--) {
+      prev.push(lastMonthLastDate - i);
+    }
+
+    for (let i = 1; i < 7 - thisMonthEndDay; i++) {
+      next.push(i);
+    }
+
+    setOtherDates(() => {
+      return { prevDates: prev, nextDates: next };
+    });
+  };
+
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    changeOtherDates();
+  }, [data, month]);
 
   return (
-    <main className={styles.wrap}>
-      <section>
+    <Main className={styles.wrap}>
+      <section className={styles.daysSection}>
         {days.map((day) => {
           return (
-            <p className={styles.days} key={day}>
+            <p className={cx("day", styles.day)} key={day}>
               {day}
             </p>
           );
         })}
+      </section>
 
-        {[0, 1, 2, 3].map((item) => {
+      <section className={cx(styles.datesSection, "datesSection")}>
+        {otherDates.prevDates.map((date) => {
           return (
-            <form className={styles.dateWrap} key={"day" + item}>
-              <label>
-                <p>{item}</p>
-                <input type="file" accept="image" />
-                <button type="button"></button>
-              </label>
+            <div className={styles.otherDateWrap} key={"prev" + date}>
+              {date + ""}
+            </div>
+          );
+        })}
+        {data.map((item) => {
+          return (
+            <form className={styles.dateWrap}>
+              <Label
+                photoUrl={item.photoUrl}
+                //photoUrl="https://blog.kakaocdn.net/dn/bEblsm/btrfU5lOJ6c/fDYBXYpHeqa8HFBEMJzaTk/img.jpg"
+                className={item.photoUrl || "nonePhoto"}
+                key={"day" + item.date}
+              >
+                <p>{item.date + ""}</p>
+                <input type="file" accept="image" hidden />
+
+                <button
+                  type="button"
+                  className={cx(item.photoUrl ? styles.modify : "add")}
+                >
+                  {item.photoUrl ? <IconModify /> : <IconPlus />}
+                </button>
+              </Label>
             </form>
           );
         })}
+        {otherDates.nextDates.map((date) => {
+          return (
+            <div className={styles.otherDateWrap} key={"prev" + date}>
+              {date + ""}
+            </div>
+          );
+        })}
       </section>
-    </main>
+    </Main>
   );
 };
 

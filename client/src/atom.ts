@@ -10,7 +10,7 @@ export const thisMonthAtom = atom({
   default: new Date().getMonth(),
 });
 
-interface Idata {
+interface IData {
   date: number;
   diary: string;
   emotion: string;
@@ -22,30 +22,7 @@ interface Idata {
   };
 }
 
-const fakeData = {
-  date: 1,
-  diary: "string",
-  emotion: "string",
-  exercise: true,
-  photoUrl: "string",
-  schedule: {
-    plan: [],
-    work: [],
-  },
-};
-
-export const dataAtom = atom({
+export const dataAtom = atom<IData[]>({
   key: "data",
   default: [],
 });
-/*January: [],
-    February: [],
-    March: [],
-    April: [],
-    May: [],
-    June: [],
-    July: [],
-    August: [],
-    September: [],
-    October: [],
-    November: [],*/
