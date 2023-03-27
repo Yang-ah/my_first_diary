@@ -1,24 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Apple, Dark, Peach, Tree } from "../../theme";
 import { Outlet, useLocation } from "react-router-dom";
 import styles from "./layout.module.scss";
-import axios from "axios";
 import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Chevron } from "../../assets/icon";
 import Trackers from "./Trackers";
-import { useSetRecoilState, useRecoilState } from "recoil";
-import { dataAtom, thisMonthAtom } from "../../atom";
+import { useRecoilState } from "recoil";
+import { thisMonthAtom } from "../../atom";
 
 const Wrap = styled.div`
   .section {
-    .chevron {
-      fill: ${(props) => props.theme.PRIMARY_50};
-    }
     > header {
       color: ${(props) => props.theme.PRIMARY_50};
+    }
+    .chevron {
+      fill: ${(props) => props.theme.PRIMARY_50};
     }
   }
 
@@ -63,30 +62,14 @@ const Layout = () => {
     }
   };
 
-  // Fetch data
-  const year = new Date().getFullYear();
-  const monthStr = new Date(year, thisMonth, 1).toLocaleString("en-US", {
-    month: "long",
-  });
-
-  const setData = useSetRecoilState(dataAtom);
-
-  const getItems = async () => {
-    const response = await axios.get("http://localhost:4000/api/planner");
-    setData(response.data.planner[monthStr]);
-  };
-
-  useEffect(() => {
-    getItems();
-  }, [monthStr]);
-
   return (
     <ThemeProvider theme={theme}>
       <Wrap className={styles.wrap}>
         <section className="section">
-          {!homePath && <Header month={monthStr} year={year + ""} />}
+          {!homePath && <Header />}
 
           <div className={styles.mainWrap}>
+            {/* left button */}
             {homePath || trackerPath || (
               <button name="left" className={styles.chevron} onClick={onClick}>
                 <Chevron className="chevron" />
@@ -98,6 +81,7 @@ const Layout = () => {
               <Outlet />
             </section>
 
+            {/* right button */}
             {homePath || trackerPath || (
               <button name="right" className={styles.chevron} onClick={onClick}>
                 <Chevron className="chevron" />

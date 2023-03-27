@@ -3,13 +3,14 @@
 .wrap {
   @include m.square();
 
-  > section {
+  > header,
+  section {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 2px;
   }
 
-  > .daysSection {
+  > header {
     height: 24px;
     margin-bottom: 2px;
 

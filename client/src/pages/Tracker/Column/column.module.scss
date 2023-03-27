@@ -1,0 +1,41 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/constants" as c;
+
+.column {
+  @include m.square();
+  display: grid;
+  grid-template-rows: 20px repeat(31, 35px);
+  grid-gap: 8px;
+  position: relative;
+
+  > &Child {
+    background-color: white;
+    border-radius: c.$S_RADIUS;
+  }
+
+  > header {
+    position: sticky;
+    top: 0;
+  }
+
+  > header,
+  .date {
+    @include m.flex();
+    padding-top: 2px;
+    border-radius: c.$S_RADIUS;
+    color: white;
+    font-size: 14px;
+  }
+
+  > ul {
+    @include m.flex();
+    padding-top: 4px;
+
+    > li:first-of-type {
+      margin-right: 8px;
+    }
+    svg {
+      width: 20px;
+    }
+  }
+}

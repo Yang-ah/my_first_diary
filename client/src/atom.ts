@@ -1,4 +1,5 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import axios from "axios";
 
 export const onTrackerAtom = atom({
   key: "tracker",
@@ -22,7 +23,26 @@ interface IData {
   };
 }
 
-export const dataAtom = atom<IData[]>({
+interface IYearData {
+  [month: string]: IData[];
+}
+
+export const dataAtom = atom<IYearData>({
   key: "data",
-  default: [],
+  default: {},
+});
+
+export const getDataSelector = selector<IYearData>({
+  key: "data/get",
+  get: async ({ get }) => {
+    try {
+      const { data } = await axios.get("http://localhost:4000/api/planner");
+      return data.planner;
+    } catch (err) {
+      throw err;
+    }
+  },
+  set: ({ set }, newValue) => {
+    set(dataAtom, newValue);
+  },
 });

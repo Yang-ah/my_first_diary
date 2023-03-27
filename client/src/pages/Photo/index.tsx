@@ -1,6 +1,6 @@
 import styles from "./photo.module.scss";
-import { useRecoilValue } from "recoil";
-import { dataAtom, thisMonthAtom } from "../../atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { getDataSelector, thisMonthAtom } from "../../atom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IconModify, IconPlus } from "../../assets/icon";
@@ -42,9 +42,12 @@ const Label = styled.label<ILabel>`
 
 const Photo = () => {
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const data = useRecoilValue(dataAtom);
+  const [data, setData] = useRecoilState(getDataSelector);
   const month = useRecoilValue(thisMonthAtom);
   const year = new Date().getFullYear();
+  const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
+    month: "long",
+  });
 
   const [otherDates, setOtherDates] = useState({
     prevDates: [1, 2],
@@ -78,7 +81,7 @@ const Photo = () => {
 
   return (
     <Main className={styles.wrap}>
-      <section className={styles.daysSection}>
+      <header>
         {days.map((day) => {
           return (
             <p className={cx("day", styles.day)} key={day}>
@@ -86,7 +89,7 @@ const Photo = () => {
             </p>
           );
         })}
-      </section>
+      </header>
 
       <section className={cx(styles.datesSection, "datesSection")}>
         {otherDates.prevDates.map((date) => {
@@ -96,28 +99,29 @@ const Photo = () => {
             </div>
           );
         })}
-        {data.map((item) => {
-          return (
-            <form className={styles.dateWrap}>
-              <Label
-                photoUrl={item.photoUrl}
-                //photoUrl="https://blog.kakaocdn.net/dn/bEblsm/btrfU5lOJ6c/fDYBXYpHeqa8HFBEMJzaTk/img.jpg"
-                className={item.photoUrl || "nonePhoto"}
-                key={"day" + item.date}
-              >
-                <p>{item.date + ""}</p>
-                <input type="file" accept="image" hidden />
 
-                <button
-                  type="button"
-                  className={cx(item.photoUrl ? styles.modify : "add")}
+        {data[monthStr] &&
+          data[monthStr].map((item) => {
+            return (
+              <form className={styles.dateWrap} key={monthStr + item.date}>
+                <Label
+                  photoUrl={item.photoUrl}
+                  className={item.photoUrl || "nonePhoto"}
                 >
-                  {item.photoUrl ? <IconModify /> : <IconPlus />}
-                </button>
-              </Label>
-            </form>
-          );
-        })}
+                  <p>{item.date + ""}</p>
+                  <input type="file" accept="image" hidden />
+
+                  <button
+                    type="button"
+                    className={cx(item.photoUrl ? styles.modify : "add")}
+                  >
+                    {item.photoUrl ? <IconModify /> : <IconPlus />}
+                  </button>
+                </Label>
+              </form>
+            );
+          })}
+
         {otherDates.nextDates.map((date) => {
           return (
             <div className={styles.otherDateWrap} key={"prev" + date}>

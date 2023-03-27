@@ -5,6 +5,7 @@ import NavButton from "./NavButton";
 import { Tree, Peach, Apple, Dark } from "../../../theme";
 import styled from "styled-components";
 import { IconApple } from "../../../assets/icon";
+import cx from "classnames";
 
 const GNB = styled.nav`
   input[type="checkbox"] + svg {
@@ -18,7 +19,8 @@ const GNB = styled.nav`
       background-color: ${(props) => props.theme.PRIMARY_40};
     }
   }
-  > button[name="themeToggle"] {
+  > .themeToggle {
+    background-color: ${(props) => props.theme.PRIMARY_40};
     > p > svg {
       fill: #fff;
       margin-bottom: 8px;
@@ -33,9 +35,6 @@ const GNB = styled.nav`
 `;
 
 const ThemeButtons = styled.div`
-  > button > svg {
-    width: 16px;
-  }
   > button[name="peach"] {
     background-color: ${Peach.PRIMARY_10};
   }
@@ -47,6 +46,7 @@ const ThemeButtons = styled.div`
   > button[name="apple"] {
     background-color: ${Apple.PRIMARY_10};
     > svg {
+      width: 16px;
       fill: ${Apple.PRIMARY_50};
     }
   }
@@ -101,7 +101,7 @@ const Nav = ({ icon, onClick, path }: INav) => {
         children="TRACKER"
         onClick={goTracker}
       />
-      <button name="themeToggle" className={styles.themeToggle}>
+      <div className={cx(styles.themeToggle, "themeToggle")}>
         <p>
           {icon === "apple" ? (
             <IconApple className="apple" />
@@ -126,7 +126,7 @@ const Nav = ({ icon, onClick, path }: INav) => {
             <IconMoon />
           </button>
         </ThemeButtons>
-      </button>
+      </div>
     </GNB>
   );
 };

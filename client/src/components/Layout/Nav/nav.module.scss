@@ -47,10 +47,11 @@
   }
   .themeToggle {
     @include m.flex();
-    height: 84px;
+    //height: 84px;
     border-bottom-right-radius: s.$S_RADIUS;
     border: none;
     font-size: 42px;
+    padding: 32px 0;
     position: relative;
     cursor: auto;
 
