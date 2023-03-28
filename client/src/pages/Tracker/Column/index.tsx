@@ -2,6 +2,8 @@ import { IconHeart, IconSolidHeart } from "../../../assets/icon";
 import cx from "classnames";
 import styles from "./column.module.scss";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { onTrackerAtom } from "../../../atom";
 
 const Article = styled.article`
   > header,
@@ -28,28 +30,48 @@ interface IColumn {
 }
 
 const Column = ({ children, month, className }: IColumn) => {
+  const onTracker = useRecoilValue(onTrackerAtom);
+
   return (
     <Article key={month} className={cx(styles.column, className)}>
-      <header>{month === "date" || month}</header>
+      {month === "date" && (
+        <>
+          <header></header>
+          {children.map((child: any) => {
+            return (
+              <div
+                key={child}
+                className={cx(styles.columnChild, styles.date, "date")}
+              >
+                {child}
+              </div>
+            );
+          })}
+        </>
+      )}
 
-      {children.map((child: any) => {
-        return month === "date" ? (
-          <div
-            key={child}
-            className={cx(styles.columnChild, styles.date, "date")}
-          >
-            {child}
-          </div>
-        ) : (
-          <ul
-            className={cx("cell", styles.columnChild)}
-            key={month + child.date}
-          >
-            <li>{child.emotion ? child.emotion : "·"}</li>
-            <li>{child.exercise ? <IconSolidHeart /> : "·"}</li>
-          </ul>
-        );
-      })}
+      {month === "date" || (
+        <>
+          <header>{month}</header>
+
+          {children.map((child: any) => {
+            return (
+              <ul
+                className={cx("cell", styles.columnChild)}
+                key={month + child.date}
+              >
+                <li className={onTracker.emotion || styles["hidden"]}>
+                  {child.emotion ? child.emotion : "·"}
+                </li>
+
+                <li className={onTracker.exercise || styles["hidden"]}>
+                  {child.exercise ? <IconSolidHeart /> : <IconHeart />}
+                </li>
+              </ul>
+            );
+          })}
+        </>
+      )}
     </Article>
   );
 };

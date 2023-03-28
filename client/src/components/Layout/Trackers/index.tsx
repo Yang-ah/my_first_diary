@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CheckBox } from "../../Common";
 
@@ -7,9 +8,9 @@ interface ITracker {
 
 const Trackers = ({ className, ...props }: ITracker) => {
   const location = useLocation();
-
   const trackerPath = location.pathname === "/tracker";
-  const listPath = location.pathname.includes("list");
+  const diaryPath = location.pathname === "/diary";
+  const schedulerPath = location.pathname.includes("scheduler");
 
   return (
     <header className={className} {...props}>
@@ -18,7 +19,7 @@ const Trackers = ({ className, ...props }: ITracker) => {
           return <CheckBox key={child} child={child} />;
         })}
 
-      {listPath && <CheckBox child="tracker" />}
+      {(diaryPath || schedulerPath) && <CheckBox child="tracker" />}
     </header>
   );
 };

@@ -1,4 +1,6 @@
-export { default as Home } from "./Home";
-export { default as Photo } from "./Photo";
-export { default as Add } from "./Scheduler/Add";
-export { default as Tracker } from "./Tracker";
+export { default as HomePage } from "./Home";
+export { default as PhotoPage } from "./Photo";
+export { default as AddPage } from "./Scheduler/Add";
+export { default as SchedulerPage } from "./Scheduler";
+export { default as TrackerPage } from "./Tracker";
+export { default as DiaryPage } from "./Diary";

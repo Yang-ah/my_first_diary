@@ -1,0 +1,26 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/constants" as c;
+
+.wrap {
+  display: grid;
+  gap: 4px;
+  height: 40px;
+  margin-bottom: 4px;
+  grid-template-columns: 36px 1fr 36px;
+
+  > li {
+    border-radius: c.$S_RADIUS;
+  }
+
+  > .date {
+    @include m.flex();
+  }
+
+  > .main {
+    border: 1px solid rgba(1, 1, 1, 0.2);
+  }
+}
+
+.tracker {
+  grid-template-columns: 36px 1fr 116px;
+}

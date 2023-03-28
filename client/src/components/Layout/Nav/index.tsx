@@ -70,9 +70,9 @@ const Nav = ({ icon, onClick, path }: INav) => {
   const navigate = useNavigate();
 
   const goPhoto = () => navigate("/photo");
-  const goSchedule = () => navigate("/list/scheduler");
+  const goSchedule = () => navigate("/scheduler");
   const goTracker = () => navigate("/tracker");
-  const goDiary = () => navigate("/list/diary");
+  const goDiary = () => navigate("/diary");
 
   return (
     <GNB className={styles.nav}>

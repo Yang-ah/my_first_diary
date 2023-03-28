@@ -1,9 +1,19 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
 
-export const onTrackerAtom = atom({
+interface ITracker {
+  [tracker: string]: boolean;
+}
+
+export const onTrackerAtom = atom<ITracker>({
   key: "tracker",
-  default: true,
+  default: {
+    tracker: true,
+    emotion: true,
+    exercise: true,
+    plan: true,
+    work: true,
+  },
 });
 
 export const thisMonthAtom = atom({

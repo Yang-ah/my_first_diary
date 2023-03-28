@@ -1,8 +1,9 @@
 import React from "react";
-
 import styles from "./checkBox.module.scss";
 import { IconCheck } from "../../../assets/icon";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { onTrackerAtom } from "../../../atom";
 
 interface ICheckBox {
   child: string;
@@ -19,9 +20,14 @@ const Label = styled.label`
 `;
 
 const CheckBox = ({ child, ...props }: ICheckBox) => {
+  const [onTracker, setTracker] = useRecoilState(onTrackerAtom);
+
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { checked, name } = e.currentTarget;
-    // console.log(checked); true/false
+
+    setTracker((prev) => {
+      return { ...prev, [name]: checked };
+    });
   };
 
   return (
@@ -32,6 +38,7 @@ const CheckBox = ({ child, ...props }: ICheckBox) => {
           name={child}
           type="checkbox"
           hidden
+          checked={onTracker[child]}
           {...props}
         />
         <IconCheck />

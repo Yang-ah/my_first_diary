@@ -31,9 +31,14 @@
     @include m.flex();
     padding-top: 4px;
 
-    > li:first-of-type {
-      margin-right: 8px;
+    > li {
+      padding: 0 8px;
     }
+
+    > .hidden {
+      display: none;
+    }
+
     svg {
       width: 20px;
     }

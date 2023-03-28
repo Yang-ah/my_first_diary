@@ -13,7 +13,8 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      {location.pathname.includes("list") && monthStr}
+      {location.pathname.includes("scheduler") && monthStr}
+      {location.pathname.includes("diary") && monthStr}
       {location.pathname.includes("photo") && monthStr}
       {location.pathname.includes("tracker") && year}
     </header>
