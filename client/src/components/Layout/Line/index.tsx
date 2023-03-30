@@ -18,11 +18,11 @@ const LineWrap = styled.ul`
 
 interface ILine {
   date: number | string;
-  child: any;
+  children: any;
   className?: string;
 }
 
-const Line = ({ date, child, className, ...props }: ILine) => {
+const Line = ({ date, children, className, ...props }: ILine) => {
   const onTracker = useRecoilValue(onTrackerAtom);
 
   return (
@@ -32,7 +32,7 @@ const Line = ({ date, child, className, ...props }: ILine) => {
       })}
     >
       <li className={styles.date}>{date}</li>
-      <li className={styles.main}>{child}</li>
+      <li className={styles.main}>{children}</li>
       <SideTrackers />
     </LineWrap>
   );

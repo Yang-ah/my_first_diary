@@ -2,10 +2,10 @@ import styles from "./header.module.scss";
 import { useLocation } from "react-router-dom";
 import { thisMonthAtom } from "../../../atom";
 import { useRecoilValue } from "recoil";
+import { year } from "../../../hooks";
 
 const Header = () => {
   const location = useLocation();
-  const year = new Date().getFullYear();
   const month = useRecoilValue(thisMonthAtom);
   const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
     month: "long",

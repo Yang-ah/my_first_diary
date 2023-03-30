@@ -1,2 +1,16 @@
 @use "../../styles/mixins" as m;
 @use "../../styles/constants" as c;
+
+.checkBoxWrap {
+  @include m.flex();
+  height: 100%;
+  label {
+    color: white;
+  }
+  svg {
+    fill: white;
+  }
+  div {
+    border: 1px solid white;
+  }
+}

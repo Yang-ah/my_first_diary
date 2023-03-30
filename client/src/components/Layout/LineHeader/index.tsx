@@ -32,28 +32,22 @@ const Header = styled.header`
 
 interface ILineHeader {
   className?: string;
+  children?: any;
 }
 
-const LineHeader = ({ className }: ILineHeader) => {
+const LineHeader = ({ className, children }: ILineHeader) => {
   const location = useLocation();
   const isScheduler = location.pathname.includes("scheduler");
   const isDiary = location.pathname.includes("diary");
 
   return (
     <Header className={className}>
-      {isDiary && <Line date="date" child="" className="header" />}
+      {isDiary && <Line date="date" children="" className="header" />}
 
       {isScheduler && (
-        <Line
-          date="date"
-          child={
-            <>
-              <CheckBox child="plan" />
-              <CheckBox child="work" />
-            </>
-          }
-          className="header"
-        />
+        <Line date="date" className="header">
+          {children}
+        </Line>
       )}
     </Header>
   );

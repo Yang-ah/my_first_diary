@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IconModify, IconPlus } from "../../assets/icon";
 import cx from "classnames";
+import { year } from "../../hooks";
 
 const Main = styled.main`
   color: ${(props) => props.theme.PRIMARY_50};
@@ -44,7 +45,6 @@ const Photo = () => {
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const [data, setData] = useRecoilState(getDataSelector);
   const month = useRecoilValue(thisMonthAtom);
-  const year = new Date().getFullYear();
   const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
     month: "long",
   });
