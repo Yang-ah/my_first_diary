@@ -14,12 +14,16 @@ const Trackers = ({ className, ...props }: ITracker) => {
 
   return (
     <header className={className} {...props}>
-      {trackerPath &&
-        ["emotion", "exercise"].map((child: string) => {
-          return <CheckBox key={child} child={child} />;
-        })}
+      {trackerPath && (
+        <>
+          <CheckBox name="emotion">emotion</CheckBox>
+          <CheckBox name="exercise">exercise</CheckBox>
+        </>
+      )}
 
-      {(diaryPath || schedulerPath) && <CheckBox child="tracker" />}
+      {(diaryPath || schedulerPath) && (
+        <CheckBox name="tracker">tracker</CheckBox>
+      )}
     </header>
   );
 };

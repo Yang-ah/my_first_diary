@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../../../atom";
 import cx from "classnames";
 import styles from "./sideTrackers.module.scss";
-import { IconDumbbell, IconLock } from "../../../../assets/icon";
+import { IconDumbbell } from "../../../../assets/icon";
 import { EmojiSmile } from "../../../../assets/emoji";
 import styled from "styled-components";
 
@@ -15,7 +15,11 @@ const Li = styled.li`
   }
 `;
 
-const SideTrackers = () => {
+interface ISideTrackers {
+  children: any;
+}
+
+const SideTrackers = ({ children }: ISideTrackers) => {
   const onTracker = useRecoilValue(onTrackerAtom);
 
   return (
@@ -28,17 +32,13 @@ const SideTrackers = () => {
           <button>
             <EmojiSmile />
           </button>
-          <button className={styles.lock}>
-            <IconLock />
-          </button>
+          {children}
         </Li>
       )}
 
       {onTracker.tracker || (
         <Li className={cx(styles.trackerButtons, "tracker", styles.offTracker)}>
-          <button className={styles.lock}>
-            <IconLock />
-          </button>
+          {children}
         </Li>
       )}
     </>

@@ -42,7 +42,7 @@ const LineHeader = ({ className, children }: ILineHeader) => {
 
   return (
     <Header className={className}>
-      {isDiary && <Line date="date" children="" className="header" />}
+      {isDiary && <Line date="date" className="header" />}
 
       {isScheduler && (
         <Line date="date" className="header">

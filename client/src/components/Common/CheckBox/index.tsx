@@ -6,8 +6,9 @@ import { useRecoilState } from "recoil";
 import { onTrackerAtom } from "../../../atom";
 import cx from "classnames";
 interface ICheckBox {
-  child: string;
+  children: string;
   className?: string;
+  name: string;
 }
 
 const Label = styled.label`
@@ -20,7 +21,7 @@ const Label = styled.label`
   }
 `;
 
-const CheckBox = ({ child, className, ...props }: ICheckBox) => {
+const CheckBox = ({ name, children, className, ...props }: ICheckBox) => {
   const [onTracker, setTracker] = useRecoilState(onTrackerAtom);
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -36,16 +37,16 @@ const CheckBox = ({ child, className, ...props }: ICheckBox) => {
       <div className={styles.box}>
         <input
           onChange={onChange}
-          name={child}
+          name={name}
           type="checkbox"
           hidden
-          checked={onTracker[child]}
+          checked={onTracker[name]}
           {...props}
         />
         <IconCheck />
       </div>
 
-      <p>{child}</p>
+      <p>{children}</p>
     </Label>
   );
 };

@@ -15,14 +15,17 @@ const Tracker = () => {
 
   return (
     <main className={styles.main}>
-      <Column children={dates} month="date" key="date" />
+      <Column month="date" key="date">
+        {dates}
+      </Column>
       {months.map((month) => {
         return (
           <Column
-            children={data[month]}
             month={month.slice(0, 3).toUpperCase()}
             key={"column" + month}
-          />
+          >
+            {data[month]}
+          </Column>
         );
       })}
     </main>

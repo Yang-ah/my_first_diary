@@ -83,24 +83,28 @@ const Nav = ({ icon, onClick, path }: INav) => {
 
       <NavButton
         className={path.includes("photo") ? "selectedButton" : ""}
-        children="PHOTO"
         onClick={goPhoto}
-      />
+      >
+        PHOTO
+      </NavButton>
       <NavButton
         className={path.includes("scheduler") ? "selectedButton" : ""}
-        children="SCHEDULER"
         onClick={goSchedule}
-      />
+      >
+        SCHEDULER
+      </NavButton>
       <NavButton
         className={path.includes("diary") ? "selectedButton" : ""}
-        children="DIARY"
         onClick={goDiary}
-      />
+      >
+        DIARY
+      </NavButton>
       <NavButton
         className={path.includes("tracker") ? "selectedButton" : ""}
-        children="TRACKER"
         onClick={goTracker}
-      />
+      >
+        TRACKER
+      </NavButton>
       <div className={cx(styles.themeToggle, "themeToggle")}>
         <p>
           {icon === "apple" ? (

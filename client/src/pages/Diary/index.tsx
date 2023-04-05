@@ -17,7 +17,7 @@ const Diary = () => {
         data[monthStr].map((item) => {
           return (
             <Line key={"diary" + item.date} date={item.date}>
-              {item.diary}
+              <input value={item.diary} />
             </Line>
           );
         })}

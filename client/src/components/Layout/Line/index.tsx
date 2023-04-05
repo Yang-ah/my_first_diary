@@ -4,6 +4,10 @@ import cx from "classnames";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../../atom";
 import SideTrackers from "./SideTrackers";
+import { useState } from "react";
+import { IconLock, IconUnlock } from "../../../assets/icon";
+import { useMatch } from "react-router-dom";
+import DiaryMain from "../../../pages/Diary/DiaryMain.tsx";
 
 const LineWrap = styled.ul`
   // date
@@ -18,12 +22,22 @@ const LineWrap = styled.ul`
 
 interface ILine {
   date: number | string;
-  children: any;
+  children?: any;
   className?: string;
 }
 
 const Line = ({ date, children, className, ...props }: ILine) => {
+  const isDiary = useMatch("/diary");
+
   const onTracker = useRecoilValue(onTrackerAtom);
+  const [onLock, setLock] = useState(true);
+  const [diary, setDiary] = useState("");
+
+  const onClickLock = () => setLock((cur) => !cur);
+
+  const onChangeDiary = (e: React.FormEvent<HTMLInputElement>) => {
+    setDiary(e.currentTarget.value);
+  };
 
   return (
     <LineWrap
@@ -32,8 +46,21 @@ const Line = ({ date, children, className, ...props }: ILine) => {
       })}
     >
       <li className={styles.date}>{date}</li>
-      <li className={styles.main}>{children}</li>
-      <SideTrackers />
+      <li className={styles.main}>
+        {children}
+        {isDiary && (
+          <DiaryMain onChange={onChangeDiary} value={diary} disabled={onLock} />
+        )}
+      </li>
+      <SideTrackers>
+        <button
+          className={styles.lock}
+          onClick={onClickLock}
+          value={onLock + ""}
+        >
+          {onLock ? <IconLock /> : <IconUnlock />}
+        </button>
+      </SideTrackers>
     </LineWrap>
   );
 };

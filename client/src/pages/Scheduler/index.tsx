@@ -15,15 +15,19 @@ const Scheduler = () => {
     <main>
       <LineHeader>
         <div className={styles.checkBoxWrap}>
-          <CheckBox child="plan" />
-          <CheckBox child="work" />
+          <CheckBox className={styles.checkbox} name="plan">
+            plan
+          </CheckBox>
+          <CheckBox className={styles.checkbox} name="work">
+            work
+          </CheckBox>
         </div>
       </LineHeader>
 
       {data[monthStr] &&
         data[monthStr].map((item) => {
           return (
-            <Line key={"diary" + item.date} date={item.date}>
+            <Line key={"scheduler" + item.date} date={item.date}>
               {item.schedule.plan}
             </Line>
           );
