@@ -1,0 +1,55 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/constants" as c;
+
+.header {
+  display: grid;
+  gap: 4px;
+  height: 40px;
+  margin-bottom: 4px;
+  grid-template-columns: 36px 1fr 36px;
+
+  > .date,
+  > .main {
+    border-radius: c.$S_RADIUS;
+    color: white;
+    border: none;
+  }
+
+  div {
+    @include m.flex();
+    border-radius: c.$S_RADIUS;
+
+    &.lock {
+      svg {
+        width: 18px;
+        padding-bottom: 2px;
+      }
+    }
+    &.exercise {
+      > svg {
+        width: 28px;
+      }
+    }
+  }
+
+  svg {
+    fill: white;
+    width: 20px;
+  }
+
+  > .date {
+    @include m.flex();
+  }
+}
+
+.tracker {
+  grid-template-columns: 36px 1fr 116px;
+}
+
+.trackerButtons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: transparent;
+  border-radius: c.$S_RADIUS;
+  gap: 4px;
+}

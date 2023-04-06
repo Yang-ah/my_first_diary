@@ -3,11 +3,10 @@ import styles from "./line.module.scss";
 import cx from "classnames";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../../atom";
-import SideTrackers from "./SideTrackers";
 import { useState } from "react";
-import { IconLock, IconUnlock } from "../../../assets/icon";
+import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
+import { EmojiSmile } from "../../../assets/emoji";
 import { useMatch } from "react-router-dom";
-import DiaryMain from "../../../pages/Diary/DiaryMain.tsx";
 
 const LineWrap = styled.ul`
   // date
@@ -20,22 +19,35 @@ const LineWrap = styled.ul`
   }
 `;
 
+const Li = styled.li`
+  svg {
+    fill: ${(props) => props.theme.SECONDARY_30};
+  }
+  button {
+    border: 1px solid ${(props) => props.theme.PRIMARY_20};
+  }
+`;
+
 interface ILine {
   date: number | string;
   children?: any;
   className?: string;
+  value: any;
+  // onClick: React.MouseEventHandler<HTMLButtonElement>;
+  // onLockMain: any;
 }
 
-const Line = ({ date, children, className, ...props }: ILine) => {
-  const isDiary = useMatch("/diary");
-
+const Line = ({ date, children, className, value, ...props }: ILine) => {
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [onLock, setLock] = useState(true);
-  const [diary, setDiary] = useState("");
 
-  const onClickLock = () => setLock((cur) => !cur);
+  const isDiary = useMatch("/diary");
+  const [onLock, setOnLock] = useState(true);
+  const onClickLock = () => {
+    setOnLock((cur) => !cur);
+  };
 
-  const onChangeDiary = (e: React.FormEvent<HTMLInputElement>) => {
+  const [diary, setDiary] = useState(value);
+  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     setDiary(e.currentTarget.value);
   };
 
@@ -47,20 +59,37 @@ const Line = ({ date, children, className, ...props }: ILine) => {
     >
       <li className={styles.date}>{date}</li>
       <li className={styles.main}>
-        {children}
         {isDiary && (
-          <DiaryMain onChange={onChangeDiary} value={diary} disabled={onLock} />
+          <input
+            className={styles.diaryInput}
+            value={diary}
+            disabled={onLock}
+            onChange={onChange}
+          />
         )}
       </li>
-      <SideTrackers>
-        <button
-          className={styles.lock}
-          onClick={onClickLock}
-          value={onLock + ""}
-        >
-          {onLock ? <IconLock /> : <IconUnlock />}
-        </button>
-      </SideTrackers>
+
+      {onTracker.tracker && (
+        <Li className={cx(styles.trackerButtons, "tracker")}>
+          <button className={styles.exercise}>
+            <IconDumbbell />
+          </button>
+          <button>
+            <EmojiSmile />
+          </button>
+          <button className={styles.lock} onClick={onClickLock}>
+            {onLock ? <IconLock /> : <IconUnlock />}
+          </button>
+        </Li>
+      )}
+
+      {onTracker.tracker || (
+        <Li className={cx(styles.trackerButtons, "tracker", styles.offTracker)}>
+          <button className={styles.lock} onClick={onClickLock}>
+            {onLock ? <IconLock /> : <IconUnlock />}
+          </button>
+        </Li>
+      )}
     </LineWrap>
   );
 };
