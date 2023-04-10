@@ -63,7 +63,9 @@ const Diary = () => {
             <Line
               key={"diary" + item.date}
               date={item.date}
-              value={item.diary}
+              diary={item.diary}
+              emotion={item.emotion}
+              exercise={item.exercise}
             ></Line>
           );
         })}

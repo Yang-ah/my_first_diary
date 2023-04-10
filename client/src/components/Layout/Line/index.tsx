@@ -5,8 +5,8 @@ import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../../atom";
 import { useState } from "react";
 import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
-import { EmojiSmile } from "../../../assets/emoji";
 import { useMatch } from "react-router-dom";
+import EmojiDropdown from "../../EmojiDropdown";
 
 const LineWrap = styled.ul`
   // date
@@ -32,65 +32,92 @@ interface ILine {
   date: number | string;
   children?: any;
   className?: string;
-  value: any;
+  diary?: string;
+  emotion: string;
+  exercise: boolean;
+  plan?: object[];
+  work?: object[];
   // onClick: React.MouseEventHandler<HTMLButtonElement>;
   // onLockMain: any;
 }
 
-const Line = ({ date, children, className, value, ...props }: ILine) => {
+const Line = ({
+  date,
+  children,
+  className,
+  diary = "",
+  emotion = "",
+  exercise = false,
+  ...props
+}: ILine) => {
   const onTracker = useRecoilValue(onTrackerAtom);
-
   const isDiary = useMatch("/diary");
   const [onLock, setOnLock] = useState(true);
+
+  // 나중에 submit으로 바꾸기
   const onClickLock = () => {
     setOnLock((cur) => !cur);
   };
 
-  const [diary, setDiary] = useState(value);
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setDiary(e.currentTarget.value);
+    setNewDiary(e.currentTarget.value);
   };
 
+  const [newDiary, setNewDiary] = useState(diary);
+  const [newExercise, setNewExercise] = useState(exercise);
+  const [newEmotion, setNewEmotion] = useState(emotion);
+
   return (
-    <LineWrap
-      className={cx(className, styles.wrap, {
-        [styles.tracker]: onTracker.tracker,
-      })}
-    >
-      <li className={styles.date}>{date}</li>
-      <li className={styles.main}>
-        {isDiary && (
-          <input
-            className={styles.diaryInput}
-            value={diary}
-            disabled={onLock}
-            onChange={onChange}
-          />
+    <>
+      <LineWrap
+        className={cx(className, styles.wrap, {
+          [styles.tracker]: onTracker.tracker,
+        })}
+      >
+        <li className={styles.date}>{date}</li>
+        <li className={styles.main}>
+          {isDiary && (
+            <input
+              className={styles.diaryInput}
+              value={newDiary}
+              disabled={onLock}
+              onChange={onChange}
+              placeholder="오늘의 한 줄 일기를 써보세요."
+            />
+          )}
+        </li>
+
+        {onTracker.tracker && (
+          <Li className={cx(styles.trackerButtons, "tracker")}>
+            <button
+              className={styles.exercise}
+              onClick={() => setNewExercise((cur) => !cur)}
+            >
+              {newExercise ? <IconDumbbell /> : "-"}
+            </button>
+            <EmojiDropdown
+              value={emotion}
+              lock={onLock}
+              onClick={setNewEmotion}
+            />
+
+            <button className={styles.lock} onClick={onClickLock}>
+              {onLock ? <IconLock /> : <IconUnlock />}
+            </button>
+          </Li>
         )}
-      </li>
 
-      {onTracker.tracker && (
-        <Li className={cx(styles.trackerButtons, "tracker")}>
-          <button className={styles.exercise}>
-            <IconDumbbell />
-          </button>
-          <button>
-            <EmojiSmile />
-          </button>
-          <button className={styles.lock} onClick={onClickLock}>
-            {onLock ? <IconLock /> : <IconUnlock />}
-          </button>
-        </Li>
-      )}
-
-      {onTracker.tracker || (
-        <Li className={cx(styles.trackerButtons, "tracker", styles.offTracker)}>
-          <button className={styles.lock} onClick={onClickLock}>
-            {onLock ? <IconLock /> : <IconUnlock />}
-          </button>
-        </Li>
-      )}
-    </LineWrap>
+        {onTracker.tracker || (
+          <Li
+            className={cx(styles.trackerButtons, "tracker", styles.offTracker)}
+          >
+            <button className={styles.lock} onClick={onClickLock}>
+              {onLock ? <IconLock /> : <IconUnlock />}
+            </button>
+          </Li>
+        )}
+      </LineWrap>
+    </>
   );
 };
 
