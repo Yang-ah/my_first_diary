@@ -14,7 +14,7 @@ interface ICheckBox {
 const Label = styled.label`
   color: ${(props) => props.theme.PRIMARY_50};
   > div {
-    border: 1px solid ${(props) => props.theme.PRIMARY_50};
+    border: 1.5px solid ${(props) => props.theme.PRIMARY_50};
   }
   svg {
     fill: ${(props) => props.theme.PRIMARY_50};

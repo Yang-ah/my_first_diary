@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getDataSelector, onTrackerAtom, thisMonthAtom } from "../../atom";
-import { Line } from "../../components";
+import { CheckBox, Line } from "../../components";
 import { year } from "../../hooks";
 import styles from "./scheduler.module.scss";
 import { useState } from "react";
@@ -66,7 +66,14 @@ const Scheduler = () => {
           })}
         >
           <p className={styles.date}>date</p>
-          <div className={styles.main}></div>
+          <div className={styles.main}>
+            <CheckBox className={styles.checkbox} name="plan">
+              plan
+            </CheckBox>
+            <CheckBox className={styles.checkbox} name="work">
+              work
+            </CheckBox>
+          </div>
 
           {onTracker.tracker && (
             <aside

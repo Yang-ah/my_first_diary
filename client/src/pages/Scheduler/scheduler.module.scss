@@ -59,6 +59,16 @@
     border-radius: c.$S_RADIUS;
     color: white;
     border: none;
+
+    .checkbox {
+      color: white;
+      svg {
+        fill: white;
+      }
+      div {
+        border-color: white;
+      }
+    }
   }
 
   div {
