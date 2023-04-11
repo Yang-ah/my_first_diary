@@ -7,6 +7,7 @@ import { useState } from "react";
 import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
 import EmojiDropdown from "../../EmojiDropdown";
+import Cell from "../../../pages/Scheduler/Cell";
 
 const LineWrap = styled.ul`
   // date
@@ -85,13 +86,14 @@ const Line = ({
               placeholder="오늘의 한 줄 일기를 써보세요."
             />
           )}
+          {/*<Cell importance={3} lock={onLock} />*/}
         </li>
 
         {onTracker.tracker && (
           <Li className={cx(styles.trackerButtons, "tracker")}>
             <button
               className={styles.exercise}
-              onClick={() => setNewExercise((cur) => !cur)}
+              onClick={onLock ? undefined : () => setNewExercise((cur) => !cur)}
             >
               {newExercise ? <IconDumbbell /> : "-"}
             </button>

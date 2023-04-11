@@ -6,7 +6,7 @@ import styles from "./scheduler.module.scss";
 import { useState } from "react";
 import cx from "classnames";
 import styled from "styled-components";
-import { IconDumbbell, IconLock } from "../../assets/icon";
+import { IconDumbbell, IconLock, IconPlus } from "../../assets/icon";
 import { EmojiSmile } from "../../assets/emoji";
 import { useMatch, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -23,6 +23,10 @@ const Header = styled.header`
 const AddScheduleBtn = styled(motion.button)`
   background-color: ${(props) => props.theme.PRIMARY_30};
   color: ${(props) => props.theme.PRIMARY_50};
+  > svg {
+    fill: white;
+    width: 20px;
+  }
 `;
 
 const Overlay = styled(motion.div)``;
@@ -48,12 +52,14 @@ const Scheduler = () => {
 
   return (
     <>
+      <AddScheduleBtn
+        className={styles.addButton}
+        layoutId="addPage"
+        onClick={clickedAdd}
+      >
+        <IconPlus />
+      </AddScheduleBtn>
       <main className={styles.wrap}>
-        <AddScheduleBtn
-          className={styles.addButton}
-          layoutId="addPage"
-          onClick={clickedAdd}
-        ></AddScheduleBtn>
         <Header
           className={cx(styles.header, {
             [styles.tracker]: onTracker.tracker,
@@ -84,20 +90,21 @@ const Scheduler = () => {
             </div>
           )}
         </Header>
-
-        {data[monthStr] &&
-          data[monthStr].map((item) => {
-            return (
-              <Line
-                key={"diary" + item.date}
-                date={item.date}
-                emotion={item.emotion}
-                exercise={item.exercise}
-                plan={item.schedule.plan}
-                work={item.schedule.work}
-              ></Line>
-            );
-          })}
+        <section>
+          {data[monthStr] &&
+            data[monthStr].map((item) => {
+              return (
+                <Line
+                  key={"diary" + item.date}
+                  date={item.date}
+                  emotion={item.emotion}
+                  exercise={item.exercise}
+                  plan={item.schedule.plan}
+                  work={item.schedule.work}
+                ></Line>
+              );
+            })}
+        </section>
       </main>
       <AnimatePresence>
         {addMatch && (

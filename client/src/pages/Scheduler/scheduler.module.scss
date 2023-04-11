@@ -8,17 +8,6 @@
   border-radius: c.$S_RADIUS;
 }
 
-.addPage {
-  width: 500px;
-  height: 500px;
-  position: absolute;
-  z-index: 300;
-  border-radius: c.$S_RADIUS;
-  top: 50%;
-  left: 50%;
-  margin: -250px 0 0 -250px;
-}
-
 .addButton {
   @include m.flex();
   align-self: flex-end;
@@ -28,12 +17,23 @@
   height: 50px;
 
   position: absolute;
-  bottom: 25px;
-  right: 25px;
+  bottom: 50px;
+  right: 50px;
   z-index: 100;
 
   font-size: 25px;
   border-radius: c.$S_RADIUS;
+}
+
+.addPage {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  z-index: 300;
+  border-radius: c.$S_RADIUS;
+  top: 50%;
+  left: 50%;
+  margin: -250px 0 0 -250px;
 }
 
 .overlay {
