@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import "./db.js";
+import bodyParser from "body-parser";
 
 const PORT = 4000;
 const app = express();
@@ -41,10 +43,16 @@ const fakeDB = {
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const getData = (req, res) => res.json(fakeDB);
 
 app.get("/api/planner", getData);
+app.post("/api/schedule", (req, res) => {
+  const { category, content, date, importance, place, time, who } = req.body;
+  console.log(req.body);
+  return res.send("success");
+});
 
 const handleListening = () =>
   console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);

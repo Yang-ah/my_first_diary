@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { thisMonthAtom } from "../../../atom";
 import { year } from "../../../hooks";
+import axios from "axios";
 
 const Container = styled.main`
   color: ${(props) => props.theme.SECONDARY_10};
@@ -74,20 +75,14 @@ const Add = () => {
   const today = `${year}-${date}-${day}`;
   const now = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log({ form });
-  };
-
   const [form, setForm] = useState({
     category: "Work",
-    date: "",
+    date: today,
     content: "",
     importance: 4,
     time: "",
     place: "",
-    with: "",
+    who: "",
   });
 
   const [option, setOption] = useState<IOption>({
@@ -95,6 +90,12 @@ const Add = () => {
     place: false,
     with: false,
   });
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await axios.post("http://localhost:4000/api/schedule", form);
+    console.log({ form });
+  };
 
   const onOption = (e: React.FormEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
@@ -201,7 +202,7 @@ const Add = () => {
             <label>With</label>
             <input
               type="text"
-              name="with"
+              name="who"
               className={styles.two}
               onChange={onChange}
             />
