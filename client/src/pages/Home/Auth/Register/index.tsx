@@ -1,6 +1,7 @@
 import axios from "axios";
 import styles from "./register.module.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // rootRouter.route("/join").get(getJoin).post(postJoin);
 
@@ -11,6 +12,7 @@ interface IUser {
 }
 
 const Register = () => {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<IUser>({
     username: "h",
     email: "h@c.com",
@@ -19,9 +21,10 @@ const Register = () => {
 
   const PostJoin = async (e: any) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:4000/api/join", {
-      ggg: "hi",
-    });
+    const response = await axios.post("http://localhost:4000/join", userInfo);
+    if (response.status === 200) {
+      navigate("/photo");
+    }
   };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -30,8 +33,6 @@ const Register = () => {
     setUserInfo((prev: any) => {
       return { ...prev, [name]: value };
     });
-
-    console.log(userInfo);
   };
 
   return (

@@ -1,3 +1,5 @@
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 import styles from "./home.module.scss";
 
 const Home = () => {
@@ -18,6 +20,9 @@ const Home = () => {
       <footer>
         <button>로그인</button>
         <button>일단 둘러볼게요 !</button>
+        <Register />
+        <h1>login</h1>
+        <Login />
       </footer>
     </section>
   );

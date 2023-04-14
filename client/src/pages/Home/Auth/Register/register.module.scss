@@ -1,0 +1,14 @@
+@use "../../../../styles/mixins" as m;
+@use "../../../../styles/constants" as c;
+
+.form {
+  @include m.flex(center, center, column);
+  input {
+    width: 180px;
+    height: 40px;
+    border: 1px solid black;
+    padding: 4px;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+}

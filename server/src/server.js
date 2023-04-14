@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "./db.js";
 import bodyParser from "body-parser";
+import rootRouter from "./routers/rootRouter.js";
 
 const PORT = 4000;
 const app = express();
@@ -40,12 +41,12 @@ const setData = () => {
 const fakeDB = {
   planner: setData(),
 };
+const getData = (req, res) => res.json(fakeDB);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-const getData = (req, res) => res.json(fakeDB);
+app.use("/", rootRouter);
 
 app.get("/api/planner", getData);
 app.post("/api/schedule", (req, res) => {
@@ -58,3 +59,5 @@ const handleListening = () =>
   console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);
 
 app.listen(PORT, handleListening);
+
+export default app;
