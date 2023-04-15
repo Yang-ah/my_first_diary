@@ -8,3 +8,10 @@
   grid-template-columns: 20px repeat(12, 1fr);
   gap: 8px;
 }
+
+.checkboxes {
+  @include m.flex(flex-end);
+  padding: 8px 16px;
+  min-height: 24px;
+  font-family: "GangwonEdu_OTFBoldA";
+}

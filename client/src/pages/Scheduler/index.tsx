@@ -21,11 +21,8 @@ const Header = styled.header`
 `;
 
 const AddScheduleBtn = styled(motion.button)`
-  background-color: ${(props) => props.theme.PRIMARY_30};
-  color: ${(props) => props.theme.PRIMARY_50};
-  > svg {
-    fill: white;
-    width: 20px;
+  &:hover {
+    background-color: ${(props) => props.theme.PRIMARY_50};
   }
 `;
 
@@ -59,6 +56,9 @@ const Scheduler = () => {
       >
         <IconPlus />
       </AddScheduleBtn>
+      <div className={styles.checkbox}>
+        <CheckBox name="tracker">tracker</CheckBox>
+      </div>
       <main className={styles.wrap}>
         <Header
           className={cx(styles.header, {

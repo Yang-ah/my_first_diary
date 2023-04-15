@@ -3,7 +3,7 @@
 .wrap {
   @include m.square(100%, 100vh);
   @include m.flex();
-
+  overflow: hidden;
   > aside {
     @include m.square();
     min-width: 152px;
@@ -22,14 +22,14 @@
     > .mainWrap {
       @include m.flex(space-between);
       @include m.square();
-      height: calc(100% - 80px);
+      height: calc(100% - 110px);
 
       > .center {
         @include m.square();
 
         > .tracker {
           @include m.flex(flex-end);
-          padding: 8px 16px;
+          //  padding: 8px 16px;
           min-height: 24px;
           font-family: "GangwonEdu_OTFBoldA";
         }
@@ -45,6 +45,7 @@
       > .chevron {
         width: 32px;
         opacity: 0.3;
+        margin: 0 8px;
         background-color: transparent;
         transition: 0.2s opacity ease-in, 0.2s transform ease-in;
 
@@ -64,6 +65,45 @@
             transform: rotate(270deg) translateY(8px);
           }
         }
+      }
+    }
+  }
+}
+
+aside {
+  > .asideHeader {
+    @include m.flex();
+    padding: 8px;
+    gap: 12px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      opacity: 0.4;
+      transition: 0.2s opacity ease-in;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    > .profile {
+      @include m.flex();
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-bottom: 2px;
+      opacity: 0.4;
+      transition: 0.2s opacity ease-in;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      > svg {
+        width: 12px;
+        height: 12px;
+        opacity: 1;
+        fill: white;
       }
     }
   }

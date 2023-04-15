@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getDataSelector, onTrackerAtom, thisMonthAtom } from "../../atom";
-import { Line } from "../../components";
+import { CheckBox, Line } from "../../components";
 import { year } from "../../hooks";
 import styles from "./diary.module.scss";
 import { useState } from "react";
@@ -27,49 +27,56 @@ const Diary = () => {
   });
 
   return (
-    <main>
-      <Header
-        className={cx(styles.header, {
-          [styles.tracker]: onTracker.tracker,
-        })}
-      >
-        <p className={styles.date}>date</p>
-        <div className={styles.main}></div>
+    <>
+      <div className={styles.checkbox}>
+        <CheckBox name="tracker">tracker</CheckBox>
+      </div>
+      <main>
+        <Header
+          className={cx(styles.header, {
+            [styles.tracker]: onTracker.tracker,
+          })}
+        >
+          <p className={styles.date}>date</p>
+          <div className={styles.main}></div>
 
-        {onTracker.tracker && (
-          <aside className={cx({ [styles.trackerButtons]: onTracker.tracker })}>
-            <div className={styles.exercise}>
-              <IconDumbbell />
-            </div>
-            <div>
-              <EmojiSmile />
-            </div>
+          {onTracker.tracker && (
+            <aside
+              className={cx({ [styles.trackerButtons]: onTracker.tracker })}
+            >
+              <div className={styles.exercise}>
+                <IconDumbbell />
+              </div>
+              <div>
+                <EmojiSmile />
+              </div>
+              <div className={styles.lock}>
+                <IconLock />
+              </div>
+            </aside>
+          )}
+
+          {onTracker.tracker || (
             <div className={styles.lock}>
               <IconLock />
             </div>
-          </aside>
-        )}
+          )}
+        </Header>
 
-        {onTracker.tracker || (
-          <div className={styles.lock}>
-            <IconLock />
-          </div>
-        )}
-      </Header>
-
-      {data[monthStr] &&
-        data[monthStr].map((item) => {
-          return (
-            <Line
-              key={"diary" + item.date}
-              date={item.date}
-              diary={item.diary}
-              emotion={item.emotion}
-              exercise={item.exercise}
-            ></Line>
-          );
-        })}
-    </main>
+        {data[monthStr] &&
+          data[monthStr].map((item) => {
+            return (
+              <Line
+                key={"diary" + item.date}
+                date={item.date}
+                diary={item.diary}
+                emotion={item.emotion}
+                exercise={item.exercise}
+              ></Line>
+            );
+          })}
+      </main>
+    </>
   );
 };
 

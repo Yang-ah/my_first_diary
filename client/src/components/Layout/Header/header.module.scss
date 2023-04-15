@@ -1,8 +1,12 @@
 @use "../../../styles/mixins/flexbox" as m;
 
 .header {
-  @include m.flex();
+  @include m.flex(space-between);
   width: 100%;
   font-family: "GangwonEdu_OTFBoldA";
-  font-size: 48px;
+  padding: 8px 48px;
+
+  > .title {
+    font-size: 48px;
+  }
 }

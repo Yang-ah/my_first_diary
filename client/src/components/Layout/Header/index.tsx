@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { thisMonthAtom } from "../../../atom";
 import { useRecoilValue } from "recoil";
 import { year } from "../../../hooks";
+import { IconHome, IconLogout, IconUser } from "../../../assets/icon";
 
 const Header = () => {
   const location = useLocation();
@@ -13,10 +14,12 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      {location.pathname.includes("scheduler") && monthStr}
-      {location.pathname.includes("diary") && monthStr}
-      {location.pathname.includes("photo") && monthStr}
-      {location.pathname.includes("tracker") && year}
+      <span className={styles.title}>
+        {location.pathname.includes("scheduler") && monthStr}
+        {location.pathname.includes("diary") && monthStr}
+        {location.pathname.includes("photo") && monthStr}
+        {location.pathname.includes("tracker") && year}
+      </span>
     </header>
   );
 };

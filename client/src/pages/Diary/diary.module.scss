@@ -1,6 +1,11 @@
 @use "../../styles/mixins" as m;
 @use "../../styles/constants" as c;
 
+.checkbox {
+  @include m.flex(flex-end);
+  min-height: 24px;
+  font-family: "GangwonEdu_OTFBoldA";
+}
 .header {
   display: grid;
   gap: 4px;

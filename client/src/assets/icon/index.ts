@@ -1,3 +1,5 @@
+export { ReactComponent as IconLogout } from "./logout.svg";
+
 export { ReactComponent as IconApple } from "./apple.svg";
 export { ReactComponent as IconMoon } from "./moon.svg";
 export { ReactComponent as IconAt } from "./at.svg";

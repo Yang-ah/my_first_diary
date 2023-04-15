@@ -4,6 +4,7 @@ import styled from "styled-components";
 import styles from "./tracker.module.scss";
 
 import Column from "./Column";
+import { CheckBox } from "../../components";
 
 const Tracker = () => {
   const [data, setData] = useRecoilState(getDataSelector);
@@ -14,21 +15,27 @@ const Tracker = () => {
   ];
 
   return (
-    <main className={styles.main}>
-      <Column month="date" key="date">
-        {dates}
-      </Column>
-      {months.map((month) => {
-        return (
-          <Column
-            month={month.slice(0, 3).toUpperCase()}
-            key={"column" + month}
-          >
-            {data[month]}
-          </Column>
-        );
-      })}
-    </main>
+    <>
+      <header className={styles.checkboxes}>
+        <CheckBox name="emotion">emotion</CheckBox>
+        <CheckBox name="exercise">exercise</CheckBox>
+      </header>
+      <main className={styles.main}>
+        <Column month="date" key="date">
+          {dates}
+        </Column>
+        {months.map((month) => {
+          return (
+            <Column
+              month={month.slice(0, 3).toUpperCase()}
+              key={"column" + month}
+            >
+              {data[month]}
+            </Column>
+          );
+        })}
+      </main>
+    </>
   );
 };
 

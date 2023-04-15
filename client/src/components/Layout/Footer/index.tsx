@@ -15,34 +15,9 @@ const FooterWrap = styled.footer`
 `;
 
 const Footer = () => {
-  const [message, setMessage] = useState("");
-
-  const onHover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { name } = e.currentTarget;
-    if (e.type === "mouseleave") {
-      setMessage("");
-      return;
-    }
-
-    name === "github" && setMessage("Click me!");
-    name === "phone" && setMessage("010-6367-8340");
-    name === "email" && setMessage("yangah0409@gmail.com");
-  };
-
   return (
-    <FooterWrap className={styles.footer} onMouseLeave={onHover}>
-      <button type="button" onMouseEnter={onHover} name="github">
-        <IconGithub />
-      </button>
-      <button type="button" onMouseEnter={onHover} name="phone">
-        <IconPhone />
-      </button>
-      <button type="button" onMouseEnter={onHover} name="email">
-        <IconAt />
-      </button>
-      <p className={cx(styles.message, message || styles.hidden)}>
-        {message && message}
-      </p>
+    <FooterWrap className={styles.footer}>
+      <p className={styles.copyright}> ⓒ 2023. Yang-ah all rights reserved.</p>
     </FooterWrap>
   );
 };

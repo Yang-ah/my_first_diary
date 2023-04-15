@@ -2,6 +2,7 @@
 
 .wrap {
   @include m.square();
+  margin-top: 30px;
 
   > header,
   section {

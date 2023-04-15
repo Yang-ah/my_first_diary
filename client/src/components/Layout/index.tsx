@@ -1,15 +1,21 @@
 import { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Apple, Dark, Peach, Tree } from "../../theme";
-import { Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styles from "./layout.module.scss";
 import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Chevron } from "../../assets/icon";
-import Trackers from "./Trackers";
+import {
+  Chevron,
+  IconGithub,
+  IconHome,
+  IconLogout,
+  IconUser,
+} from "../../assets/icon";
 import { useRecoilState } from "recoil";
 import { thisMonthAtom } from "../../atom";
+import cx from "classnames";
 
 const Wrap = styled.div`
   .section {
@@ -23,6 +29,12 @@ const Wrap = styled.div`
 
   > aside {
     background-color: ${(props) => props.theme.PRIMARY_10};
+    .asideSvg {
+      fill: ${(props) => props.theme.PRIMARY_50};
+    }
+    .profile {
+      background-color: ${(props) => props.theme.PRIMARY_50};
+    }
   }
 `;
 
@@ -44,7 +56,7 @@ const Layout = () => {
     location.pathname === "/register";
 
   const trackerPath = location.pathname === "/tracker";
-
+  const navigate = useNavigate();
   // Move month
   const [thisMonth, setThisMonth] = useRecoilState(thisMonthAtom);
 
@@ -81,7 +93,6 @@ const Layout = () => {
             )}
 
             <section className={styles.center}>
-              <Trackers className={styles.tracker} />
               <Outlet />
             </section>
 
@@ -95,6 +106,26 @@ const Layout = () => {
         </section>
 
         <aside>
+          <header className={styles.asideHeader}>
+            <button
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              <IconHome className="asideSvg" />
+            </button>
+            <a
+              href="https://github.com/Yang-ah/my_first_diary"
+              target="_blank"
+              className="asideSvg"
+              rel="noreferrer"
+            >
+              <IconGithub />
+            </a>
+            <button className={cx(styles.profile, "profile")}>
+              <IconUser />
+            </button>
+          </header>
           <Nav
             onClick={onChangeTheme}
             icon={theme.ICON}
@@ -108,3 +139,9 @@ const Layout = () => {
 };
 
 export default Layout;
+
+{
+  /* <button>
+  <IconLogout />
+</button>; */
+}

@@ -33,7 +33,7 @@ const Register = () => {
     e.preventDefault();
     const response = await axios.post("http://localhost:4000/join", userInfo);
     if (response.status === 200) {
-      navigate("/photo");
+      alert("환영합니다 :) ");
     }
   };
 
@@ -49,7 +49,6 @@ const Register = () => {
     <Form
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
-      exit={{ x: -300, opacity: 0 }}
       className={styles.form}
       onSubmit={PostJoin}
     >
