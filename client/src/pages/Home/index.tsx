@@ -1,10 +1,32 @@
-import Login from "./Auth/Login";
-import Register from "./Auth/Register";
+import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styles from "./home.module.scss";
+import { AnimatePresence, motion } from "framer-motion";
+import styled from "styled-components";
+
+const Wrap = styled(motion.section)`
+  > header {
+    color: ${(props) => props.theme.PRIMARY_50};
+    span {
+      color: ${(props) => props.theme.PRIMARY_30};
+    }
+  }
+  > footer {
+    > button {
+      color: ${(props) => props.theme.PRIMARY_50};
+
+      &:hover {
+        background-color: ${(props) => props.theme.PRIMARY_30};
+        color: white;
+      }
+    }
+  }
+`;
 
 const Home = () => {
+  const navigate = useNavigate();
+  const homeMatch = useMatch("/");
   return (
-    <section className={styles.wrap}>
+    <Wrap className={styles.wrap}>
       <header className={styles.logo}>
         <p>
           <span>M</span>y
@@ -16,15 +38,19 @@ const Home = () => {
           <span>D</span>iary
         </p>
       </header>
+      <AnimatePresence>
+        <motion.footer>
+          {homeMatch && (
+            <>
+              <button onClick={() => navigate("login")}>로그인</button>
+              <button onClick={() => navigate("/")}>일단 둘러볼게요 !</button>
+            </>
+          )}
 
-      <footer>
-        <button>로그인</button>
-        <button>일단 둘러볼게요 !</button>
-        <Register />
-        <h1>login</h1>
-        <Login />
-      </footer>
-    </section>
+          <Outlet />
+        </motion.footer>
+      </AnimatePresence>
+    </Wrap>
   );
 };
 

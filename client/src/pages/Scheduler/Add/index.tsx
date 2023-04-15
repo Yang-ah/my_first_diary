@@ -88,12 +88,12 @@ const Add = () => {
   const [option, setOption] = useState<IOption>({
     time: false,
     place: false,
-    with: false,
+    who: false,
   });
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post("http://localhost:4000/api/schedule", form);
+    await axios.post("http://localhost:4000/schedule", form);
     console.log({ form });
   };
 

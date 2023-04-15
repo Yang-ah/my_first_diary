@@ -1,7 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
+import styled from "styled-components";
+
+const Form = styled(motion.form)`
+  input,
+  button {
+    color: ${(props) => props.theme.PRIMARY_50};
+  }
+  button {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
+  }
+`;
 
 interface ILogin {
   email: string;
@@ -11,8 +24,8 @@ interface ILogin {
 const Login = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<ILogin>({
-    email: "h@c.com",
-    password: "h",
+    email: "",
+    password: "",
   });
 
   const postLogin = async (
@@ -23,11 +36,16 @@ const Login = () => {
     try {
       const response = await axios.post(
         "http://localhost:4000/login",
-        userInfo
+        userInfo,
+        { withCredentials: true }
       );
 
       if (response.status === 200) {
+        console.log(response.data);
         navigate("/photo");
+
+        // const { token } = response.data;
+        // localStorage.setItem("TOKEN", token);
       } // TODO : error type이 any.... 이후에 해결하자
     } catch (error: any) {
       alert(error.response.data.errorMessage);
@@ -42,22 +60,37 @@ const Login = () => {
     });
   };
 
+  useEffect(() => {}, []);
+
   return (
-    <form className={styles.form} onSubmit={postLogin}>
-      <input
-        type="email"
-        name="email"
-        placeholder="email"
-        onChange={onChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        onChange={onChange}
-      />
-      <button onClick={postLogin}>로그인</button>
-    </form>
+    <Form
+      initial={{ x: 300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ x: -300, opacity: 0 }}
+      className={styles.form}
+      onSubmit={postLogin}
+    >
+      <div className={styles.inputWrap}>
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          required
+          onChange={onChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          required
+          onChange={onChange}
+        />
+        <Link to="/register" className={styles.link}>
+          회원가입 하시겠습니까? &rarr;
+        </Link>
+      </div>
+      <button type="submit">로그인</button>
+    </Form>
   );
 };
 

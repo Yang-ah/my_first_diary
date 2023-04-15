@@ -38,7 +38,11 @@ const Layout = () => {
 
   // Check location
   const location = useLocation();
-  const homePath = location.pathname === "/";
+  const homePath =
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register";
+
   const trackerPath = location.pathname === "/tracker";
 
   // Move month

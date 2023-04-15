@@ -1,7 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
-export const getJoin = (req, res) => res.render("join");
 export const postJoin = async (req, res) => {
   // console.log(req.body);
   try {
@@ -17,6 +16,12 @@ export const postJoin = async (req, res) => {
     return res.status(400).send({ errorMessage: error._message });
   }
 };
+
+// export const getLogin = async (req, res) => {
+//   const id = req.headers.authorization;
+//   const user = await User.findOne({ id });
+//   console.log(user);
+// };
 
 export const postLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -40,5 +45,7 @@ export const postLogin = async (req, res) => {
     });
   }
   // check if password correct
-  res.end();
+  req.session.loggedIn = true;
+  req.session.user = user;
+  res.send({ user });
 };

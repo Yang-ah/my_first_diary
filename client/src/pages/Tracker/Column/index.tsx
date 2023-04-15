@@ -60,11 +60,11 @@ const Column = ({ children, month, className }: IColumn) => {
                 className={cx("cell", styles.columnChild)}
                 key={month + child.date}
               >
-                <li className={onTracker.emotion || styles["hidden"]}>
+                <li className={cx({ [styles.hidden]: onTracker.emotion })}>
                   {child.emotion ? child.emotion : "·"}
                 </li>
 
-                <li className={onTracker.exercise || styles["hidden"]}>
+                <li className={cx({ [styles.hidden]: onTracker.exercise })}>
                   {child.exercise ? <IconSolidHeart /> : <IconHeart />}
                 </li>
               </ul>
