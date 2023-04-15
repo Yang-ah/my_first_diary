@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { getDataSelector } from "../../atom";
+import { dataAtom } from "../../atom";
 import styled from "styled-components";
 import styles from "./tracker.module.scss";
 
@@ -7,7 +7,7 @@ import Column from "./Column";
 import { CheckBox } from "../../components";
 
 const Tracker = () => {
-  const [data, setData] = useRecoilState(getDataSelector);
+  const [data, setData] = useRecoilState(dataAtom);
   const months = Object.keys(data);
   const dates = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,

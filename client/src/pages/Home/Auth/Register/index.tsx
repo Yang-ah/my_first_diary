@@ -33,6 +33,7 @@ const Register = () => {
     e.preventDefault();
     const response = await axios.post("http://localhost:4000/join", userInfo);
     if (response.status === 200) {
+      console.log(response);
       alert("환영합니다 :) ");
     }
   };

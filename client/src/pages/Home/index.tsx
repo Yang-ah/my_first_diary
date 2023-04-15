@@ -2,6 +2,10 @@ import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styles from "./home.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
+import axios from "axios";
+import { useEffect } from "react";
+import { dataAtom, isLoginAtom } from "../../atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 const Wrap = styled(motion.section)`
   > header {
@@ -23,8 +27,30 @@ const Wrap = styled(motion.section)`
 `;
 
 const Home = () => {
+  const setData = useSetRecoilState(dataAtom);
+
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const navigate = useNavigate();
   const homeMatch = useMatch("/");
+
+  const getLogin = async () => {
+    // if (isLogin) {
+    //   return;
+    // }
+
+    const token = localStorage.getItem("TOKEN");
+    if (token) {
+      const response = await axios.get(`http://localhost:4000/login/${token}`);
+      //console.log(response.data.user.data);
+      setData(response.data.user.data);
+      setIsLogin(true);
+    }
+  };
+
+  useEffect(() => {
+    getLogin();
+  }, []);
+
   return (
     <Wrap className={styles.wrap}>
       <header className={styles.logo}>

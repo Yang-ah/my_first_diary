@@ -1,11 +1,12 @@
 import styles from "./photo.module.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { getDataSelector, thisMonthAtom } from "../../atom";
+import { dataAtom, thisMonthAtom } from "../../atom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IconModify, IconPlus } from "../../assets/icon";
 import cx from "classnames";
 import { year } from "../../hooks";
+import axios from "axios";
 
 const Main = styled.main`
   color: ${(props) => props.theme.PRIMARY_50};
@@ -43,7 +44,7 @@ const Label = styled.label<ILabel>`
 
 const Photo = () => {
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const [data, setData] = useRecoilState(getDataSelector);
+  const [data, setData] = useRecoilState(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
   const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
     month: "long",
@@ -103,13 +104,17 @@ const Photo = () => {
         {data[monthStr] &&
           data[monthStr].map((item) => {
             return (
-              <form className={styles.dateWrap} key={monthStr + item.date}>
+              <form
+                encType="multipart/form-data"
+                className={styles.dateWrap}
+                key={monthStr + item.date}
+              >
                 <Label
                   photoUrl={item.photoUrl}
                   className={item.photoUrl || "nonePhoto"}
                 >
                   <p>{item.date + ""}</p>
-                  <input type="file" accept="image" hidden />
+                  <input type="file" accept="image/*" hidden />
 
                   <button
                     type="button"

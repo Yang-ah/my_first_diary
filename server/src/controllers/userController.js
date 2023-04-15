@@ -1,6 +1,37 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
+const setInitData = () => {
+  const thisYear = new Date().getFullYear();
+  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const result = {};
+
+  months.map((month) => {
+    const strMonth = new Date(thisYear, month, 1).toLocaleString("en-US", {
+      month: "long",
+    });
+    const thisMonthEnd = new Date(thisYear, month + 1, 0).getDate();
+
+    result[strMonth] = [];
+
+    for (let i = 1; i <= thisMonthEnd; i++) {
+      result[strMonth].push({
+        date: i,
+        photoUrl: "",
+        diary: "",
+        schedule: {
+          work: [],
+          plan: [],
+        },
+        emotion: "",
+        exercise: false,
+      });
+    }
+  });
+
+  return result;
+};
+
 export const postJoin = async (req, res) => {
   // console.log(req.body);
   try {
@@ -9,6 +40,7 @@ export const postJoin = async (req, res) => {
       username,
       email,
       password,
+      data: setInitData(),
     });
 
     return res.end();
@@ -47,5 +79,11 @@ export const postLogin = async (req, res) => {
   // check if password correct
   req.session.loggedIn = true;
   req.session.user = user;
+  res.send({ user });
+};
+
+export const getLogin = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
   res.send({ user });
 };

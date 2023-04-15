@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { getDataSelector, onTrackerAtom, thisMonthAtom } from "../../atom";
+import { dataAtom, onTrackerAtom, thisMonthAtom } from "../../atom";
 import { CheckBox, Line } from "../../components";
 import { year } from "../../hooks";
 import styles from "./diary.module.scss";
@@ -19,7 +19,7 @@ const Header = styled.header`
 
 const Diary = () => {
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [data, setData] = useRecoilState(getDataSelector); // 비동기
+  const [data, setData] = useRecoilState(dataAtom);
 
   const month = useRecoilValue(thisMonthAtom);
   const monthStr = new Date(year, month, 1).toLocaleString("en-US", {

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { dataAtom, isLoginAtom } from "../../../../atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const Form = styled(motion.form)`
   input,
@@ -22,6 +24,10 @@ interface ILogin {
 }
 
 const Login = () => {
+  const setIsLogin = useSetRecoilState(isLoginAtom);
+  const [data, setData] = useRecoilState(dataAtom);
+  const [stateData, setStateData] = useState();
+
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<ILogin>({
     email: "",
@@ -41,11 +47,10 @@ const Login = () => {
       );
 
       if (response.status === 200) {
-        console.log(response.data);
+        setIsLogin(true);
+        setData(response.data.user.data);
+        localStorage.setItem("TOKEN", response.data.user._id);
         navigate("/photo");
-
-        // const { token } = response.data;
-        // localStorage.setItem("TOKEN", token);
       } // TODO : error type이 any.... 이후에 해결하자
     } catch (error: any) {
       alert(error.response.data.errorMessage);
@@ -59,8 +64,6 @@ const Login = () => {
       return { ...prev, [name]: value };
     });
   };
-
-  useEffect(() => {}, []);
 
   return (
     <Form
