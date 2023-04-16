@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { thisMonthAtom } from "../../../atom";
 import { year } from "../../../hooks";
-import axios from "axios";
 
 const Container = styled.main`
   color: ${(props) => props.theme.SECONDARY_10};
@@ -93,7 +92,6 @@ const Add = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post("http://localhost:4000/schedule", form);
     console.log({ form });
   };
 

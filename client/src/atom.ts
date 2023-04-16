@@ -1,5 +1,4 @@
-import { atom, selector } from "recoil";
-import axios from "axios";
+import { atom } from "recoil";
 
 const setInitData = () => {
   const thisYear = new Date().getFullYear();

@@ -26,12 +26,6 @@ app.use(
 app.use(localsMiddleware);
 app.use("/", rootRouter);
 
-app.post("/api/schedule", (req, res) => {
-  const { category, content, date, importance, place, time, who } = req.body;
-  console.log(req.body);
-  return res.send("success");
-});
-
 const handleListening = () =>
   console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);
 

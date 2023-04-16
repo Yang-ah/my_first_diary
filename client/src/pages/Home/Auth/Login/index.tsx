@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -24,11 +24,9 @@ interface ILogin {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const [data, setData] = useRecoilState(dataAtom);
-  const [stateData, setStateData] = useState();
-
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<ILogin>({
     email: "",
     password: "",
@@ -50,7 +48,8 @@ const Login = () => {
         setIsLogin(true);
         setData(response.data.user.data);
         localStorage.setItem("TOKEN", response.data.user._id);
-        navigate("/photo");
+
+        console.log("login", response.data.user.data);
       } // TODO : error type이 any.... 이후에 해결하자
     } catch (error: any) {
       alert(error.response.data.errorMessage);

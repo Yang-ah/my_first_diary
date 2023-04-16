@@ -5,7 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
 import { dataAtom, isLoginAtom } from "../../atom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const Wrap = styled(motion.section)`
   > header {
@@ -27,16 +27,15 @@ const Wrap = styled(motion.section)`
 `;
 
 const Home = () => {
-  const setData = useSetRecoilState(dataAtom);
-
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const navigate = useNavigate();
+  const setData = useSetRecoilState(dataAtom);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const homeMatch = useMatch("/");
 
   const getLogin = async () => {
-    // if (isLogin) {
-    //   return;
-    // }
+    if (isLogin) {
+      return;
+    }
 
     const token = localStorage.getItem("TOKEN");
     if (token) {
@@ -44,6 +43,7 @@ const Home = () => {
       //console.log(response.data.user.data);
       setData(response.data.user.data);
       setIsLogin(true);
+      console.log("home", response.data.user.data);
     }
   };
 
