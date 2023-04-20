@@ -66,27 +66,29 @@ const EmojiWrap = styled.div`
   }
 `;
 
-const EmojiDropdown = ({ value = "", onClick, lock }: any) => {
+// onClick : Line에서 보내는 함수
+const EmojiDropdown = ({ stateValue = "", setState, lock }: any) => {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [emoji, setEmoji] = useState(value);
+  const [emoji, setEmoji] = useState(stateValue); // Emoji Icon
   const onClickDropdown = () => setIsOpen((cur) => !cur);
 
-  const emotionEmoji = (emojiValue: string) => {
+  const covertValueToEmoji = (emojiValue: string) => {
     emojis
       .filter((emoji) => emoji.value === emojiValue)
       .map((emoji) => setEmoji(emoji.emoji));
   };
 
-  const onClickNewEmoji = (newEmojiValue: string) => {
-    onClick(newEmojiValue);
-    emotionEmoji(newEmojiValue);
+  const onChangeValue = (value: string) => {
+    setState(value);
+    setEmoji(value);
+    covertValueToEmoji(value);
     setIsOpen(false);
   };
 
   useEffect(() => {
-    emotionEmoji(value);
-  }, [value]);
+    covertValueToEmoji(stateValue);
+  }, [stateValue]);
 
   return (
     <div className={styles.dropdownWrap}>
@@ -104,7 +106,7 @@ const EmojiDropdown = ({ value = "", onClick, lock }: any) => {
             <button
               value={emoji.value}
               key={emoji.value}
-              onClick={() => onClickNewEmoji(emoji.value)}
+              onClick={() => onChangeValue(emoji.value)}
             >
               {emoji.emoji}
             </button>

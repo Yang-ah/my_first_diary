@@ -9,10 +9,7 @@ export const patchEmotion = async (req, res) => {
 
     const newUserData = user.data;
 
-    const patchUser = await User.updateOne(
-      { _id: id },
-      { $set: { data: newUserData } }
-    );
+    await User.updateOne({ _id: id }, { $set: { data: newUserData } });
 
     return res.send(`updated emotion ${date} ${month}`);
   } catch (error) {

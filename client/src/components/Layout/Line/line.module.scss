@@ -8,7 +8,9 @@
   margin-bottom: 4px;
   grid-template-columns: 36px 1fr 36px;
 
-  > li {
+  > li,
+  .main,
+  .date {
     border-radius: c.$S_RADIUS;
   }
 
