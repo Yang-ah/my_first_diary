@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { IconDumbbell, IconLock } from "../../assets/icon";
 import { EmojiSmile } from "../../assets/emoji";
 import axios from "axios";
+import { getMonthData } from "../../api/Data";
 
 const Header = styled.header`
   > p,
@@ -27,14 +28,14 @@ const Diary = () => {
   });
   const [monthData, setMonthData] = useState<IData[] | any>(data[monthStr]);
 
-  const getMonthData = async () => {
-    const id = localStorage.getItem("TOKEN");
-    const response = await axios.get(`/month/${id}/${monthStr}`);
+  const fetchMonthData = async () => {
+    const id = localStorage.getItem("TOKEN") + "";
+    const response = await getMonthData(id, monthStr);
     setMonthData(response.data);
   };
 
   useEffect(() => {
-    getMonthData();
+    fetchMonthData();
   }, [month, monthStr]);
 
   return (
@@ -83,6 +84,8 @@ const Diary = () => {
                 diary={item.diary}
                 emotion={item.emotion}
                 exercise={item.exercise}
+                month={monthStr}
+                fetchMonthData={fetchMonthData}
               ></Line>
             );
           })}

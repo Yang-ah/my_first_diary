@@ -8,6 +8,7 @@ import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
 import EmojiDropdown from "../../EmojiDropdown";
 import Cell from "../../../pages/Scheduler/Cell";
+import { patchDiary } from "../../../api/Diary";
 
 const LineWrap = styled.ul`
   // date
@@ -35,6 +36,7 @@ const Li = styled.li`
 `;
 
 interface ILine {
+  fetchMonthData?: any;
   date: number | string;
   children?: any;
   className?: string;
@@ -43,11 +45,14 @@ interface ILine {
   exercise: boolean;
   plan?: object[];
   work?: object[];
+  month?: string;
   // onClick: React.MouseEventHandler<HTMLButtonElement>;
   // onLockMain: any;
 }
 
 const Line = ({
+  fetchMonthData,
+  month = "January",
   date,
   children,
   className,
@@ -62,15 +67,30 @@ const Line = ({
 
   const onClickLock = () => setOnLock((cur) => !cur);
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) =>
+  const onChangeDiary = (e: React.FormEvent<HTMLInputElement>) =>
     setNewDiary(e.currentTarget.value);
 
   const [newDiary, setNewDiary] = useState(diary);
   const [newExercise, setNewExercise] = useState(exercise);
   const [newEmotion, setNewEmotion] = useState(emotion);
 
+  const onSubmitDiary = async (e: any) => {
+    e.preventDefault();
+    const id = localStorage.getItem("TOKEN") + "";
+    const response = await patchDiary({
+      id: id,
+      month: month,
+      date: +date,
+      diary: newDiary,
+    });
+
+    setNewDiary("");
+    setOnLock(true);
+    await fetchMonthData();
+    alert(response.data);
+  };
+
   useEffect(() => {}, []);
-  const onSubmitDiary = () => {};
 
   return (
     <>
@@ -82,18 +102,18 @@ const Line = ({
         <li className={styles.date}>{date}</li>
         <li className={styles.main}>
           {isDiary && (
-            <form className={styles.diaryForm}>
+            <form className={styles.diaryForm} onSubmit={onSubmitDiary}>
               <input
                 className={styles.diaryInput}
                 value={newDiary}
                 disabled={onLock}
-                onChange={onChange}
+                onChange={onChangeDiary}
                 placeholder="오늘의 한 줄 일기를 써보세요. 일기 작성 후 꼭 저장 버튼을 눌러주세요."
               />
               {onLock || (
                 <button
                   className={cx(styles.diarySubmitButton, "diarySubmitButton")}
-                  onSubmit={onSubmitDiary}
+                  onClick={onSubmitDiary}
                 >
                   저장
                 </button>
