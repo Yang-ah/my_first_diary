@@ -75,7 +75,9 @@ aside {
     @include m.flex();
     padding: 8px;
     gap: 12px;
-
+    > button {
+      background-color: transparent;
+    }
     svg {
       width: 24px;
       height: 24px;
@@ -85,26 +87,62 @@ aside {
         opacity: 1;
       }
     }
+  }
+}
 
-    > .profile {
-      @include m.flex();
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin-bottom: 2px;
-      opacity: 0.4;
-      transition: 0.2s opacity ease-in;
+.profile {
+  @include m.flex();
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+  opacity: 0.4;
+  transition: 0.2s opacity ease-in;
 
-      &:hover {
-        opacity: 1;
-      }
+  &:hover {
+    opacity: 1;
+  }
 
-      > svg {
-        width: 12px;
-        height: 12px;
-        opacity: 1;
-        fill: white;
-      }
+  > .userIcon {
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+    fill: white;
+  }
+}
+
+.profileWrap {
+  position: relative;
+}
+
+.dropdownWrap {
+  @include m.flex(center, center, column);
+
+  background-color: white;
+  position: absolute;
+  top: 100%;
+  width: 80px;
+  right: 0;
+  max-height: 0;
+  visibility: hidden;
+  overflow-y: scroll;
+  transition: max-height 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  &.isOpen {
+    max-height: 200px;
+    visibility: visible;
+  }
+  > button {
+    padding: 8px;
+    width: 100%;
+    height: 100%;
+    @include m.flex();
+    gap: 4px;
+    background-color: transparent;
+    &:hover {
+      background-color: rgba(1, 1, 1, 0.4);
     }
   }
 }

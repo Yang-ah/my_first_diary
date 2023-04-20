@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { dataAtom, onTrackerAtom, thisMonthAtom } from "../../atom";
+import { dataAtom, onTrackerAtom, thisMonthAtom } from "../../status";
 import { CheckBox, Line } from "../../components";
 import { year } from "../../hooks";
 import styles from "./scheduler.module.scss";

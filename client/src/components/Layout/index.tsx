@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Apple, Dark, Peach, Tree } from "../../theme";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styles from "./layout.module.scss";
 import Nav from "./Nav";
 import Header from "./Header";
@@ -11,11 +11,18 @@ import {
   IconGithub,
   IconHome,
   IconLogout,
+  IconModify,
   IconUser,
 } from "../../assets/icon";
-import { useRecoilState } from "recoil";
-import { thisMonthAtom } from "../../atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  dataAtom,
+  isLoginAtom,
+  thisMonthAtom,
+  usernameAtom,
+} from "../../status";
 import cx from "classnames";
+import { getLogin } from "../../api/Auth";
 
 const Wrap = styled.div`
   .section {
@@ -39,6 +46,38 @@ const Wrap = styled.div`
 `;
 
 const Layout = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const setData = useSetRecoilState(dataAtom);
+  const [username, setUsername] = useRecoilState(usernameAtom);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
+
+  const autoSignIn = async () => {
+    const token = localStorage.getItem("TOKEN");
+
+    if (isLogin) {
+      return;
+    }
+
+    if (token) {
+      const response = await getLogin(token);
+      setData(response.data.user.data);
+      setUsername(response.data.user.username);
+      setIsLogin(true);
+    }
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+    alert("로그아웃 되었습니다.");
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    autoSignIn();
+  }, []);
+
   // Change theme
   const [theme, setTheme] = useState(Apple);
   const onChangeTheme = (theme: string) => {
@@ -49,15 +88,12 @@ const Layout = () => {
   };
 
   // Check location
-  const location = useLocation();
   const homePath =
     location.pathname === "/" ||
     location.pathname === "/login" ||
     location.pathname === "/register";
-
   const trackerPath = location.pathname === "/tracker";
-  const navigate = useNavigate();
-  // Move month
+
   const [thisMonth, setThisMonth] = useRecoilState(thisMonthAtom);
 
   const onClick = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -77,6 +113,10 @@ const Layout = () => {
       setThisMonth((cur) => cur + 1);
     }
   };
+
+  const ref = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const onClickDropdown = () => setIsOpen((cur) => !cur);
 
   return (
     <ThemeProvider theme={theme}>
@@ -107,11 +147,7 @@ const Layout = () => {
 
         <aside>
           <header className={styles.asideHeader}>
-            <button
-              onClick={() => {
-                navigate("/");
-              }}
-            >
+            <button onClick={() => navigate("/")}>
               <IconHome className="asideSvg" />
             </button>
             <a
@@ -122,9 +158,32 @@ const Layout = () => {
             >
               <IconGithub />
             </a>
-            <button className={cx(styles.profile, "profile")}>
-              <IconUser />
-            </button>
+
+            {isLogin ? (
+              <div className={styles.profileWrap}>
+                <button
+                  ref={ref}
+                  onClick={onClickDropdown}
+                  className={cx(styles.profile, "profile", {
+                    [styles.isOpen]: isOpen,
+                  })}
+                >
+                  <IconUser className={styles.userIcon} />
+                </button>
+                <div
+                  className={cx(styles.dropdownWrap, {
+                    [styles.isOpen]: isOpen,
+                  })}
+                >
+                  <button className={styles.login} onClick={logout}>
+                    로그아웃
+                  </button>
+                  <button>정보수정</button>
+                </div>
+              </div>
+            ) : (
+              <button onClick={() => navigate(`/login`)}>로그인</button>
+            )}
           </header>
           <Nav
             onClick={onChangeTheme}
@@ -139,9 +198,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
-{
-  /* <button>
-  <IconLogout />
-</button>; */
-}

@@ -78,21 +78,21 @@ const EmojiDropdown = ({ value = "", onClick, lock }: any) => {
       .map((emoji) => setEmoji(emoji.emoji));
   };
 
-  useEffect(() => {
-    emotionEmoji(value);
-  }, [value]);
-
   const onClickNewEmoji = (newEmojiValue: string) => {
     onClick(newEmojiValue);
     emotionEmoji(newEmojiValue);
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    emotionEmoji(value);
+  }, [value]);
+
   return (
     <div className={styles.dropdownWrap}>
       <button
         ref={ref}
-        className={cx(styles.dropdownButton, { [styles.isOpen]: isOpen })}
+        className={styles.dropdownButton}
         onClick={lock ? undefined : onClickDropdown}
       >
         {emoji ? emoji : <EmojiSmile />}

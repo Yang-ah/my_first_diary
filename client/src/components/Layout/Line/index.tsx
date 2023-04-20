@@ -2,8 +2,8 @@ import styled from "styled-components";
 import styles from "./line.module.scss";
 import cx from "classnames";
 import { useRecoilValue } from "recoil";
-import { onTrackerAtom } from "../../../atom";
-import { useState } from "react";
+import { onTrackerAtom } from "../../../status";
+import { useEffect, useState } from "react";
 import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
 import EmojiDropdown from "../../EmojiDropdown";
@@ -17,6 +17,11 @@ const LineWrap = styled.ul`
   }
   > li:nth-of-type(2) {
     border: 1px solid ${(props) => props.theme.PRIMARY_20};
+  }
+  .diarySubmitButton {
+    &:hover {
+      background-color: ${(props) => props.theme.PRIMARY_30};
+    }
   }
 `;
 
@@ -55,18 +60,17 @@ const Line = ({
   const isDiary = useMatch("/diary");
   const [onLock, setOnLock] = useState(true);
 
-  // 나중에 submit으로 바꾸기
-  const onClickLock = () => {
-    setOnLock((cur) => !cur);
-  };
+  const onClickLock = () => setOnLock((cur) => !cur);
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChange = (e: React.FormEvent<HTMLInputElement>) =>
     setNewDiary(e.currentTarget.value);
-  };
 
   const [newDiary, setNewDiary] = useState(diary);
   const [newExercise, setNewExercise] = useState(exercise);
   const [newEmotion, setNewEmotion] = useState(emotion);
+
+  useEffect(() => {}, []);
+  const onSubmitDiary = () => {};
 
   return (
     <>
@@ -78,13 +82,23 @@ const Line = ({
         <li className={styles.date}>{date}</li>
         <li className={styles.main}>
           {isDiary && (
-            <input
-              className={styles.diaryInput}
-              value={newDiary}
-              disabled={onLock}
-              onChange={onChange}
-              placeholder="오늘의 한 줄 일기를 써보세요."
-            />
+            <form className={styles.diaryForm}>
+              <input
+                className={styles.diaryInput}
+                value={newDiary}
+                disabled={onLock}
+                onChange={onChange}
+                placeholder="오늘의 한 줄 일기를 써보세요. 일기 작성 후 꼭 저장 버튼을 눌러주세요."
+              />
+              {onLock || (
+                <button
+                  className={cx(styles.diarySubmitButton, "diarySubmitButton")}
+                  onSubmit={onSubmitDiary}
+                >
+                  저장
+                </button>
+              )}
+            </form>
           )}
           {/*<Cell importance={3} lock={onLock} />*/}
         </li>

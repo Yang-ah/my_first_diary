@@ -3,7 +3,7 @@ import styles from "./add.module.scss";
 import cx from "classnames";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { thisMonthAtom } from "../../../atom";
+import { thisMonthAtom } from "../../../status";
 import { year } from "../../../hooks";
 
 const Container = styled.main`
@@ -92,7 +92,6 @@ const Add = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ form });
   };
 
   const onOption = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -106,7 +105,6 @@ const Add = () => {
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     setForm({ ...form, [name]: value });
-    console.log({ form });
   };
 
   const onClickCategory = (e: React.FormEvent<HTMLButtonElement>) => {

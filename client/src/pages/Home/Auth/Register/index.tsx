@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { register, IRegister } from "../../../../api/Auth";
 
 const Form = styled(motion.form)`
   input,
@@ -15,26 +16,21 @@ const Form = styled(motion.form)`
     color: white;
   }
 `;
-interface IUser {
-  username: string;
-  email: string;
-  password: string;
-}
 
 const Register = () => {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<IUser>({
-    username: "",
+  const [userInfo, setUserInfo] = useState<IRegister>({
     email: "",
     password: "",
+    username: "",
   });
 
   const PostJoin = async (e: any) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:4000/join", userInfo);
+    const response = await register(userInfo);
     if (response.status === 200) {
-      console.log(response);
-      alert("환영합니다 :) ");
+      alert("회원가입이 완료되었습니다. :)");
+      navigate("/login");
     }
   };
 

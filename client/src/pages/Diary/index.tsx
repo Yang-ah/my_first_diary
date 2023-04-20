@@ -1,13 +1,14 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { dataAtom, onTrackerAtom, thisMonthAtom } from "../../atom";
+import { dataAtom, onTrackerAtom, thisMonthAtom, IData } from "../../status";
 import { CheckBox, Line } from "../../components";
 import { year } from "../../hooks";
 import styles from "./diary.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cx from "classnames";
 import styled from "styled-components";
 import { IconDumbbell, IconLock } from "../../assets/icon";
 import { EmojiSmile } from "../../assets/emoji";
+import axios from "axios";
 
 const Header = styled.header`
   > p,
@@ -19,12 +20,22 @@ const Header = styled.header`
 
 const Diary = () => {
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [data, setData] = useRecoilState(dataAtom);
-
-  const month = useRecoilValue(thisMonthAtom);
+  const data = useRecoilValue(dataAtom);
+  const [month, setMonth] = useRecoilState(thisMonthAtom);
   const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
     month: "long",
   });
+  const [monthData, setMonthData] = useState<IData[] | any>(data[monthStr]);
+
+  const getMonthData = async () => {
+    const id = localStorage.getItem("TOKEN");
+    const response = await axios.get(`/month/${id}/${monthStr}`);
+    setMonthData(response.data);
+  };
+
+  useEffect(() => {
+    getMonthData();
+  }, [month, monthStr]);
 
   return (
     <>
@@ -63,11 +74,11 @@ const Diary = () => {
           )}
         </Header>
 
-        {data[monthStr] &&
-          data[monthStr].map((item) => {
+        {monthData &&
+          monthData.map((item: IData) => {
             return (
               <Line
-                key={"diary" + item.date}
+                key={`${monthStr}-${item.date}-${item.diary}-${item.emotion}-${item.exercise}`}
                 date={item.date}
                 diary={item.diary}
                 emotion={item.emotion}

@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.scss";
 import { useState } from "react";
-import axios from "axios";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { dataAtom, isLoginAtom } from "../../../../atom";
+import { dataAtom, isLoginAtom, usernameAtom } from "../../../../status";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { postLogin, ILogin } from "../../../../api/Auth";
 
 const Form = styled(motion.form)`
   input,
@@ -18,38 +18,29 @@ const Form = styled(motion.form)`
   }
 `;
 
-interface ILogin {
-  email: string;
-  password: string;
-}
-
 const Login = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useRecoilState(usernameAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
-  const [data, setData] = useRecoilState(dataAtom);
+  const setData = useSetRecoilState(dataAtom);
   const [userInfo, setUserInfo] = useState<ILogin>({
     email: "",
     password: "",
   });
 
-  const postLogin = async (
+  const signIn = async (
     e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
   ) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/login",
-        userInfo,
-        { withCredentials: true }
-      );
-
+      const response = await postLogin(userInfo);
       if (response.status === 200) {
         setIsLogin(true);
         setData(response.data.user.data);
+        setUsername(response.data.user.username);
         localStorage.setItem("TOKEN", response.data.user._id);
-
-        console.log("login", response.data.user.data);
+        navigate("/");
       } // TODO : error type이 any.... 이후에 해결하자
     } catch (error: any) {
       alert(error.response.data.errorMessage);
@@ -69,7 +60,7 @@ const Login = () => {
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
       className={styles.form}
-      onSubmit={postLogin}
+      onSubmit={signIn}
     >
       <div className={styles.inputWrap}>
         <input

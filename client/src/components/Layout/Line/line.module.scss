@@ -18,13 +18,28 @@
 
   > .main {
     border: 1px solid rgba(1, 1, 1, 0.2);
+    @include m.flex(flex-start);
+  }
+}
 
-    > .diaryInput {
-      width: 100%;
-      height: 100%;
-      background-color: transparent;
-      padding: 8px;
-    }
+.diaryForm {
+  @include m.flex(flex-start);
+  position: relative;
+  width: 100%;
+
+  > .diaryInput {
+    padding: 8px;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+
+  > .diarySubmitButton {
+    width: 40px;
+    margin-right: 8px;
+    padding: 8px 4px;
+    border-radius: 2px;
+    transition: 0.2s background-color ease-in;
   }
 }
 

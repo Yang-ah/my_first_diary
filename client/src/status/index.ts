@@ -35,6 +35,11 @@ interface ITracker {
   [tracker: string]: boolean;
 }
 
+export const usernameAtom = atom({
+  key: "user",
+  default: "",
+});
+
 export const isLoginAtom = atom({
   key: "isLogin",
   default: false,
@@ -56,7 +61,7 @@ export const thisMonthAtom = atom({
   default: new Date().getMonth(),
 });
 
-interface IData {
+export interface IData {
   date: number;
   diary: string;
   emotion: string;

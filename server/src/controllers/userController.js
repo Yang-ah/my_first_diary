@@ -33,7 +33,6 @@ const setInitData = () => {
 };
 
 export const postJoin = async (req, res) => {
-  // console.log(req.body);
   try {
     const { username, email, password } = req.body;
     await User.create({
@@ -48,12 +47,6 @@ export const postJoin = async (req, res) => {
     return res.status(400).send({ errorMessage: error._message });
   }
 };
-
-// export const getLogin = async (req, res) => {
-//   const id = req.headers.authorization;
-//   const user = await User.findOne({ id });
-//   console.log(user);
-// };
 
 export const postLogin = async (req, res) => {
   const { email, password } = req.body;
