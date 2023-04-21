@@ -1,10 +1,11 @@
 import { useState } from "react";
+import dayjs from "dayjs";
 import styles from "./add.module.scss";
-import cx from "classnames";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { thisMonthAtom } from "../../../status";
-import { year } from "../../../hooks";
+import cx from "classnames";
+import { postSchedule } from "../../../api/Schedule";
+import { getUserId } from "../../../hooks";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.main`
   color: ${(props) => props.theme.SECONDARY_10};
@@ -67,15 +68,14 @@ interface IOption {
   [key: string]: boolean;
 }
 
-const Add = () => {
-  const month = useRecoilValue(thisMonthAtom);
-  const date = (month + 1).toString().padStart(2, "0");
-  const day = new Date().getDate().toString().padStart(2, "0");
-  const today = `${year}-${date}-${day}`;
+const Add = ({ fetchMonthData }: any) => {
+  const navigate = useNavigate();
+  const goScheduler = () => navigate("/scheduler");
+  const today = dayjs().format("YYYY-MM-DD");
   const now = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
   const [form, setForm] = useState({
-    category: "Work",
+    category: "work",
     date: today,
     content: "",
     importance: 4,
@@ -92,6 +92,21 @@ const Add = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const response = await postSchedule({
+      id: getUserId(),
+      category: form.category,
+      dateString: form.date,
+      data: {
+        content: form.content,
+        importance: form.importance,
+        time: form.time,
+        with: form.who,
+        place: form.place,
+      },
+    });
+    fetchMonthData();
+    goScheduler();
+    alert(response.data);
   };
 
   const onOption = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -121,10 +136,10 @@ const Add = () => {
           type="button"
           id="work"
           name="category"
-          value="Work"
+          value="work"
           onClick={onClickCategory}
           className={
-            form.category === "Work" ? "selected" : styles.categoryButton
+            form.category === "work" ? "selected" : styles.categoryButton
           }
         >
           Work
@@ -133,10 +148,10 @@ const Add = () => {
           type="button"
           id="plan"
           name="category"
-          value="Plan"
+          value="plan"
           onClick={onClickCategory}
           className={
-            form.category === "Plan" ? "selected" : styles.categoryButton
+            form.category === "plan" ? "selected" : styles.categoryButton
           }
         >
           Plan

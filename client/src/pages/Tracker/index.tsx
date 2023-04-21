@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { dataAtom } from "../../status";
+import { dataAtom } from "../../state";
 import styled from "styled-components";
 import styles from "./tracker.module.scss";
 

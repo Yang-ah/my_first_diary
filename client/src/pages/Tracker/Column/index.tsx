@@ -3,7 +3,7 @@ import cx from "classnames";
 import styles from "./column.module.scss";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { onTrackerAtom } from "../../../status";
+import { onTrackerAtom } from "../../../state";
 
 const Article = styled.article`
   > header,

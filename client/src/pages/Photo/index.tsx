@@ -1,6 +1,6 @@
 import styles from "./photo.module.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { dataAtom, thisMonthAtom } from "../../status";
+import { dataAtom, thisMonthAtom } from "../../state";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IconModify, IconPlus } from "../../assets/icon";

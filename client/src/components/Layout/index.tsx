@@ -20,7 +20,7 @@ import {
   isLoginAtom,
   thisMonthAtom,
   usernameAtom,
-} from "../../status";
+} from "../../state";
 import cx from "classnames";
 import { getLogin } from "../../api/Auth";
 

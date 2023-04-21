@@ -1,15 +1,14 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { dataAtom, onTrackerAtom, thisMonthAtom, IData } from "../../status";
-import { CheckBox, Line } from "../../components";
-import { year } from "../../hooks";
-import styles from "./diary.module.scss";
+import { dataAtom, onTrackerAtom, thisMonthAtom, IData } from "../../state";
 import { useEffect, useState } from "react";
-import cx from "classnames";
-import styled from "styled-components";
-import { IconDumbbell, IconLock } from "../../assets/icon";
-import { EmojiSmile } from "../../assets/emoji";
-import axios from "axios";
 import { getMonthData } from "../../api/Data";
+import { useRecoilValue } from "recoil";
+import { EmojiSmile } from "../../assets/emoji";
+import { CheckBox, Line } from "../../components";
+import { getUserId, monthStr } from "../../hooks";
+import { IconDumbbell, IconLock } from "../../assets/icon";
+import styles from "./diary.module.scss";
+import styled from "styled-components";
+import cx from "classnames";
 
 const Header = styled.header`
   > p,
@@ -20,23 +19,22 @@ const Header = styled.header`
 `;
 
 const Diary = () => {
-  const onTracker = useRecoilValue(onTrackerAtom);
   const data = useRecoilValue(dataAtom);
-  const [month, setMonth] = useRecoilState(thisMonthAtom);
-  const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
-    month: "long",
-  });
-  const [monthData, setMonthData] = useState<IData[] | any>(data[monthStr]);
+  const month = useRecoilValue(thisMonthAtom);
+  const onTracker = useRecoilValue(onTrackerAtom);
+  const [monthData, setMonthData] = useState<IData[] | any>(
+    data[monthStr(month)]
+  );
 
   const fetchMonthData = async () => {
-    const id = localStorage.getItem("TOKEN") + "";
-    const response = await getMonthData(id, monthStr);
+    const id = getUserId();
+    const response = await getMonthData(id, monthStr(month));
     setMonthData(response.data);
   };
 
   useEffect(() => {
     fetchMonthData();
-  }, [month, monthStr]);
+  }, [month]);
 
   return (
     <>
@@ -79,12 +77,14 @@ const Diary = () => {
           monthData.map((item: IData) => {
             return (
               <Line
-                key={`${monthStr}-${item.date}-${item.diary}-${item.emotion}-${item.exercise}`}
+                key={`diary-${monthStr(month)}-${item.date}-${item.diary}-${
+                  item.emotion
+                }-${item.exercise}`}
                 date={item.date}
                 diary={item.diary}
                 emotion={item.emotion}
                 exercise={item.exercise}
-                month={monthStr}
+                month={monthStr(month)}
                 fetchMonthData={fetchMonthData}
               ></Line>
             );

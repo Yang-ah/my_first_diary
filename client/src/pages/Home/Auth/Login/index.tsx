@@ -3,7 +3,7 @@ import styles from "./login.module.scss";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { dataAtom, isLoginAtom, usernameAtom } from "../../../../status";
+import { dataAtom, isLoginAtom, usernameAtom } from "../../../../state";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { postLogin, ILogin } from "../../../../api/Auth";
 

@@ -31,10 +31,6 @@ const setInitData = () => {
   return result;
 };
 
-interface ITracker {
-  [tracker: string]: boolean;
-}
-
 export const usernameAtom = atom({
   key: "user",
   default: "",
@@ -45,6 +41,9 @@ export const isLoginAtom = atom({
   default: false,
 });
 
+interface ITracker {
+  [tracker: string]: boolean;
+}
 export const onTrackerAtom = atom<ITracker>({
   key: "tracker",
   default: {
@@ -61,6 +60,14 @@ export const thisMonthAtom = atom({
   default: new Date().getMonth(),
 });
 
+export interface ISchedule {
+  content: string;
+  importance: number;
+  time?: string;
+  with?: string;
+  place?: string;
+}
+
 export interface IData {
   date: number;
   diary: string;
@@ -68,8 +75,8 @@ export interface IData {
   exercise: boolean;
   photoUrl: string;
   schedule: {
-    plan: [];
-    work: [];
+    plan: ISchedule[];
+    work: ISchedule[];
   };
 }
 
@@ -81,18 +88,3 @@ export const dataAtom = atom<IYearData>({
   key: "data",
   default: setInitData(),
 });
-
-// export const getDataSelector = selector<IYearData>({
-//   key: "data/get",
-//   get: async ({ get }) => {
-//     try {
-//       const { data } = await axios.get("http://localhost:4000/api/planner");
-//       return data.planner;
-//     } catch (err) {
-//       throw err;
-//     }
-//   },
-//   set: ({ set }, newValue) => {
-//     set(dataAtom, newValue);
-//   },
-// });

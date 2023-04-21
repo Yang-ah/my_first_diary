@@ -3,7 +3,7 @@ import styles from "./checkBox.module.scss";
 import { IconCheck } from "../../../assets/icon";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { onTrackerAtom } from "../../../status";
+import { onTrackerAtom } from "../../../state";
 import cx from "classnames";
 interface ICheckBox {
   children: string;

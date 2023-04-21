@@ -1,9 +1,9 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { dataAtom, onTrackerAtom, thisMonthAtom } from "../../status";
+import { useRecoilValue } from "recoil";
+import { IData, dataAtom, onTrackerAtom, thisMonthAtom } from "../../state";
 import { CheckBox, Line } from "../../components";
-import { year } from "../../hooks";
+import { getUserId, monthStr } from "../../hooks";
 import styles from "./scheduler.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cx from "classnames";
 import styled from "styled-components";
 import { IconDumbbell, IconLock, IconPlus } from "../../assets/icon";
@@ -11,6 +11,7 @@ import { EmojiSmile } from "../../assets/emoji";
 import { useMatch, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Add from "./Add";
+import { getMonthData } from "../../api/Data";
 
 const Header = styled.header`
   > p,
@@ -33,19 +34,27 @@ const AddPage = styled(motion.div)`
 `;
 
 const Scheduler = () => {
-  const addMatch = useMatch("/scheduler/add");
   const navigate = useNavigate();
-
-  const onTracker = useRecoilValue(onTrackerAtom);
-  const [data, setData] = useRecoilState(dataAtom);
-
+  const addMatch = useMatch("/scheduler/add");
+  const data = useRecoilValue(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
-  const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
-    month: "long",
-  });
+  const onTracker = useRecoilValue(onTrackerAtom);
+  const [monthData, setMonthData] = useState<IData[] | any>(
+    data[monthStr(month)]
+  );
 
   const clickedAdd = () => navigate("/scheduler/add");
   const goScheduler = () => navigate("/scheduler");
+
+  const fetchMonthData = async () => {
+    const id = getUserId();
+    const response = await getMonthData(id, monthStr(month));
+    setMonthData(response.data);
+  };
+
+  useEffect(() => {
+    fetchMonthData();
+  }, [month]);
 
   return (
     <>
@@ -98,16 +107,18 @@ const Scheduler = () => {
           )}
         </Header>
         <section>
-          {data[monthStr] &&
-            data[monthStr].map((item) => {
+          {monthData &&
+            monthData.map((item: IData) => {
               return (
                 <Line
-                  key={"diary" + item.date}
+                  key={`schedule-${monthStr(month)}-${item.date}
+                  -${item.emotion}-${item.exercise}`}
                   date={item.date}
+                  month={monthStr(month)}
                   emotion={item.emotion}
                   exercise={item.exercise}
-                  plan={item.schedule.plan}
-                  work={item.schedule.work}
+                  planArray={item.schedule.plan}
+                  workArray={item.schedule.work}
                 ></Line>
               );
             })}
@@ -122,7 +133,7 @@ const Scheduler = () => {
               animate={{ opacity: 1 }}
             ></Overlay>
             <AddPage layoutId="addPage" className={styles.addPage}>
-              <Add />
+              <Add fetchMonthData={fetchMonthData} />
             </AddPage>
           </>
         )}

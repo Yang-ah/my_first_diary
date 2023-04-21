@@ -2,7 +2,7 @@ import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styles from "./home.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
-import { isLoginAtom, usernameAtom } from "../../status";
+import { isLoginAtom, usernameAtom } from "../../state";
 import { useRecoilValue } from "recoil";
 
 const Wrap = styled(motion.section)`

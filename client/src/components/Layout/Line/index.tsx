@@ -2,7 +2,7 @@ import styled from "styled-components";
 import styles from "./line.module.scss";
 import cx from "classnames";
 import { useRecoilValue } from "recoil";
-import { onTrackerAtom } from "../../../status";
+import { onTrackerAtom, ISchedule } from "../../../state";
 import { useEffect, useState } from "react";
 import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
@@ -44,9 +44,9 @@ interface ILine {
   diary?: string;
   emotion: string;
   exercise: boolean;
-  plan?: object[];
-  work?: object[];
-  month?: string;
+  planArray?: ISchedule[];
+  workArray?: ISchedule[];
+  month: string;
   // onClick: React.MouseEventHandler<HTMLButtonElement>;
   // onLockMain: any;
 }
@@ -55,12 +55,12 @@ const Line = ({
   fetchMonthData,
   month = "January",
   date,
-  children,
   className,
   diary = "",
   emotion = "",
   exercise = false,
-  ...props
+  planArray,
+  workArray,
 }: ILine) => {
   const onTracker = useRecoilValue(onTrackerAtom);
   const isDiary = useMatch("/diary");
@@ -152,7 +152,38 @@ const Line = ({
         </form>
       )}
 
-      {!isDiary && <main className={cx(styles.main, "main")}></main>}
+      {!isDiary && (
+        <main className={cx(styles.main, "main")}>
+          {planArray?.length !== 0 &&
+            planArray?.map((plan, index) => {
+              return (
+                <Cell
+                  key={`plan-${index}-${plan.importance}-${plan.content}`}
+                  index={index}
+                  schedule={plan}
+                  lock={onLock}
+                  category="plan"
+                  month={month}
+                  date={+date}
+                />
+              );
+            })}
+          {workArray?.length !== 0 &&
+            workArray?.map((work, index) => {
+              return (
+                <Cell
+                  key={`work-${index}-${work.importance}-${work.content}`}
+                  index={index}
+                  schedule={work}
+                  lock={onLock}
+                  category="work"
+                  month={month}
+                  date={+date}
+                />
+              );
+            })}
+        </main>
+      )}
 
       {onTracker.tracker && (
         <TrackerWrap className={cx(styles.trackerButtons, "tracker")}>
