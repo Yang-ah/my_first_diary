@@ -1,12 +1,12 @@
-import styles from "./photo.module.scss";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { dataAtom, thisMonthAtom } from "../../state";
 import { useEffect, useState } from "react";
+import { IData, dataAtom, thisMonthAtom } from "../../state";
+import { useRecoilValue } from "recoil";
+import { getUserId, monthStr, year } from "../../hooks";
+import { getMonthData } from "../../api/Data";
+import PhotoCell from "./PhotoCell";
+import styles from "./photo.module.scss";
 import styled from "styled-components";
-import { IconModify, IconPlus } from "../../assets/icon";
 import cx from "classnames";
-import { year } from "../../hooks";
-import axios from "axios";
 
 const Main = styled.main`
   color: ${(props) => props.theme.PRIMARY_50};
@@ -18,42 +18,24 @@ const Main = styled.main`
   }
 `;
 
-interface ILabel {
-  photoUrl?: string;
-}
-
-const Label = styled.label<ILabel>`
-  &.nonePhoto {
-    background-color: ${(props) => props.theme.PRIMARY_10};
-    > .add {
-      background-color: ${(props) => props.theme.SECONDARY_30};
-    }
-  }
-
-  // have a photo
-  &:not(.nonePhoto) {
-    color: white;
-    background: no-repeat center/120% url(${(props) => props.photoUrl});
-    transition: 0.2s opacity ease-in;
-
-    &:hover {
-      opacity: 0.4;
-    }
-  }
-`;
+const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 const Photo = () => {
-  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const [data, setData] = useRecoilState(dataAtom);
+  const data = useRecoilValue(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
-  const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
-    month: "long",
-  });
-
   const [otherDates, setOtherDates] = useState({
     prevDates: [1, 2],
     nextDates: [3, 4],
   });
+  const [monthData, setMonthData] = useState<IData[] | any>(
+    data[monthStr(month)]
+  );
+
+  const fetchMonthData = async () => {
+    const id = getUserId();
+    const response = await getMonthData(id, monthStr(month));
+    setMonthData(response.data);
+  };
 
   const changeOtherDates = () => {
     const prev: number[] = [];
@@ -78,6 +60,7 @@ const Photo = () => {
 
   useEffect(() => {
     changeOtherDates();
+    fetchMonthData();
   }, [data, month]);
 
   return (
@@ -101,29 +84,16 @@ const Photo = () => {
           );
         })}
 
-        {data[monthStr] &&
-          data[monthStr].map((item) => {
+        {monthData &&
+          monthData.map((item: IData) => {
             return (
-              <form
-                encType="multipart/form-data"
-                className={styles.dateWrap}
-                key={monthStr + item.date}
-              >
-                <Label
-                  photoUrl={item.photoUrl}
-                  className={item.photoUrl || "nonePhoto"}
-                >
-                  <p>{item.date + ""}</p>
-                  <input type="file" accept="image/*" hidden />
-
-                  <button
-                    type="button"
-                    className={cx(item.photoUrl ? styles.modify : "add")}
-                  >
-                    {item.photoUrl ? <IconModify /> : <IconPlus />}
-                  </button>
-                </Label>
-              </form>
+              <PhotoCell
+                key={monthStr(month) + item.date}
+                item={item}
+                month={monthStr(month)}
+                id={getUserId()}
+                fetchMonthData={fetchMonthData}
+              />
             );
           })}
 

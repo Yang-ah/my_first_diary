@@ -1,0 +1,50 @@
+@use "../../../styles/mixins" as m;
+
+.dateWrap {
+  @include m.square();
+
+  > label {
+    @include m.square();
+    display: block;
+    position: relative;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      > button {
+        opacity: 1;
+      }
+    }
+
+    > button {
+      @include m.flex();
+      position: absolute;
+      transition: 0.2s opacity ease-in;
+      opacity: 0.2;
+
+      > svg {
+        padding-left: 1px;
+        width: 12px;
+      }
+
+      &:not(.modify) {
+        bottom: 12px;
+        right: 12px;
+        padding: 4px;
+        border-radius: 50%;
+      }
+
+      &.modify {
+        background-color: transparent;
+        top: 5px;
+        right: 5px;
+
+        > svg {
+          fill: white;
+          width: 16px;
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,8 @@ import { patchDiary } from "../controllers/diaryController.js";
 import { getMonthData } from "../controllers/monthDataController.js";
 import { patchExercise } from "../controllers/exerciseController.js";
 import { patchEmotion } from "../controllers/emotionController.js";
+import { postPhotoUrl } from "../controllers/photoUrlController.js";
+import { uploadFiles } from "../middlewares.js";
 
 const rootRouter = express.Router();
 
@@ -27,7 +29,7 @@ rootRouter
 rootRouter.route("/schedule").post(postSchedule);
 rootRouter.route("/login/:id").get(getLogin);
 rootRouter.route("/month/:id/:month").get(getMonthData);
-
-// rootRouter.route('/api/posts/:year/:month').patch();
-
+rootRouter
+  .route("/photo/:id/:month/:date")
+  .post(uploadFiles.single("photoUrl"), postPhotoUrl);
 export default rootRouter;

@@ -6,6 +6,7 @@ import rootRouter from "./routers/rootRouter.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares.js";
+import multer from "multer";
 
 const PORT = 4000;
 const app = express();
