@@ -1,97 +1,57 @@
 import { useEffect, useRef, useState } from "react";
-import { EmojiTired } from "../../assets/emoji";
-import { EmojiSurprise } from "../../assets/emoji";
-import { EmojiSmileBeam } from "../../assets/emoji";
-import { EmojiSadTear } from "../../assets/emoji";
-import { EmojiRollingEyes } from "../../assets/emoji";
-import { EmojiMehBlank } from "../../assets/emoji";
-import { EmojiMeh } from "../../assets/emoji";
-import { EmojiGrinTongueWink } from "../../assets/emoji";
-import { EmojiGrinTongueSquint } from "../../assets/emoji";
-import { EmojiGrinTongue } from "../../assets/emoji";
-import { EmojiGrinStars } from "../../assets/emoji";
-import { EmojiGrinSquintTears } from "../../assets/emoji";
-import { EmojiGrinSquint } from "../../assets/emoji";
-import { EmojiGrinHearts } from "../../assets/emoji";
-import { EmojiGrinBeamSweat } from "../../assets/emoji";
-import { EmojiGrinBeam } from "../../assets/emoji";
-import { EmojiGrin } from "../../assets/emoji";
-import { EmojiGrimace } from "../../assets/emoji";
-import { EmojiFrownOpen } from "../../assets/emoji";
-import { EmojiFrown } from "../../assets/emoji";
-import { EmojiFlushed } from "../../assets/emoji";
-import { EmojiDizzy } from "../../assets/emoji";
-import { EmojiAngry } from "../../assets/emoji";
 import { EmojiSmile } from "../../assets/emoji";
-// import { EmojiLaughSquint } from "../../assets/emoji";
 
 import styles from "./emojiDropdown.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
 import { Chevron } from "../../assets/icon";
+import { emojis } from "../../utils/emojiData";
+import convertEmoji from "../../utils/convertEmoji";
 
-const emojis = [
-  { value: "smile", emoji: <EmojiSmile /> },
-  { value: "grin", emoji: <EmojiGrin /> },
-  { value: "smileBeam", emoji: <EmojiSmileBeam /> },
-  { value: "grinBeam", emoji: <EmojiGrinBeam /> },
-  { value: "grinSquint", emoji: <EmojiGrinSquint /> },
-  { value: "grinStars", emoji: <EmojiGrinStars /> },
-  { value: "grinHearts", emoji: <EmojiGrinHearts /> },
-  // { value: "laughSquint", emoji: <EmojiLaughSquint /> },
-  { value: "grinTongue", emoji: <EmojiGrinTongue /> },
-  { value: "grinTongueWink", emoji: <EmojiGrinTongueWink /> },
-  { value: "grinTongueSquint", emoji: <EmojiGrinTongueSquint /> },
-  { value: "grinBeamSweat", emoji: <EmojiGrinBeamSweat /> },
-  { value: "grinSquintTears", emoji: <EmojiGrinSquintTears /> },
-  { value: "mehBlank", emoji: <EmojiMehBlank /> },
-  { value: "meh", emoji: <EmojiMeh /> },
-  { value: "surprise", emoji: <EmojiSurprise /> },
-  { value: "sadTear", emoji: <EmojiSadTear /> },
-  { value: "tired", emoji: <EmojiTired /> },
-  { value: "grinGrimace", emoji: <EmojiGrimace /> },
-  { value: "flushed", emoji: <EmojiFlushed /> },
-  { value: "rollingEyes", emoji: <EmojiRollingEyes /> },
-  { value: "frownOpen", emoji: <EmojiFrownOpen /> },
-  { value: "frown", emoji: <EmojiFrown /> },
-  { value: "dizzy", emoji: <EmojiDizzy /> },
-  { value: "angry", emoji: <EmojiAngry /> },
-];
+const DropdownWrap = styled.div`
+  border: 1px solid ${(props) => props.theme.PRIMARY_20};
+  border-radius: 5px;
 
-const EmojiWrap = styled.div`
-  > button {
-    svg {
-      fill: ${(props) => props.theme.SECONDARY_30};
+  > .emojiWrap {
+    border: 1px solid ${(props) => props.theme.PRIMARY_20};
+    > button {
+      svg {
+        fill: ${(props) => props.theme.SECONDARY_30};
+        transition: 0.2s fill ease-in;
+      }
+      &:hover {
+        svg {
+          fill: ${(props) => props.theme.SECONDARY_50};
+        }
+      }
     }
   }
 `;
 
-// onClick : Line에서 보내는 함수
-const EmojiDropdown = ({ stateValue = "", setState, lock }: any) => {
+interface IEmojiDropdown {
+  stateValue: string;
+  setState: any;
+  lock: boolean;
+}
+
+const EmojiDropdown = ({ stateValue = "", setState, lock }: IEmojiDropdown) => {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [emoji, setEmoji] = useState(stateValue); // Emoji Icon
+  const [emoji, setEmoji] = useState<any>(); // Emoji Icon
   const onClickDropdown = () => setIsOpen((cur) => !cur);
 
-  const covertValueToEmoji = (emojiValue: string) => {
-    emojis
-      .filter((emoji) => emoji.value === emojiValue)
-      .map((emoji) => setEmoji(emoji.emoji));
-  };
-
   const onChangeValue = (value: string) => {
-    setState(value);
-    setEmoji(value);
-    covertValueToEmoji(value);
+    setState(value); // Emoji string(value)
+    setEmoji(convertEmoji(value)); // Emoji Icon
     setIsOpen(false);
   };
 
   useEffect(() => {
-    covertValueToEmoji(stateValue);
+    setEmoji(convertEmoji(stateValue));
   }, [stateValue]);
 
   return (
-    <div className={styles.dropdownWrap}>
+    <DropdownWrap className={styles.dropdownWrap}>
       <button
         ref={ref}
         className={styles.dropdownButton}
@@ -100,20 +60,24 @@ const EmojiDropdown = ({ stateValue = "", setState, lock }: any) => {
         {emoji ? emoji : <EmojiSmile />}
         {lock || <Chevron className={styles.chevron} />}
       </button>
-      <EmojiWrap className={cx(styles.emojiWrap, { [styles.isOpen]: isOpen })}>
-        {emojis.map((emoji) => {
+      <div
+        className={cx("emojiWrap", styles.emojiWrap, {
+          [styles.isOpen]: isOpen,
+        })}
+      >
+        {emojis.map((emoji, index) => {
           return (
             <button
-              value={emoji.value}
-              key={emoji.value}
-              onClick={() => onChangeValue(emoji.value)}
+              key={emoji.emojiValue}
+              value={emoji.emojiValue}
+              onClick={() => onChangeValue(emoji.emojiValue)}
             >
               {emoji.emoji}
             </button>
           );
         })}
-      </EmojiWrap>
-    </div>
+      </div>
+    </DropdownWrap>
   );
 };
 export default EmojiDropdown;

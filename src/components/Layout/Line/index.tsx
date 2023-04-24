@@ -31,7 +31,7 @@ const TrackerWrap = styled.article`
   svg {
     fill: ${(props) => props.theme.SECONDARY_30};
   }
-  button {
+  > button {
     border: 1px solid ${(props) => props.theme.PRIMARY_20};
   }
 `;
@@ -196,7 +196,6 @@ const Line = ({
           <EmojiDropdown
             stateValue={newEmotion}
             lock={onLock}
-            onClickEmotion={onClickEmotion}
             setState={setNewEmotion}
           />
 

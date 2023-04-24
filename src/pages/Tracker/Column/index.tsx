@@ -4,6 +4,7 @@ import styles from "./column.module.scss";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../../state";
+import convertEmoji from "../../../utils/convertEmoji";
 
 const Article = styled.article`
   > header,
@@ -61,7 +62,7 @@ const Column = ({ children, month, className }: IColumn) => {
                 key={month + child.date}
               >
                 <li className={cx({ [styles.hidden]: !onTracker.emotion })}>
-                  {child.emotion ? child.emotion : "·"}
+                  {child.emotion ? convertEmoji(child.emotion) : "·"}
                 </li>
 
                 <li className={cx({ [styles.hidden]: !onTracker.exercise })}>

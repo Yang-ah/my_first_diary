@@ -119,6 +119,7 @@ const Scheduler = () => {
                   exercise={item.exercise}
                   planArray={item.schedule.plan}
                   workArray={item.schedule.work}
+                  fetchMonthData={fetchMonthData}
                 ></Line>
               );
             })}
