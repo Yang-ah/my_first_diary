@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { IconModify, IconPlus } from "../../../assets/icon";
-import { postPhoto } from "../../../api/Photo";
 import styled from "styled-components";
 import styles from "./photoCell.module.scss";
 import cx from "classnames";
@@ -42,18 +41,7 @@ const PhotoCell = ({ item, month, id }: any) => {
   const onChange = async () => {
     const reader = new FileReader();
     reader.readAsDataURL(imgRef.current.files[0]);
-    reader.onload = () => {
-      setNewImgUrl(reader.result + "");
-    };
-    const formData = new FormData();
-    formData.append("photoUrl", imgRef.current.files[0]);
-    const response = await postPhoto({
-      id: id,
-      file: formData,
-      month: month,
-      date: item.date,
-    });
-    alert(response.data);
+    reader.onload = () => setNewImgUrl(reader.result + "");
   };
 
   return (

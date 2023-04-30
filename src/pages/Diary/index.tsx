@@ -1,6 +1,5 @@
 import { dataAtom, onTrackerAtom, thisMonthAtom, IData } from "../../state";
 import { useEffect, useState } from "react";
-import { getMonthData } from "../../api/Data";
 import { useRecoilValue } from "recoil";
 import { EmojiSmile } from "../../assets/emoji";
 import { CheckBox, Line } from "../../components";
@@ -25,16 +24,6 @@ const Diary = () => {
   const [monthData, setMonthData] = useState<IData[] | any>(
     data[monthStr(month)]
   );
-
-  const fetchMonthData = async () => {
-    const id = getUserId();
-    const response = await getMonthData(id, monthStr(month));
-    setMonthData(response.data);
-  };
-
-  useEffect(() => {
-    fetchMonthData();
-  }, [month]);
 
   return (
     <>
@@ -85,7 +74,6 @@ const Diary = () => {
                 emotion={item.emotion}
                 exercise={item.exercise}
                 month={monthStr(month)}
-                fetchMonthData={fetchMonthData}
               ></Line>
             );
           })}

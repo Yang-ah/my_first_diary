@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { IData, dataAtom, thisMonthAtom } from "../../state";
 import { useRecoilValue } from "recoil";
 import { getUserId, monthStr, year } from "../../hooks";
-import { getMonthData } from "../../api/Data";
 import PhotoCell from "./PhotoCell";
 import styles from "./photo.module.scss";
 import styled from "styled-components";
@@ -31,12 +30,6 @@ const Photo = () => {
     data[monthStr(month)]
   );
 
-  const fetchMonthData = async () => {
-    const id = getUserId();
-    const response = await getMonthData(id, monthStr(month));
-    setMonthData(response.data);
-  };
-
   const changeOtherDates = () => {
     const prev: number[] = [];
     const next: number[] = [];
@@ -60,8 +53,7 @@ const Photo = () => {
 
   useEffect(() => {
     changeOtherDates();
-    fetchMonthData();
-  }, [data, month]);
+  }, [month]);
 
   return (
     <Main className={styles.wrap}>
@@ -92,7 +84,6 @@ const Photo = () => {
                 item={item}
                 month={monthStr(month)}
                 id={getUserId()}
-                fetchMonthData={fetchMonthData}
               />
             );
           })}

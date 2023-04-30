@@ -8,9 +8,6 @@ import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
 import EmojiDropdown from "../../EmojiDropdown";
 import Cell from "../../../pages/Scheduler/Cell";
-import { patchDiary } from "../../../api/Diary";
-import { patchExercise } from "../../../api/Exercise";
-import { patchEmotion } from "../../../api/Emotion";
 
 const LineWrap = styled.section`
   .date {
@@ -75,53 +72,6 @@ const Line = ({
   const [newDiary, setNewDiary] = useState(diary);
   const [newEmotion, setNewEmotion] = useState(emotion);
 
-  const onSubmitDiary = async (e: any) => {
-    e.preventDefault();
-    const response = await patchDiary({
-      id: id,
-      month: month,
-      date: +date,
-      diary: newDiary,
-    });
-
-    setNewDiary("");
-    setOnLock(true);
-    await fetchMonthData();
-    alert(response.data);
-  };
-
-  const onClickExercise = async () => {
-    const response = await patchExercise({
-      id: id,
-      month: month,
-      date: +date,
-      exercise: !exercise,
-    });
-
-    setOnLock(true);
-    await fetchMonthData();
-    alert(response.data);
-  };
-
-  const onClickEmotion = async () => {
-    const response = await patchEmotion({
-      id: id,
-      month: month,
-      date: +date,
-      emotion: newEmotion,
-    });
-
-    setOnLock(true);
-    await fetchMonthData();
-    alert(response.data);
-  };
-
-  useEffect(() => {
-    if (emotion !== newEmotion) {
-      onClickEmotion();
-    }
-  }, [newEmotion]);
-
   return (
     <LineWrap
       className={cx(className, styles.wrap, {
@@ -130,10 +80,7 @@ const Line = ({
     >
       <div className={cx(styles.date, "date")}>{date}</div>
       {isDiary && (
-        <form
-          className={cx(styles.diaryForm, styles.main, "main")}
-          onSubmit={onSubmitDiary}
-        >
+        <form className={cx(styles.diaryForm, styles.main, "main")}>
           <input
             className={styles.diaryInput}
             value={newDiary}
@@ -144,7 +91,6 @@ const Line = ({
           {onLock || (
             <button
               className={cx(styles.diarySubmitButton, "diarySubmitButton")}
-              onClick={onSubmitDiary}
             >
               저장
             </button>
@@ -187,10 +133,7 @@ const Line = ({
 
       {onTracker.tracker && (
         <TrackerWrap className={cx(styles.trackerButtons, "tracker")}>
-          <button
-            className={styles.exercise}
-            onClick={onLock ? undefined : onClickExercise}
-          >
+          <button className={styles.exercise}>
             {exercise ? <IconDumbbell /> : "-"}
           </button>
           <EmojiDropdown

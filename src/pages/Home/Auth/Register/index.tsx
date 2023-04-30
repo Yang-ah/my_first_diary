@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { register, IRegister } from "../../../../api/Auth";
 
 const Form = styled(motion.form)`
   input,
@@ -19,20 +18,11 @@ const Form = styled(motion.form)`
 
 const Register = () => {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<IRegister>({
+  const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
     username: "",
   });
-
-  const PostJoin = async (e: any) => {
-    e.preventDefault();
-    const response = await register(userInfo);
-    if (response.status === 200) {
-      alert("회원가입이 완료되었습니다. :)");
-      navigate("/login");
-    }
-  };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
@@ -47,7 +37,6 @@ const Register = () => {
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
       className={styles.form}
-      onSubmit={PostJoin}
     >
       <div className={styles.inputWrap}>
         <input

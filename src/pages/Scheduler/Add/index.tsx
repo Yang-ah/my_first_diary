@@ -3,8 +3,6 @@ import dayjs from "dayjs";
 import styles from "./add.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
-import { postSchedule } from "../../../api/Schedule";
-import { getUserId } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.main`
@@ -90,25 +88,6 @@ const Add = ({ fetchMonthData }: any) => {
     who: false,
   });
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const response = await postSchedule({
-      id: getUserId(),
-      category: form.category,
-      dateString: form.date,
-      data: {
-        content: form.content,
-        importance: form.importance,
-        time: form.time,
-        with: form.who,
-        place: form.place,
-      },
-    });
-    fetchMonthData();
-    goScheduler();
-    alert(response.data);
-  };
-
   const onOption = (e: React.FormEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
 
@@ -130,7 +109,7 @@ const Add = ({ fetchMonthData }: any) => {
 
   return (
     <Container className={styles.container}>
-      <form className={styles.form} id="addForm" onSubmit={onSubmit}>
+      <form className={styles.form} id="addForm">
         <label>Category</label>
         <Category
           type="button"

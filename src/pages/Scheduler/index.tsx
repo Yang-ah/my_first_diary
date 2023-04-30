@@ -11,7 +11,6 @@ import { EmojiSmile } from "../../assets/emoji";
 import { useMatch, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Add from "./Add";
-import { getMonthData } from "../../api/Data";
 
 const Header = styled.header`
   > p,
@@ -45,16 +44,6 @@ const Scheduler = () => {
 
   const clickedAdd = () => navigate("/scheduler/add");
   const goScheduler = () => navigate("/scheduler");
-
-  const fetchMonthData = async () => {
-    const id = getUserId();
-    const response = await getMonthData(id, monthStr(month));
-    setMonthData(response.data);
-  };
-
-  useEffect(() => {
-    fetchMonthData();
-  }, [month]);
 
   return (
     <>
@@ -119,7 +108,6 @@ const Scheduler = () => {
                   exercise={item.exercise}
                   planArray={item.schedule.plan}
                   workArray={item.schedule.work}
-                  fetchMonthData={fetchMonthData}
                 ></Line>
               );
             })}
@@ -134,7 +122,7 @@ const Scheduler = () => {
               animate={{ opacity: 1 }}
             ></Overlay>
             <AddPage layoutId="addPage" className={styles.addPage}>
-              <Add fetchMonthData={fetchMonthData} />
+              <Add />
             </AddPage>
           </>
         )}

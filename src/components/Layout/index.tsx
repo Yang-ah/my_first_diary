@@ -22,7 +22,6 @@ import {
   usernameAtom,
 } from "../../state";
 import cx from "classnames";
-import { getLogin } from "../../api/Auth";
 
 const Wrap = styled.div`
   .section {
@@ -51,32 +50,6 @@ const Layout = () => {
   const setData = useSetRecoilState(dataAtom);
   const [username, setUsername] = useRecoilState(usernameAtom);
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-
-  const autoSignIn = async () => {
-    const token = localStorage.getItem("TOKEN");
-
-    if (isLogin) {
-      return;
-    }
-
-    if (token) {
-      const response = await getLogin(token);
-      setData(response.data.user.data);
-      setUsername(response.data.user.username);
-      setIsLogin(true);
-    }
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
-    alert("로그아웃 되었습니다.");
-    window.location.reload();
-  };
-
-  useEffect(() => {
-    autoSignIn();
-  }, []);
 
   // Change theme
   const [theme, setTheme] = useState(Apple);
@@ -175,9 +148,7 @@ const Layout = () => {
                     [styles.isOpen]: isOpen,
                   })}
                 >
-                  <button className={styles.login} onClick={logout}>
-                    로그아웃
-                  </button>
+                  <button className={styles.login}>로그아웃</button>
                   <button>정보수정</button>
                 </div>
               </div>
