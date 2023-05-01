@@ -7,8 +7,3 @@ export const monthStr = (month: number) => {
 
   return result;
 };
-
-export const getUserId = () => {
-  const TOKEN = localStorage.getItem("TOKEN");
-  return TOKEN ?? "";
-};

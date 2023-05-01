@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { EmojiSmile } from "../../assets/emoji";
 import { CheckBox, Line } from "../../components";
-import { getUserId, monthStr } from "../../hooks";
+import { monthStr } from "../../hooks";
 import { IconDumbbell, IconLock } from "../../assets/icon";
 import styles from "./diary.module.scss";
 import styled from "styled-components";

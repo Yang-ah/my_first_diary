@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { EmojiSmile } from "../../assets/emoji";
-
 import styles from "./emojiDropdown.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
@@ -35,7 +34,6 @@ interface IEmojiDropdown {
 }
 
 const EmojiDropdown = ({ stateValue = "", setState, lock }: IEmojiDropdown) => {
-  const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [emoji, setEmoji] = useState<any>(); // Emoji Icon
   const onClickDropdown = () => setIsOpen((cur) => !cur);
@@ -53,7 +51,6 @@ const EmojiDropdown = ({ stateValue = "", setState, lock }: IEmojiDropdown) => {
   return (
     <DropdownWrap className={styles.dropdownWrap}>
       <button
-        ref={ref}
         className={styles.dropdownButton}
         onClick={lock ? undefined : onClickDropdown}
       >
@@ -65,7 +62,7 @@ const EmojiDropdown = ({ stateValue = "", setState, lock }: IEmojiDropdown) => {
           [styles.isOpen]: isOpen,
         })}
       >
-        {emojis.map((emoji, index) => {
+        {emojis.map((emoji) => {
           return (
             <button
               key={emoji.emojiValue}

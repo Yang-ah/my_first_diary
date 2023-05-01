@@ -1,9 +1,9 @@
-import axios from "axios";
 import styles from "./register.module.scss";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
+import { isLoginAtom } from "../../../../state";
 
 const Form = styled(motion.form)`
   input,
@@ -18,18 +18,11 @@ const Form = styled(motion.form)`
 
 const Register = () => {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-    username: "",
-  });
+  const setIsLogin = useSetRecoilState(isLoginAtom);
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value, name } = e.currentTarget;
-
-    setUserInfo((prev: any) => {
-      return { ...prev, [name]: value };
-    });
+  const onSubmit = () => {
+    setIsLogin(true);
+    navigate("/");
   };
 
   return (
@@ -37,28 +30,26 @@ const Register = () => {
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
       className={styles.form}
+      onSubmit={onSubmit}
     >
       <div className={styles.inputWrap}>
         <input
-          onChange={onChange}
           type="email"
           name="email"
           placeholder="이메일을 입력해주세요."
-          required
+          // required
         />
         <input
-          onChange={onChange}
           type="password"
           name="password"
           placeholder="비밀번호를 입력해주세요."
           required
         />
         <input
-          onChange={onChange}
           type="text"
           name="username"
           placeholder="사용하실 닉네임을 입력해주세요."
-          required
+          // required
         />
       </div>
       <button type="submit">가입하기</button>

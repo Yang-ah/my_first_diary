@@ -2,7 +2,6 @@ import styles from "./cell.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
 import { ISchedule } from "../../../state";
-import { getUserId } from "../../../hooks";
 
 interface ICell {
   index: number;

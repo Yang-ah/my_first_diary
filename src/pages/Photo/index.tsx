@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IData, dataAtom, thisMonthAtom } from "../../state";
 import { useRecoilValue } from "recoil";
-import { getUserId, monthStr, year } from "../../hooks";
+import { monthStr, year } from "../../hooks";
 import PhotoCell from "./PhotoCell";
 import styles from "./photo.module.scss";
 import styled from "styled-components";
@@ -83,7 +83,6 @@ const Photo = () => {
                 key={monthStr(month) + item.date}
                 item={item}
                 month={monthStr(month)}
-                id={getUserId()}
               />
             );
           })}

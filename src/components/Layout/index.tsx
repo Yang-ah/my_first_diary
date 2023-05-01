@@ -6,21 +6,9 @@ import styles from "./layout.module.scss";
 import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";
-import {
-  Chevron,
-  IconGithub,
-  IconHome,
-  IconLogout,
-  IconModify,
-  IconUser,
-} from "../../assets/icon";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  dataAtom,
-  isLoginAtom,
-  thisMonthAtom,
-  usernameAtom,
-} from "../../state";
+import { Chevron, IconGithub, IconHome, IconUser } from "../../assets/icon";
+import { useRecoilState } from "recoil";
+import { isLoginAtom, thisMonthAtom } from "../../state";
 import cx from "classnames";
 
 const Wrap = styled.div`
@@ -45,11 +33,9 @@ const Wrap = styled.div`
 `;
 
 const Layout = () => {
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const location = useLocation();
   const navigate = useNavigate();
-  const setData = useSetRecoilState(dataAtom);
-  const [username, setUsername] = useRecoilState(usernameAtom);
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
   // Change theme
   const [theme, setTheme] = useState(Apple);
@@ -87,9 +73,9 @@ const Layout = () => {
     }
   };
 
-  const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const onClickDropdown = () => setIsOpen((cur) => !cur);
+  const logout = () => setIsLogin(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,7 +121,6 @@ const Layout = () => {
             {isLogin ? (
               <div className={styles.profileWrap}>
                 <button
-                  ref={ref}
                   onClick={onClickDropdown}
                   className={cx(styles.profile, "profile", {
                     [styles.isOpen]: isOpen,
@@ -148,7 +133,9 @@ const Layout = () => {
                     [styles.isOpen]: isOpen,
                   })}
                 >
-                  <button className={styles.login}>로그아웃</button>
+                  <button className={styles.login} onClick={logout}>
+                    로그아웃
+                  </button>
                   <button>정보수정</button>
                 </div>
               </div>

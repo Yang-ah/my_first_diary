@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { IData, dataAtom, onTrackerAtom, thisMonthAtom } from "../../state";
 import { CheckBox, Line } from "../../components";
-import { getUserId, monthStr } from "../../hooks";
+import { monthStr } from "../../hooks";
 import styles from "./scheduler.module.scss";
 import { useEffect, useState } from "react";
 import cx from "classnames";

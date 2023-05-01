@@ -1,10 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.scss";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { dataAtom, isLoginAtom, usernameAtom } from "../../../../state";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { isLoginAtom } from "../../../../state";
+import { useSetRecoilState } from "recoil";
 
 const Form = styled(motion.form)`
   input,
@@ -19,20 +18,11 @@ const Form = styled(motion.form)`
 
 const Login = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useRecoilState(usernameAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
-  const setData = useSetRecoilState(dataAtom);
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-  });
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value, name } = e.currentTarget;
-
-    setUserInfo((prev: any) => {
-      return { ...prev, [name]: value };
-    });
+  const onSubmit = () => {
+    setIsLogin(true);
+    navigate("/");
   };
 
   return (
@@ -40,21 +30,20 @@ const Login = () => {
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
       className={styles.form}
+      onSubmit={onSubmit}
     >
       <div className={styles.inputWrap}>
         <input
           type="email"
           name="email"
-          placeholder="email"
-          required
-          onChange={onChange}
+          placeholder="e-mail"
+          //required
         />
         <input
           type="password"
           name="password"
           placeholder="password"
-          required
-          onChange={onChange}
+          // required
         />
         <Link to="/register" className={styles.link}>
           회원가입 하시겠습니까? &rarr;
