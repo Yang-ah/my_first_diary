@@ -6,47 +6,36 @@ import cx from "classnames";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.main`
-  color: ${(props) => props.theme.SECONDARY_10};
-
   label {
     background-color: ${(props) => props.theme.PRIMARY_30};
-  }
-
-  button,
-  input {
-    color: ${(props) => props.theme.PRIMARY_50};
-    border: 1px solid ${(props) => props.theme.PRIMARY_30};
+    color: white;
   }
 
   input[type="range"] {
     ::-webkit-slider-thumb {
-      background-color: ${(props) => props.theme.PRIMARY_50};
+      background-color: ${(props) => props.theme.PRIMARY_30};
     }
   }
 `;
 
 const Category = styled.button`
-  color: ${(props) => props.theme.PRIMARY_50};
-  background-color: #ffffff8a;
-  border: 1px solid ${(props) => props.theme.PRIMARY_30};
+  background-color: transparent;
 
   &.selected,
   &:hover {
     background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
   }
 `;
 
 const AddButton = styled.button`
   background-color: ${(props) => props.theme.PRIMARY_30};
-
-  &:hover {
-    background-color: ${(props) => props.theme.PRIMARY_50};
-    border-color: ${(props) => props.theme.PRIMARY_50};
-  }
+  color: white;
+  font-size: 18px;
 `;
 
 const OptionButton = styled.button`
-  background-color: #ffffff8a;
+  background-color: transparent;
   > div {
     background-color: ${(props) => props.theme.PRIMARY_30};
     color: white;
@@ -54,6 +43,7 @@ const OptionButton = styled.button`
 
   &.minus {
     background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
     > div {
       background-color: white;
       color: ${(props) => props.theme.PRIMARY_30};
@@ -102,14 +92,17 @@ const Add = ({ fetchMonthData }: any) => {
   };
 
   const onClickCategory = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     const { name, value } = e.currentTarget;
     setForm({ ...form, [name]: value });
   };
 
+  const onClickAdd = () => {
+    goScheduler();
+  };
+
   return (
     <Container className={styles.container}>
-      <form className={styles.form} id="addForm">
+      <div className={styles.form} id="addForm">
         <label>Category</label>
         <Category
           type="button"
@@ -152,6 +145,8 @@ const Add = ({ fetchMonthData }: any) => {
           name="content"
           className={styles.two}
           onChange={onChange}
+          maxLength={11}
+          placeholder="스케줄을 간단히 입력해보세요. (최대 11자)"
         />
 
         <label>Importance : {form.importance}</label>
@@ -183,6 +178,8 @@ const Add = ({ fetchMonthData }: any) => {
               name="place"
               className={styles.two}
               onChange={onChange}
+              maxLength={8}
+              placeholder="어디에서 진행되나요? (최대 8글자)"
             />
           </>
         )}
@@ -195,6 +192,8 @@ const Add = ({ fetchMonthData }: any) => {
               name="who"
               className={styles.two}
               onChange={onChange}
+              maxLength={7}
+              placeholder="누구와 함께하나요? (최대 7글자)"
             />
           </>
         )}
@@ -228,9 +227,15 @@ const Add = ({ fetchMonthData }: any) => {
           With
           <div>{option.with ? "-" : "+"}</div>
         </OptionButton>
-      </form>
+      </div>
 
-      <AddButton type="submit" form="addForm">
+      <AddButton
+        className={styles.addButton}
+        type="button"
+        onClick={onClickAdd}
+        // type="submit"
+        // form="addForm"
+      >
         Add {form.category}
       </AddButton>
     </Container>

@@ -3,6 +3,7 @@ import { IconModify, IconPlus } from "../../../assets/icon";
 import styled from "styled-components";
 import styles from "./photoCell.module.scss";
 import cx from "classnames";
+import { Toast } from "../../../components";
 
 interface ILabel {
   photoUrl?: string;
@@ -11,11 +12,13 @@ interface ILabel {
 interface IInput {
   ref: React.RefObject<HTMLInputElement>;
 }
+
 const ImgInput = styled.input<IInput>``;
 
 const Label = styled.label<ILabel>`
   &.nonePhoto {
     background-color: ${(props) => props.theme.PRIMARY_10};
+
     > .add {
       background-color: ${(props) => props.theme.SECONDARY_30};
     }
@@ -34,14 +37,26 @@ const Label = styled.label<ILabel>`
   }
 `;
 
-const PhotoCell = ({ item, month, id }: any) => {
+const PhotoCell = ({ item, month }: any) => {
   const imgRef = useRef<any>(null);
   const [newImgUrl, setNewImgUrl] = useState(item.photoUrl);
+  const [onToast, setOnToast] = useState(false);
+
+  const showToast = () => {
+    setOnToast(true);
+    const timer = setTimeout(() => {
+      setOnToast(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  };
 
   const onChange = async () => {
     const reader = new FileReader();
     reader.readAsDataURL(imgRef.current.files[0]);
     reader.onload = () => setNewImgUrl(reader.result + "");
+    showToast();
   };
 
   return (
@@ -64,6 +79,9 @@ const PhotoCell = ({ item, month, id }: any) => {
           {item.photoUrl ? <IconModify /> : <IconPlus />}
         </button>
       </Label>
+      <Toast className={cx(styles.toast, { [styles.onToast]: onToast })}>
+        {`${item.date} ${month.slice(0, 3)} 사진을 변경하였습니다. :)`}
+      </Toast>
     </form>
   );
 };

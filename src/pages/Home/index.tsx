@@ -10,19 +10,14 @@ import cx from "classnames";
 
 const Wrap = styled(motion.section)`
   > header {
-    color: ${(props) => props.theme.PRIMARY_50};
     span {
       color: ${(props) => props.theme.PRIMARY_30};
     }
   }
   > footer {
-    > button {
-      color: ${(props) => props.theme.PRIMARY_50};
-
-      &:hover {
-        background-color: ${(props) => props.theme.PRIMARY_30};
-        color: white;
-      }
+    &:hover {
+      background-color: ${(props) => props.theme.PRIMARY_30};
+      color: white;
     }
   }
 `;
@@ -48,7 +43,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    isLogin && showToast();
+    showToast();
   }, [isLogin]);
 
   return (
@@ -80,7 +75,9 @@ const Home = () => {
         </motion.footer>
       </AnimatePresence>
       <Toast className={cx(styles.toast, { [styles.onToast]: onToast })}>
-        테스트 계정으로 로그인 되었습니다.
+        {isLogin
+          ? "테스트 계정으로 로그인 되었습니다."
+          : "로그아웃 되었습니다."}
       </Toast>
     </Wrap>
   );

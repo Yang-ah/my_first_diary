@@ -6,12 +6,10 @@ export const Tree: DefaultTheme = {
   PRIMARY_20: "#E4EEC2",
   PRIMARY_30: "#C5D8A4",
   PRIMARY_40: "#8A9C6B",
-  PRIMARY_50: "#596348",
   SECONDARY_10: "#FFDCD6",
   SECONDARY_20: "#DCBBB5",
   SECONDARY_30: "#B4928B",
   SECONDARY_40: "#7D6560",
-  SECONDARY_50: "#534340",
 };
 
 export const Peach: DefaultTheme = {
@@ -20,12 +18,10 @@ export const Peach: DefaultTheme = {
   PRIMARY_20: "#fae2b9",
   PRIMARY_30: "#ffd792",
   PRIMARY_40: "#fabb4f",
-  PRIMARY_50: "#d19631",
   SECONDARY_10: "#FFDCD6",
   SECONDARY_20: "#DCBBB5",
   SECONDARY_30: "#B4928B",
   SECONDARY_40: "#7D6560",
-  SECONDARY_50: "#534340",
 };
 
 export const Apple: DefaultTheme = {
@@ -34,12 +30,10 @@ export const Apple: DefaultTheme = {
   PRIMARY_20: "#D1D4DF",
   PRIMARY_30: "#3365CF",
   PRIMARY_40: "#3F4F71",
-  PRIMARY_50: "#2B364E",
   SECONDARY_10: "#FFDCD6",
   SECONDARY_20: "#DCBBB5",
   SECONDARY_30: "#B4928B",
   SECONDARY_40: "#7D6560",
-  SECONDARY_50: "#534340",
 };
 
 export const Dark: DefaultTheme = {
@@ -48,10 +42,8 @@ export const Dark: DefaultTheme = {
   PRIMARY_20: "#D1D4DF",
   PRIMARY_30: "#3365CF",
   PRIMARY_40: "#3F4F71",
-  PRIMARY_50: "#2B364E",
   SECONDARY_10: "#FFDCD6",
   SECONDARY_20: "#DCBBB5",
   SECONDARY_30: "#B4928B",
   SECONDARY_40: "#7D6560",
-  SECONDARY_50: "#534340",
 };

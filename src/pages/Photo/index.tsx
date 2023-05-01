@@ -8,11 +8,10 @@ import styled from "styled-components";
 import cx from "classnames";
 
 const Main = styled.main`
-  color: ${(props) => props.theme.PRIMARY_50};
   .day {
     background-color: ${(props) => props.theme.PRIMARY_30};
   }
-  div {
+  .otherDateWrap {
     background-color: ${(props) => props.theme.PRIMARY_10};
   }
 `;
@@ -70,7 +69,10 @@ const Photo = () => {
       <section className={cx(styles.datesSection, "datesSection")}>
         {otherDates.prevDates.map((date) => {
           return (
-            <div className={styles.otherDateWrap} key={"prev" + date}>
+            <div
+              className={cx(styles.otherDateWrap, "otherDateWrap")}
+              key={"prev" + date}
+            >
               {date + ""}
             </div>
           );
@@ -89,7 +91,10 @@ const Photo = () => {
 
         {otherDates.nextDates.map((date) => {
           return (
-            <div className={styles.otherDateWrap} key={"prev" + date}>
+            <div
+              className={cx(styles.otherDateWrap, "otherDateWrap")}
+              key={"prev" + date}
+            >
               {date + ""}
             </div>
           );

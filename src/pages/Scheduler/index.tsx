@@ -22,15 +22,13 @@ const Header = styled.header`
 
 const AddScheduleBtn = styled(motion.button)`
   &:hover {
-    background-color: ${(props) => props.theme.PRIMARY_50};
+    background-color: ${(props) => props.theme.PRIMARY_40};
   }
 `;
 
 const Overlay = styled(motion.div)``;
 
-const AddPage = styled(motion.div)`
-  background-color: ${(props) => props.theme.PRIMARY_10};
-`;
+const AddPage = styled(motion.div)``;
 
 const Scheduler = () => {
   const navigate = useNavigate();

@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { thisMonthAtom } from "../../../state";
 import { useRecoilValue } from "recoil";
 import { year } from "../../../hooks";
-import { IconHome, IconLogout, IconUser } from "../../../assets/icon";
 
 const Header = () => {
   const location = useLocation();

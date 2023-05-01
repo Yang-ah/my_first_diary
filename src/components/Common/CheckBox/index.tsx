@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./checkBox.module.scss";
 import { IconCheck } from "../../../assets/icon";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { onTrackerAtom } from "../../../state";
 import cx from "classnames";
@@ -10,16 +9,6 @@ interface ICheckBox {
   className?: string;
   name: string;
 }
-
-const Label = styled.label`
-  color: ${(props) => props.theme.PRIMARY_50};
-  > div {
-    border: 1.5px solid ${(props) => props.theme.PRIMARY_50};
-  }
-  svg {
-    fill: ${(props) => props.theme.PRIMARY_50};
-  }
-`;
 
 const CheckBox = ({ name, children, className, ...props }: ICheckBox) => {
   const [onTracker, setTracker] = useRecoilState(onTrackerAtom);
@@ -33,7 +22,7 @@ const CheckBox = ({ name, children, className, ...props }: ICheckBox) => {
   };
 
   return (
-    <Label className={cx(styles.wrapper, className)}>
+    <label className={cx(styles.wrapper, className)}>
       <div className={styles.box}>
         <input
           onChange={onChange}
@@ -47,7 +36,7 @@ const CheckBox = ({ name, children, className, ...props }: ICheckBox) => {
       </div>
 
       <p>{children}</p>
-    </Label>
+    </label>
   );
 };
 

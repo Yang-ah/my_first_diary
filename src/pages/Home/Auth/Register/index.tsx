@@ -6,13 +6,8 @@ import { useSetRecoilState } from "recoil";
 import { isLoginAtom } from "../../../../state";
 
 const Form = styled(motion.form)`
-  input,
-  button {
-    color: ${(props) => props.theme.PRIMARY_50};
-  }
   button {
     background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
   }
 `;
 
@@ -43,7 +38,7 @@ const Register = () => {
           type="password"
           name="password"
           placeholder="비밀번호를 입력해주세요."
-          required
+          // required
         />
         <input
           type="text"

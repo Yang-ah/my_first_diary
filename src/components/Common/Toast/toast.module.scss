@@ -2,8 +2,8 @@
 @use "../../../styles/constants" as c;
 
 .wrap {
-  @include m.flex(space-between);
-  min-width: 200px;
+  @include m.flex();
+  min-width: 100px;
   position: fixed;
   left: 20px;
   bottom: 20px;

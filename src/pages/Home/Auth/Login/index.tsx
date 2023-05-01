@@ -6,13 +6,8 @@ import { isLoginAtom } from "../../../../state";
 import { useSetRecoilState } from "recoil";
 
 const Form = styled(motion.form)`
-  input,
-  button {
-    color: ${(props) => props.theme.PRIMARY_50};
-  }
   button {
     background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
   }
 `;
 
@@ -37,12 +32,14 @@ const Login = () => {
           type="email"
           name="email"
           placeholder="e-mail"
+          className={styles.input}
           //required
         />
         <input
           type="password"
           name="password"
           placeholder="password"
+          className={styles.input}
           // required
         />
         <Link to="/register" className={styles.link}>

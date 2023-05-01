@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Apple, Dark, Peach, Tree } from "../../theme";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -12,23 +12,8 @@ import { isLoginAtom, thisMonthAtom } from "../../state";
 import cx from "classnames";
 
 const Wrap = styled.div`
-  .section {
-    > header {
-      color: ${(props) => props.theme.PRIMARY_50};
-    }
-    .chevron {
-      fill: ${(props) => props.theme.PRIMARY_50};
-    }
-  }
-
   > aside {
     background-color: ${(props) => props.theme.PRIMARY_10};
-    .asideSvg {
-      fill: ${(props) => props.theme.PRIMARY_50};
-    }
-    .profile {
-      background-color: ${(props) => props.theme.PRIMARY_50};
-    }
   }
 `;
 
@@ -73,9 +58,13 @@ const Layout = () => {
     }
   };
 
-  const [isOpen, setIsOpen] = useState(false);
   const onClickDropdown = () => setIsOpen((cur) => !cur);
-  const logout = () => setIsLogin(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const logout = () => {
+    setIsLogin(false);
+    setIsOpen(false);
+    navigate("/");
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,7 +87,7 @@ const Layout = () => {
             {/* right button */}
             {homePath || trackerPath || (
               <button name="right" className={styles.chevron} onClick={onClick}>
-                <Chevron className="chevron" />
+                <Chevron />
               </button>
             )}
           </div>
@@ -107,12 +96,12 @@ const Layout = () => {
         <aside>
           <header className={styles.asideHeader}>
             <button onClick={() => navigate("/")}>
-              <IconHome className="asideSvg" />
+              <IconHome className={styles.asideSvg} />
             </button>
             <a
               href="https://github.com/Yang-ah/my_first_diary"
               target="_blank"
-              className="asideSvg"
+              className={styles.asideSvg}
               rel="noreferrer"
             >
               <IconGithub />
@@ -122,7 +111,7 @@ const Layout = () => {
               <div className={styles.profileWrap}>
                 <button
                   onClick={onClickDropdown}
-                  className={cx(styles.profile, "profile", {
+                  className={cx(styles.profile, {
                     [styles.isOpen]: isOpen,
                   })}
                 >

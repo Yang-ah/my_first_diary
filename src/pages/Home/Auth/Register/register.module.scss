@@ -15,6 +15,7 @@
       font-size: 18px;
       border-radius: c.$S_RADIUS;
       margin-bottom: 12px;
+      color: c.$C_BLACK;
 
       &::placeholder {
         color: rgba(1, 1, 1, 0.2);
@@ -35,5 +36,6 @@
     border-radius: c.$S_RADIUS;
     box-shadow: 0px 1px 2px 0px rgba(1, 1, 1, 0.4);
     font-size: 16px;
+    color: white;
   }
 }

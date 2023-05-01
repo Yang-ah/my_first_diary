@@ -9,7 +9,7 @@ import cx from "classnames";
 
 const GNB = styled.nav`
   input[type="checkbox"] + svg {
-    fill: ${(props) => props.theme.PRIMARY_50};
+    fill: ${(props) => props.theme.PRIMARY_40};
   }
   > button {
     background-color: ${(props) => props.theme.PRIMARY_30};
@@ -47,12 +47,12 @@ const ThemeButtons = styled.div`
     background-color: ${Apple.PRIMARY_10};
     > svg {
       width: 16px;
-      fill: ${Apple.PRIMARY_50};
+      fill: ${Apple.PRIMARY_40};
     }
   }
 
   > button[name="dark"] {
-    background-color: ${Dark.PRIMARY_50};
+    background-color: ${Dark.PRIMARY_40};
     > svg {
       width: 20px;
       fill: #fff;

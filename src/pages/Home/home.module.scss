@@ -5,11 +5,16 @@
   @include m.flex(center, center, column);
   margin-top: 80px;
 
-  footer {
+  > header {
+    color: c.$C_BLACK;
+  }
+
+  > footer {
     @include m.flex(center, center, column);
     margin-top: 40px;
 
     > button {
+      color: c.$C_BLACK;
       width: 260px;
       height: 40px;
       font-size: 18px;

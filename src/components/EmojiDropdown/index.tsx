@@ -20,7 +20,7 @@ const DropdownWrap = styled.div`
       }
       &:hover {
         svg {
-          fill: ${(props) => props.theme.SECONDARY_50};
+          fill: ${(props) => props.theme.SECONDARY_40};
         }
       }
     }
@@ -30,10 +30,16 @@ const DropdownWrap = styled.div`
 interface IEmojiDropdown {
   stateValue: string;
   setState: any;
+  setLock: any;
   lock: boolean;
 }
 
-const EmojiDropdown = ({ stateValue = "", setState, lock }: IEmojiDropdown) => {
+const EmojiDropdown = ({
+  stateValue = "",
+  setState,
+  lock,
+  setLock,
+}: IEmojiDropdown) => {
   const [isOpen, setIsOpen] = useState(false);
   const [emoji, setEmoji] = useState<any>(); // Emoji Icon
   const onClickDropdown = () => setIsOpen((cur) => !cur);
@@ -42,11 +48,16 @@ const EmojiDropdown = ({ stateValue = "", setState, lock }: IEmojiDropdown) => {
     setState(value); // Emoji string(value)
     setEmoji(convertEmoji(value)); // Emoji Icon
     setIsOpen(false);
+    setLock(true);
   };
 
   useEffect(() => {
     setEmoji(convertEmoji(stateValue));
   }, [stateValue]);
+
+  useEffect(() => {
+    lock && setIsOpen(false);
+  }, [lock]);
 
   return (
     <DropdownWrap className={styles.dropdownWrap}>
