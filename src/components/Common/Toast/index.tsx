@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import styles from "./toast.module.scss";
 import { IconCheck } from "../../../assets/icon";
@@ -14,8 +14,10 @@ const Container = styled.div`
 `;
 
 const Toast = ({ children, className }: IToast) => {
+  const ref = useRef(null);
+
   return (
-    <Container className={cx(styles.wrap, className)}>
+    <Container ref={ref} className={cx(styles.wrap, className)}>
       <IconCheck />
       <p>{children}</p>
     </Container>

@@ -25,9 +25,6 @@ const Photo = () => {
     prevDates: [1, 2],
     nextDates: [3, 4],
   });
-  const [monthData, setMonthData] = useState<IData[] | any>(
-    data[monthStr(month)]
-  );
 
   const changeOtherDates = () => {
     const prev: number[] = [];
@@ -78,8 +75,8 @@ const Photo = () => {
           );
         })}
 
-        {monthData &&
-          monthData.map((item: IData) => {
+        {data[monthStr(month)] &&
+          data[monthStr(month)].map((item: IData) => {
             return (
               <PhotoCell
                 key={monthStr(month) + item.date}

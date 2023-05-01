@@ -30,29 +30,28 @@ const DropdownWrap = styled.div`
 interface IEmojiDropdown {
   stateValue: string;
   setState: any;
-  setLock: any;
   lock: boolean;
+  className?: string;
 }
 
 const EmojiDropdown = ({
   stateValue = "",
   setState,
   lock,
-  setLock,
+  className,
 }: IEmojiDropdown) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [emoji, setEmoji] = useState<any>(); // Emoji Icon
+  const [emoji, setEmoji] = useState(<EmojiSmile />); // Emoji SVG
   const onClickDropdown = () => setIsOpen((cur) => !cur);
 
   const onChangeValue = (value: string) => {
     setState(value); // Emoji string(value)
-    setEmoji(convertEmoji(value)); // Emoji Icon
+    setEmoji(convertEmoji(value) ?? <EmojiSmile />); // Emoji SVG
     setIsOpen(false);
-    setLock(true);
   };
 
   useEffect(() => {
-    setEmoji(convertEmoji(stateValue));
+    setEmoji(convertEmoji(stateValue) ?? <EmojiSmile />);
   }, [stateValue]);
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const EmojiDropdown = ({
   }, [lock]);
 
   return (
-    <DropdownWrap className={styles.dropdownWrap}>
+    <DropdownWrap className={cx(className, styles.dropdownWrap)}>
       <button
         className={styles.dropdownButton}
         onClick={lock ? undefined : onClickDropdown}

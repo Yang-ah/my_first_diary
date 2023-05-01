@@ -1,5 +1,4 @@
 import { dataAtom, onTrackerAtom, thisMonthAtom, IData } from "../../state";
-import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { EmojiSmile } from "../../assets/emoji";
 import { CheckBox, Line } from "../../components";
@@ -21,9 +20,6 @@ const Diary = () => {
   const data = useRecoilValue(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [monthData, setMonthData] = useState<IData[] | any>(
-    data[monthStr(month)]
-  );
 
   return (
     <>
@@ -62,8 +58,8 @@ const Diary = () => {
           )}
         </Header>
 
-        {monthData &&
-          monthData.map((item: IData) => {
+        {data[monthStr(month)] &&
+          data[monthStr(month)].map((item: IData) => {
             return (
               <Line
                 key={`diary-${monthStr(month)}-${item.date}-${item.diary}-${

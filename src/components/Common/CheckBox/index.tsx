@@ -4,6 +4,7 @@ import { IconCheck } from "../../../assets/icon";
 import { useRecoilState } from "recoil";
 import { onTrackerAtom } from "../../../state";
 import cx from "classnames";
+
 interface ICheckBox {
   children: string;
   className?: string;

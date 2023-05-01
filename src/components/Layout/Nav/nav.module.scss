@@ -110,3 +110,14 @@
     }
   }
 }
+
+.toast {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.5s opacity ease-in, 0.5s transform ease-in;
+
+  &.onToast {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -4,6 +4,8 @@ import styled from "styled-components";
 import styles from "./photoCell.module.scss";
 import cx from "classnames";
 import { Toast } from "../../../components";
+import { IData, dataAtom } from "../../../state";
+import { useSetRecoilState } from "recoil";
 
 interface ILabel {
   photoUrl?: string;
@@ -11,6 +13,11 @@ interface ILabel {
 
 interface IInput {
   ref: React.RefObject<HTMLInputElement>;
+}
+
+interface IPhotoCell {
+  item: IData;
+  month: string;
 }
 
 const ImgInput = styled.input<IInput>``;
@@ -37,10 +44,11 @@ const Label = styled.label<ILabel>`
   }
 `;
 
-const PhotoCell = ({ item, month }: any) => {
+const PhotoCell = ({ item, month }: IPhotoCell) => {
   const imgRef = useRef<any>(null);
   const [newImgUrl, setNewImgUrl] = useState(item.photoUrl);
   const [onToast, setOnToast] = useState(false);
+  const setData = useSetRecoilState(dataAtom);
 
   const showToast = () => {
     setOnToast(true);
@@ -55,7 +63,19 @@ const PhotoCell = ({ item, month }: any) => {
   const onChange = async () => {
     const reader = new FileReader();
     reader.readAsDataURL(imgRef.current.files[0]);
-    reader.onload = () => setNewImgUrl(reader.result + "");
+    reader.onload = () => {
+      setNewImgUrl(reader.result + "");
+      setData((prevData) => {
+        const newMonthData = [...prevData[month]];
+        const newData = {
+          ...newMonthData[item.date - 1],
+          photoUrl: reader.result + "",
+        };
+        newMonthData[item.date - 1] = newData;
+        const newDataObj = { ...prevData, [month]: newMonthData };
+        return newDataObj;
+      });
+    };
     showToast();
   };
 
@@ -73,7 +93,8 @@ const PhotoCell = ({ item, month }: any) => {
         />
 
         <button
-          type="submit"
+          type="button"
+          // type="submit"
           className={cx(item.photoUrl ? styles.modify : "add")}
         >
           {item.photoUrl ? <IconModify /> : <IconPlus />}

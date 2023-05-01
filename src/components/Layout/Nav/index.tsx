@@ -6,6 +6,10 @@ import { Tree, Peach, Apple, Dark } from "../../../theme";
 import styled from "styled-components";
 import { IconApple } from "../../../assets/icon";
 import cx from "classnames";
+import { Toast } from "../../Common";
+import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { isLoginAtom } from "../../../state";
 
 const GNB = styled.nav`
   input[type="checkbox"] + svg {
@@ -67,12 +71,26 @@ interface INav {
 }
 
 const Nav = ({ icon, onClick, path }: INav) => {
+  const [onToast, setOnToast] = useState(false);
+  const isLogin = useRecoilValue(isLoginAtom);
+
   const navigate = useNavigate();
 
-  const goPhoto = () => navigate("/photo");
-  const goSchedule = () => navigate("/scheduler");
-  const goTracker = () => navigate("/tracker");
-  const goDiary = () => navigate("/diary");
+  const showToast = () => {
+    setOnToast(true);
+    const timer = setTimeout(() => {
+      setOnToast(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  };
+
+  const goPhoto = () => (isLogin ? navigate("/photo") : showToast());
+
+  const goSchedule = () => (isLogin ? navigate("/scheduler") : showToast());
+  const goTracker = () => (isLogin ? navigate("/tracker") : showToast());
+  const goDiary = () => (isLogin ? navigate("/diary") : showToast());
 
   return (
     <GNB className={styles.nav}>
@@ -131,6 +149,9 @@ const Nav = ({ icon, onClick, path }: INav) => {
           </button>
         </ThemeButtons>
       </div>
+      <Toast className={cx(styles.toast, { [styles.onToast]: onToast })}>
+        로그인 후 이용부탁드립니다.
+      </Toast>
     </GNB>
   );
 };

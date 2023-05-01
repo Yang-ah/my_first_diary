@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import styles from "./line.module.scss";
 import cx from "classnames";
-import { useRecoilValue } from "recoil";
-import { onTrackerAtom, ISchedule } from "../../../state";
-import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { onTrackerAtom, ISchedule, dataAtom } from "../../../state";
+import { useEffect, useState } from "react";
 import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
 import EmojiDropdown from "../../EmojiDropdown";
@@ -36,9 +36,7 @@ const TrackerWrap = styled.article`
 `;
 
 interface ILine {
-  fetchMonthData?: any;
   date: number | string;
-  children?: any;
   className?: string;
   diary?: string;
   emotion: string;
@@ -46,8 +44,6 @@ interface ILine {
   planArray?: ISchedule[];
   workArray?: ISchedule[];
   month: string;
-  // onClick: React.MouseEventHandler<HTMLButtonElement>;
-  // onLockMain: any;
 }
 
 const Line = ({
@@ -68,11 +64,31 @@ const Line = ({
   const [newExercise, setNewExercise] = useState(exercise);
   const [toastMessage, setToastMessage] = useState("");
   const [onToast, setOnToast] = useState(false);
+  const setData = useSetRecoilState(dataAtom);
 
   const onClickLock = () => setOnLock((cur) => !cur);
-  const onClickDiary = () => {
+
+  const showToast = () => {
+    setOnToast(true);
+    const timer = setTimeout(() => {
+      setOnToast(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  };
+
+  const onSubmitDiary = (
+    e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    setToastMessage(
+      `${date} ${month.slice(0, 3)} 다이어리를 변경하였습니다. :)`
+    );
+    showToast();
     setOnLock(true);
   };
+
   const onClickExercise = () => {
     if (onLock) {
       return;
@@ -83,6 +99,16 @@ const Line = ({
     setNewExercise((cur) => !cur);
     setOnLock(true);
     showToast();
+    setData((prevData) => {
+      const newMonthData = [...prevData[month]];
+      const newData = {
+        ...newMonthData[+date - 1],
+        exercise: !newExercise,
+      };
+      newMonthData[+date - 1] = newData;
+      const newDataObj = { ...prevData, [month]: newMonthData };
+      return newDataObj;
+    });
   };
 
   const onChangeDiary = (e: React.FormEvent<HTMLInputElement>) =>
@@ -93,17 +119,17 @@ const Line = ({
     setToastMessage(
       `${date} ${month.slice(0, 3)} 감정 기록을 변경하였습니다. :)`
     );
-    showToast();
-  };
-
-  const showToast = () => {
-    setOnToast(true);
-    const timer = setTimeout(() => {
-      setOnToast(false);
-    }, 2000);
-    return () => {
-      clearTimeout(timer);
-    };
+    setOnLock(true);
+    setData((prevData) => {
+      const newMonthData = [...prevData[month]];
+      const newData = {
+        ...newMonthData[+date - 1],
+        emotion: selectedEmotion,
+      };
+      newMonthData[+date - 1] = newData;
+      const newDataObj = { ...prevData, [month]: newMonthData };
+      return newDataObj;
+    });
   };
 
   const fakeSchedule = {
@@ -129,7 +155,10 @@ const Line = ({
     >
       <div className={cx(styles.date, "date")}>{date}</div>
       {isDiary && (
-        <div className={cx(styles.diaryForm, styles.main, "main")}>
+        <form
+          onSubmit={onSubmitDiary}
+          className={cx(styles.diaryForm, styles.main, "main")}
+        >
           <input
             className={styles.diaryInput}
             value={newDiary}
@@ -140,13 +169,13 @@ const Line = ({
           {onLock || (
             <button
               className={cx(styles.diarySubmitButton, "diarySubmitButton")}
-              onClick={onClickDiary}
-              type="button"
+              onClick={onSubmitDiary}
+              type="submit"
             >
               저장
             </button>
           )}
-        </div>
+        </form>
       )}
 
       {!isDiary && (
@@ -202,17 +231,21 @@ const Line = ({
 
       {onTracker.tracker && (
         <TrackerWrap className={cx(styles.trackerButtons, "tracker")}>
-          <button className={styles.exercise} onClick={onClickExercise}>
+          <button
+            className={cx(styles.exercise, { [styles.onLock]: onLock })}
+            onClick={onClickExercise}
+          >
             {newExercise ? <IconDumbbell /> : "-"}
           </button>
+
           <EmojiDropdown
+            className={cx({ [styles.onLock]: onLock })}
             stateValue={newEmotion}
             lock={onLock}
-            setLock={setOnLock}
             setState={onChangeEmotion}
           />
 
-          <button className={styles.lock} onClick={onClickLock}>
+          <button className={cx(styles.lock)} onClick={onClickLock}>
             {onLock ? <IconLock /> : <IconUnlock />}
           </button>
         </TrackerWrap>

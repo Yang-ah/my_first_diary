@@ -56,7 +56,7 @@ interface IOption {
   [key: string]: boolean;
 }
 
-const Add = ({ fetchMonthData }: any) => {
+const Add = () => {
   const navigate = useNavigate();
   const goScheduler = () => navigate("/scheduler");
   const today = dayjs().format("YYYY-MM-DD");

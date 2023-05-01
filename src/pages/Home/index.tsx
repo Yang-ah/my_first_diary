@@ -15,9 +15,11 @@ const Wrap = styled(motion.section)`
     }
   }
   > footer {
-    &:hover {
-      background-color: ${(props) => props.theme.PRIMARY_30};
-      color: white;
+    > button {
+      &:hover {
+        background-color: ${(props) => props.theme.PRIMARY_30};
+        color: white;
+      }
     }
   }
 `;
@@ -30,6 +32,7 @@ const Home = () => {
 
   const onClickTest = () => {
     setIsLogin(true);
+    showToast();
   };
 
   const showToast = () => {
@@ -41,10 +44,6 @@ const Home = () => {
       clearTimeout(timer);
     };
   };
-
-  useEffect(() => {
-    showToast();
-  }, [isLogin]);
 
   return (
     <Wrap className={styles.wrap}>

@@ -3,7 +3,6 @@ import { IData, dataAtom, onTrackerAtom, thisMonthAtom } from "../../state";
 import { CheckBox, Line } from "../../components";
 import { monthStr } from "../../hooks";
 import styles from "./scheduler.module.scss";
-import { useEffect, useState } from "react";
 import cx from "classnames";
 import styled from "styled-components";
 import { IconDumbbell, IconLock, IconPlus } from "../../assets/icon";
@@ -36,9 +35,6 @@ const Scheduler = () => {
   const data = useRecoilValue(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
   const onTracker = useRecoilValue(onTrackerAtom);
-  const [monthData, setMonthData] = useState<IData[] | any>(
-    data[monthStr(month)]
-  );
 
   const clickedAdd = () => navigate("/scheduler/add");
   const goScheduler = () => navigate("/scheduler");
@@ -94,8 +90,8 @@ const Scheduler = () => {
           )}
         </Header>
         <section>
-          {monthData &&
-            monthData.map((item: IData) => {
+          {data[monthStr(month)] &&
+            data[monthStr(month)].map((item: IData) => {
               return (
                 <Line
                   key={`schedule-${monthStr(month)}-${item.date}
