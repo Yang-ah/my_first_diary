@@ -10,6 +10,7 @@ import { EmojiSmile } from "../../assets/emoji";
 import { useMatch, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Add from "./Add";
+import { useEffect, useState } from "react";
 
 const Header = styled.header`
   > p,

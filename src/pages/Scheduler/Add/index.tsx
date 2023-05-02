@@ -4,6 +4,10 @@ import styles from "./add.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { dataAtom } from "../../../state";
+import { monthStr } from "../../../hooks";
+import { Toast } from "../../../components";
 
 const Container = styled.main`
   label {
@@ -59,8 +63,10 @@ interface IOption {
 const Add = () => {
   const navigate = useNavigate();
   const goScheduler = () => navigate("/scheduler");
+  const [data, setData] = useRecoilState(dataAtom);
   const today = dayjs().format("YYYY-MM-DD");
   const now = `${new Date().getHours()}:${new Date().getMinutes()}`;
+  const [onToast, setOnToast] = useState(false);
 
   const [form, setForm] = useState({
     category: "work",
@@ -69,14 +75,27 @@ const Add = () => {
     importance: 4,
     time: "",
     place: "",
-    who: "",
+    with: "",
   });
 
   const [option, setOption] = useState<IOption>({
     time: false,
     place: false,
-    who: false,
+    with: false,
   });
+
+  const month = monthStr(+form.date.slice(5, 7) - 1);
+  const date = +form.date.slice(8, 10);
+
+  const showToast = () => {
+    setOnToast(true);
+    const timer = setTimeout(() => {
+      setOnToast(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  };
 
   const onOption = (e: React.FormEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
@@ -97,6 +116,43 @@ const Add = () => {
   };
 
   const onClickAdd = () => {
+    showToast();
+
+    const newMonthData = [...data[month]];
+    const newSchedule = {
+      content: form.content,
+      importance: form.importance,
+      time: form.time,
+      with: form.with,
+      place: form.place,
+    };
+
+    if (form.category === "plan") {
+      const newDayData = {
+        ...newMonthData[date - 1],
+        schedule: {
+          ...newMonthData[date - 1].schedule,
+          plan: [...newMonthData[date - 1].schedule.plan, newSchedule],
+        },
+      };
+
+      newMonthData[+date - 1] = newDayData;
+      const updatedObj = { ...data, [month]: newMonthData };
+      setData(updatedObj);
+    }
+
+    if (form.category === "work") {
+      const newDayData = {
+        ...newMonthData[date - 1],
+        schedule: {
+          ...newMonthData[date - 1].schedule,
+          work: [...newMonthData[date - 1].schedule.work, newSchedule],
+        },
+      };
+      newMonthData[date - 1] = newDayData;
+      const updatedObj = { ...data, [month]: newMonthData };
+      setData(updatedObj);
+    }
     goScheduler();
   };
 
@@ -189,7 +245,7 @@ const Add = () => {
             <label>With</label>
             <input
               type="text"
-              name="who"
+              name="with"
               className={styles.two}
               onChange={onChange}
               maxLength={7}
@@ -238,6 +294,11 @@ const Add = () => {
       >
         Add {form.category}
       </AddButton>
+      <Toast className={cx(styles.toast, { [styles.onToast]: onToast })}>
+        {`${date} ${month.slice(0, 3)} ${
+          form.category
+        } 스케줄 변경하였습니다. :)`}
+      </Toast>
     </Container>
   );
 };

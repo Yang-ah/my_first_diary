@@ -3,7 +3,7 @@ import styles from "./line.module.scss";
 import cx from "classnames";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { onTrackerAtom, ISchedule, dataAtom } from "../../../state";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IconDumbbell, IconLock, IconUnlock } from "../../../assets/icon";
 import { useMatch } from "react-router-dom";
 import EmojiDropdown from "../../EmojiDropdown";
@@ -63,6 +63,7 @@ const Line = ({
   const [newEmotion, setNewEmotion] = useState(emotion);
   const [newExercise, setNewExercise] = useState(exercise);
   const [toastMessage, setToastMessage] = useState("");
+
   const [onToast, setOnToast] = useState(false);
   const setData = useSetRecoilState(dataAtom);
 
@@ -132,21 +133,6 @@ const Line = ({
     });
   };
 
-  const fakeSchedule = {
-    content: "플랜플랜플스케줄이에요",
-    importance: 1,
-    time: "15:33",
-    with: "엄마랑",
-    place: "교보문고",
-  };
-  const fakeSchedule2 = {
-    content: "플랜 스케줄이에요.",
-    importance: 2,
-    time: "15:33",
-    with: "엄마랑랑아빠랑",
-    place: "교보문고교보문고",
-  };
-
   return (
     <LineWrap
       className={cx(className, styles.wrap, {
@@ -180,22 +166,6 @@ const Line = ({
 
       {!isDiary && (
         <main className={cx(styles.main, "main")}>
-          <Cell
-            index={1}
-            schedule={fakeSchedule}
-            lock={onLock}
-            category="work"
-            month={month}
-            date={+date}
-          />
-          <Cell
-            index={1}
-            schedule={fakeSchedule2}
-            lock={onLock}
-            category="work"
-            month={month}
-            date={+date}
-          />
           {onTracker.plan &&
             planArray?.length !== 0 &&
             planArray?.map((plan, index) => {

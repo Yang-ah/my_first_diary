@@ -99,3 +99,14 @@
     border-radius: c.$S_RADIUS;
   }
 }
+.toast {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.5s opacity ease-in, 0.5s transform ease-in;
+  z-index: 999;
+
+  &.onToast {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

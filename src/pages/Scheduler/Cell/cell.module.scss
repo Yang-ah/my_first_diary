@@ -11,10 +11,16 @@
   box-shadow: 0px 1px 2px 0px rgba(1, 1, 1, 0.4);
   border-radius: c.$S_RADIUS;
   overflow: hidden;
+  flex-shrink: 0;
+
+  &:hover > .back {
+    visibility: visible;
+  }
 
   .front {
-    @include m.flex();
+    @include m.flex(flex-start);
     position: relative;
+    width: 100%;
 
     > .starWrap {
       width: 24px;
@@ -40,10 +46,6 @@
         color: white;
       }
     }
-  }
-
-  .front:hover + .back {
-    visibility: visible;
   }
 
   .back {
@@ -78,4 +80,19 @@
     color: c.$C_BLACK;
     font-size: 14px;
   }
+}
+
+.deleteButton {
+  @include m.flex();
+
+  background-color: red;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+
+  position: absolute;
+  right: 10px;
+  z-index: 300;
+
+  color: white;
 }
