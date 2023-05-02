@@ -1,8 +1,10 @@
 import styles from "./header.module.scss";
 import { useLocation } from "react-router-dom";
-import { thisMonthAtom } from "../../../state";
-import { useRecoilValue } from "recoil";
+import { dataAtom, thisMonthAtom } from "../../../state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { year } from "../../../hooks";
+import { setInitData } from "../../../state/initData";
+import { setTestData } from "../../../state/testData";
 
 const Header = () => {
   const location = useLocation();
@@ -10,6 +12,16 @@ const Header = () => {
   const monthStr = new Date(year, month, 1).toLocaleString("en-US", {
     month: "long",
   });
+  const setData = useSetRecoilState(dataAtom);
+
+  const onClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.name === "reset") {
+      setData(setInitData);
+    }
+    if (e.currentTarget.name === "test") {
+      setData(setTestData);
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -19,6 +31,14 @@ const Header = () => {
         {location.pathname.includes("photo") && monthStr}
         {location.pathname.includes("tracker") && year}
       </span>
+      <div className={styles.buttons}>
+        <button name="reset" type="button" onClick={onClick}>
+          데이터 초기화
+        </button>
+        <button name="test" type="button" onClick={onClick}>
+          테스트 데이터
+        </button>
+      </div>
     </header>
   );
 };

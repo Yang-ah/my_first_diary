@@ -1,5 +1,6 @@
 import { atom } from "recoil";
-import { setInitData } from "./initData";
+// import { setInitData } from "./initData";
+import { setTestData } from "./testData";
 
 export const usernameAtom = atom({
   key: "user",
@@ -56,5 +57,5 @@ interface IYearData {
 
 export const dataAtom = atom<IYearData>({
   key: "data",
-  default: setInitData(),
+  default: setTestData(),
 });

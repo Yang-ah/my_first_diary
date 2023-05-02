@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IconModify, IconPlus } from "../../../assets/icon";
 import styled from "styled-components";
 import styles from "./photoCell.module.scss";
@@ -78,6 +78,10 @@ const PhotoCell = ({ item, month }: IPhotoCell) => {
     };
     showToast();
   };
+
+  useEffect(() => {
+    setNewImgUrl(item.photoUrl);
+  }, [item.photoUrl]);
 
   return (
     <form className={styles.dateWrap} encType="multipart/form-data">

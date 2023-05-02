@@ -2,7 +2,7 @@ import styles from "./cell.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
 import { ISchedule, dataAtom } from "../../../state";
-import { IconMinus, IconStar } from "../../../assets/icon";
+import { IconStar } from "../../../assets/icon";
 import { useRecoilState } from "recoil";
 
 interface ICell {

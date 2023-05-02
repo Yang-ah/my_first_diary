@@ -5,7 +5,7 @@ import { IconCheck } from "../../../assets/icon";
 import cx from "classnames";
 
 interface IToast {
-  children: string;
+  children: string | any;
   className?: string;
 }
 

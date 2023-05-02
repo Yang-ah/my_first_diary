@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { isLoginAtom } from "../../state";
 import { useRecoilState } from "recoil";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Toast } from "../../components";
 import cx from "classnames";
 
@@ -69,7 +69,15 @@ const Home = () => {
             </>
           )}
 
-          {isLogin && <div>반가워요, My First Diary를 한번 둘러볼까요?</div>}
+          {isLogin && (
+            <div className={styles.greet}>
+              <p>환영합니다 :)</p>
+              <p>
+                <span>오른쪽 메뉴바</span>를 눌러서,
+              </p>
+              <p>My First Diary를 한번 둘러볼까요?</p>
+            </div>
+          )}
           <Outlet />
         </motion.footer>
       </AnimatePresence>

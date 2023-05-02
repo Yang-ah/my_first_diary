@@ -12,3 +12,19 @@
     font-size: 48px;
   }
 }
+
+.buttons {
+  width: 160px;
+  @include m.flex(space-between);
+
+  > button {
+    padding: 8px;
+    border-radius: c.$S_RADIUS;
+    transition: 0.2s all ease-in;
+
+    &:hover {
+      background-color: c.$C_BLACK;
+      color: white;
+    }
+  }
+}
