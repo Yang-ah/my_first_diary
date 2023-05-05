@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { IconMoon, IconThumbTack } from "../../../assets/icon";
+import { IconThumbTack } from "../../../assets/icon";
 import styles from "./nav.module.scss";
 import NavButton from "./NavButton";
 import { Tree, Peach, Apple, Dark } from "../../../theme";
@@ -12,9 +12,6 @@ import { useRecoilValue } from "recoil";
 import { isLoginAtom } from "../../../state";
 
 const GNB = styled.nav`
-  input[type="checkbox"] + svg {
-    fill: ${(props) => props.theme.PRIMARY_40};
-  }
   > button {
     background-color: ${(props) => props.theme.PRIMARY_30};
 
@@ -56,11 +53,7 @@ const ThemeButtons = styled.div`
   }
 
   > button[name="dark"] {
-    background-color: ${Dark.PRIMARY_40};
-    > svg {
-      width: 20px;
-      fill: #fff;
-    }
+    background-color: ${Dark.PRIMARY_30};
   }
 `;
 
@@ -87,14 +80,13 @@ const Nav = ({ icon, onClick, path }: INav) => {
   };
 
   const goPhoto = () => (isLogin ? navigate("/photo") : showToast());
-
   const goSchedule = () => (isLogin ? navigate("/scheduler") : showToast());
   const goTracker = () => (isLogin ? navigate("/tracker") : showToast());
   const goDiary = () => (isLogin ? navigate("/diary") : showToast());
 
   return (
     <GNB className={styles.nav}>
-      <label className={styles.fixedCheckBox}>
+      <label className={cx(styles.fixedCheckBox, "fixed")}>
         <input type="checkbox" readOnly hidden />
         <IconThumbTack />
       </label>
@@ -124,15 +116,7 @@ const Nav = ({ icon, onClick, path }: INav) => {
         TRACKER
       </NavButton>
       <div className={cx(styles.themeToggle, "themeToggle")}>
-        <p>
-          {icon === "apple" ? (
-            <IconApple className="apple" />
-          ) : icon === "dark" ? (
-            <IconMoon className="moon" />
-          ) : (
-            icon
-          )}
-        </p>
+        <p>{icon === "apple" ? <IconApple className="apple" /> : icon}</p>
 
         <ThemeButtons className={styles.themeButtons}>
           <button onClick={() => onClick("peach")} name="peach">
@@ -145,7 +129,7 @@ const Nav = ({ icon, onClick, path }: INav) => {
             <IconApple />
           </button>
           <button onClick={() => onClick("dark")} name="dark">
-            <IconMoon />
+            {Dark.ICON}
           </button>
         </ThemeButtons>
       </div>

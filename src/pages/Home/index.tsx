@@ -10,8 +10,10 @@ import cx from "classnames";
 
 const Wrap = styled(motion.section)`
   > header {
+    color: ${(props) => props.theme.PRIMARY_30};
+
     span {
-      color: ${(props) => props.theme.PRIMARY_30};
+      color: ${(props) => props.theme.PRIMARY_40};
     }
   }
   > footer {

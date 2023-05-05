@@ -87,8 +87,8 @@ export const setTestData = () => {
     for (let i = 1; i <= thisMonthEnd; i++) {
       result[strMonth].push({
         date: i,
-        photoUrl: photoUrlArr[(i + month) % 8],
-        diary: diaryArr[(i + month) % 6],
+        photoUrl: photoUrlArr[(i + month) % 6],
+        diary: diaryArr[(i + month) % 5],
         schedule: {
           work: workArr.slice((i + month) % 4, workArr.length),
           plan: planArr.slice((i + month) % 4, planArr.length),

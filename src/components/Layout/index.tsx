@@ -14,6 +14,12 @@ import cx from "classnames";
 const Wrap = styled.div`
   > aside {
     background-color: ${(props) => props.theme.PRIMARY_10};
+    svg {
+      fill: ${(props) => props.theme.PRIMARY_40};
+    }
+    .profile {
+      background-color: ${(props) => props.theme.PRIMARY_40};
+    }
   }
 `;
 
@@ -111,7 +117,7 @@ const Layout = () => {
               <div className={styles.profileWrap}>
                 <button
                   onClick={onClickDropdown}
-                  className={cx(styles.profile, {
+                  className={cx("profile", styles.profile, {
                     [styles.isOpen]: isOpen,
                   })}
                 >
