@@ -8,14 +8,6 @@ import styled from "styled-components";
 import cx from "classnames";
 import { monthStr } from "../../utils/date";
 
-const Header = styled.header`
-  > p,
-  div,
-  button {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-  }
-`;
-
 const Diary = () => {
   const data = useRecoilValue(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
@@ -77,5 +69,13 @@ const Diary = () => {
     </>
   );
 };
+
+const Header = styled.header`
+  > p,
+  div,
+  button {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+  }
+`;
 
 export default Diary;

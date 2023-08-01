@@ -14,49 +14,6 @@ interface ICell {
   date: number;
 }
 
-const Wrap = styled.div`
-  &.plan1 {
-    svg {
-      fill: ${(props) => props.theme.PRIMARY_10};
-    }
-  }
-  &.plan2 {
-    svg {
-      fill: ${(props) => props.theme.PRIMARY_20};
-    }
-  }
-  &.plan3 {
-    svg {
-      fill: ${(props) => props.theme.PRIMARY_30};
-    }
-  }
-  &.plan4 {
-    svg {
-      fill: ${(props) => props.theme.PRIMARY_40};
-    }
-  }
-  &.work1 {
-    svg {
-      fill: ${(props) => props.theme.SECONDARY_10};
-    }
-  }
-  &.work2 {
-    svg {
-      fill: ${(props) => props.theme.SECONDARY_20};
-    }
-  }
-  &.work3 {
-    svg {
-      fill: ${(props) => props.theme.SECONDARY_30};
-    }
-  }
-  &.work4 {
-    svg {
-      fill: ${(props) => props.theme.SECONDARY_40};
-    }
-  }
-`;
-
 const Cell = ({ index, schedule, category, month, date, lock }: ICell) => {
   const [data, setData] = useRecoilState(dataAtom);
 
@@ -120,5 +77,48 @@ const Cell = ({ index, schedule, category, month, date, lock }: ICell) => {
     </Wrap>
   );
 };
+
+const Wrap = styled.div`
+  &.plan1 {
+    svg {
+      fill: ${(props) => props.theme.PRIMARY_10};
+    }
+  }
+  &.plan2 {
+    svg {
+      fill: ${(props) => props.theme.PRIMARY_20};
+    }
+  }
+  &.plan3 {
+    svg {
+      fill: ${(props) => props.theme.PRIMARY_30};
+    }
+  }
+  &.plan4 {
+    svg {
+      fill: ${(props) => props.theme.PRIMARY_40};
+    }
+  }
+  &.work1 {
+    svg {
+      fill: ${(props) => props.theme.SECONDARY_10};
+    }
+  }
+  &.work2 {
+    svg {
+      fill: ${(props) => props.theme.SECONDARY_20};
+    }
+  }
+  &.work3 {
+    svg {
+      fill: ${(props) => props.theme.SECONDARY_30};
+    }
+  }
+  &.work4 {
+    svg {
+      fill: ${(props) => props.theme.SECONDARY_40};
+    }
+  }
+`;
 
 export default Cell;

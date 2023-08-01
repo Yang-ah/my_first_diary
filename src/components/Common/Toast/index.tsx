@@ -9,10 +9,6 @@ interface IToast {
   className?: string;
 }
 
-const Container = styled.div`
-  background-color: ${(props) => props.theme.PRIMARY_30};
-`;
-
 const Toast = ({ children, className }: IToast) => {
   const ref = useRef(null);
 
@@ -23,5 +19,9 @@ const Toast = ({ children, className }: IToast) => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  background-color: ${(props) => props.theme.PRIMARY_30};
+`;
 
 export default Toast;

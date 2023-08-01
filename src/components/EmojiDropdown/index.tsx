@@ -7,26 +7,6 @@ import { Chevron } from "../../assets/icon";
 import { emojis } from "../../utils/emojiData";
 import convertEmoji from "../../utils/convertEmoji";
 
-const DropdownWrap = styled.div`
-  border: 1px solid ${(props) => props.theme.PRIMARY_20};
-  border-radius: 5px;
-
-  > .emojiWrap {
-    border: 1px solid ${(props) => props.theme.PRIMARY_20};
-    > button {
-      svg {
-        fill: ${(props) => props.theme.SECONDARY_30};
-        transition: 0.2s fill ease-in;
-      }
-      &:hover {
-        svg {
-          fill: ${(props) => props.theme.SECONDARY_40};
-        }
-      }
-    }
-  }
-`;
-
 interface IEmojiDropdown {
   stateValue: string;
   setState: any;
@@ -45,8 +25,8 @@ const EmojiDropdown = ({
   const onClickDropdown = () => setIsOpen((cur) => !cur);
 
   const onChangeValue = (value: string) => {
-    setState(value); // Emoji string(value)
-    setEmoji(convertEmoji(value) ?? <EmojiSmile />); // Emoji SVG
+    setState(value);
+    setEmoji(convertEmoji(value) ?? <EmojiSmile />);
     setIsOpen(false);
   };
 
@@ -87,4 +67,25 @@ const EmojiDropdown = ({
     </DropdownWrap>
   );
 };
+
+const DropdownWrap = styled.div`
+  border: 1px solid ${(props) => props.theme.PRIMARY_20};
+  border-radius: 5px;
+
+  > .emojiWrap {
+    border: 1px solid ${(props) => props.theme.PRIMARY_20};
+    > button {
+      svg {
+        fill: ${(props) => props.theme.SECONDARY_30};
+        transition: 0.2s fill ease-in;
+      }
+      &:hover {
+        svg {
+          fill: ${(props) => props.theme.SECONDARY_40};
+        }
+      }
+    }
+  }
+`;
+
 export default EmojiDropdown;

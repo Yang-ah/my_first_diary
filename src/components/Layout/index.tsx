@@ -11,24 +11,11 @@ import { useRecoilState } from "recoil";
 import { isLoginAtom, thisMonthAtom } from "../../state";
 import cx from "classnames";
 
-const Wrap = styled.div`
-  > aside {
-    background-color: ${(props) => props.theme.PRIMARY_10};
-    svg {
-      fill: ${(props) => props.theme.PRIMARY_40};
-    }
-    .profile {
-      background-color: ${(props) => props.theme.PRIMARY_40};
-    }
-  }
-`;
-
 const Layout = () => {
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Change theme
   const [theme, setTheme] = useState(Apple);
   const onChangeTheme = (theme: string) => {
     theme === "tree" && setTheme(Tree);
@@ -37,7 +24,6 @@ const Layout = () => {
     theme === "dark" && setTheme(Dark);
   };
 
-  // Check location
   const homePath =
     location.pathname === "/" ||
     location.pathname === "/login" ||
@@ -79,7 +65,6 @@ const Layout = () => {
           {!homePath && <Header />}
 
           <div className={styles.mainWrap}>
-            {/* left button */}
             {homePath || trackerPath || (
               <button name="left" className={styles.chevron} onClick={onClick}>
                 <Chevron className="chevron" />
@@ -90,7 +75,6 @@ const Layout = () => {
               <Outlet />
             </section>
 
-            {/* right button */}
             {homePath || trackerPath || (
               <button name="right" className={styles.chevron} onClick={onClick}>
                 <Chevron />
@@ -149,5 +133,17 @@ const Layout = () => {
     </ThemeProvider>
   );
 };
+
+const Wrap = styled.div`
+  > aside {
+    background-color: ${(props) => props.theme.PRIMARY_10};
+    svg {
+      fill: ${(props) => props.theme.PRIMARY_40};
+    }
+    .profile {
+      background-color: ${(props) => props.theme.PRIMARY_40};
+    }
+  }
+`;
 
 export default Layout;

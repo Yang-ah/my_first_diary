@@ -7,17 +7,6 @@ import styled from "styled-components";
 import cx from "classnames";
 import { monthStr, year } from "../../utils/date";
 
-const Main = styled.main`
-  .day {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-  }
-  .otherDateWrap {
-    background-color: ${(props) => props.theme.PRIMARY_10};
-  }
-`;
-
-const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
 const Photo = () => {
   const data = useRecoilValue(dataAtom);
   const month = useRecoilValue(thisMonthAtom);
@@ -100,5 +89,16 @@ const Photo = () => {
     </Main>
   );
 };
+
+const Main = styled.main`
+  .day {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+  }
+  .otherDateWrap {
+    background-color: ${(props) => props.theme.PRIMARY_10};
+  }
+`;
+
+const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 export default Photo;

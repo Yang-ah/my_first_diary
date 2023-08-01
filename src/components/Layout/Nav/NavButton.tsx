@@ -1,12 +1,6 @@
 import cx from "classnames";
 import styled from "styled-components";
 
-const Button = styled.button`
-  & .selectedButton &:hover {
-    background-color: ${(props) => props.theme.PRIMARY_40};
-  }
-`;
-
 interface INavButton {
   className: string;
   children: string;
@@ -31,4 +25,11 @@ const NavButton = ({
     </Button>
   );
 };
+
+const Button = styled.button`
+  & .selectedButton &:hover {
+    background-color: ${(props) => props.theme.PRIMARY_40};
+  }
+`;
+
 export default NavButton;

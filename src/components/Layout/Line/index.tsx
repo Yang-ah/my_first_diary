@@ -10,31 +10,6 @@ import EmojiDropdown from "../../EmojiDropdown";
 import Cell from "../../../pages/Scheduler/Cell";
 import { Toast } from "../../Common";
 
-const LineWrap = styled.section`
-  .date {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
-  }
-  .main {
-    border: 1px solid ${(props) => props.theme.PRIMARY_20};
-  }
-  .diarySubmitButton {
-    &:hover {
-      background-color: ${(props) => props.theme.PRIMARY_30};
-      color: white;
-    }
-  }
-`;
-
-const TrackerWrap = styled.article`
-  svg {
-    fill: ${(props) => props.theme.SECONDARY_30};
-  }
-  > button {
-    border: 1px solid ${(props) => props.theme.PRIMARY_20};
-  }
-`;
-
 interface ILine {
   date: number | string;
   className?: string;
@@ -237,5 +212,30 @@ const Line = ({
     </LineWrap>
   );
 };
+
+const LineWrap = styled.section`
+  .date {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
+  }
+  .main {
+    border: 1px solid ${(props) => props.theme.PRIMARY_20};
+  }
+  .diarySubmitButton {
+    &:hover {
+      background-color: ${(props) => props.theme.PRIMARY_30};
+      color: white;
+    }
+  }
+`;
+
+const TrackerWrap = styled.article`
+  svg {
+    fill: ${(props) => props.theme.SECONDARY_30};
+  }
+  > button {
+    border: 1px solid ${(props) => props.theme.PRIMARY_20};
+  }
+`;
 
 export default Line;

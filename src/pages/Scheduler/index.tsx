@@ -9,26 +9,7 @@ import { EmojiSmile } from "../../assets/emoji";
 import { useMatch, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Add from "./Add";
-import { useEffect, useState } from "react";
 import { monthStr } from "../../utils/date";
-
-const Header = styled.header`
-  > p,
-  div,
-  button {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-  }
-`;
-
-const AddScheduleBtn = styled(motion.button)`
-  &:hover {
-    background-color: ${(props) => props.theme.PRIMARY_40};
-  }
-`;
-
-const Overlay = styled(motion.div)``;
-
-const AddPage = styled(motion.div)``;
 
 const Scheduler = () => {
   const navigate = useNavigate();
@@ -125,5 +106,23 @@ const Scheduler = () => {
     </>
   );
 };
+
+const Header = styled.header`
+  > p,
+  div,
+  button {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+  }
+`;
+
+const AddScheduleBtn = styled(motion.button)`
+  &:hover {
+    background-color: ${(props) => props.theme.PRIMARY_40};
+  }
+`;
+
+const Overlay = styled(motion.div)``;
+
+const AddPage = styled(motion.div)``;
 
 export default Scheduler;

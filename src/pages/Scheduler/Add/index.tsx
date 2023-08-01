@@ -9,53 +9,6 @@ import { dataAtom } from "../../../state";
 import { Toast } from "../../../components";
 import { monthStr } from "../../../utils/date";
 
-const Container = styled.main`
-  label {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
-  }
-
-  input[type="range"] {
-    ::-webkit-slider-thumb {
-      background-color: ${(props) => props.theme.PRIMARY_30};
-    }
-  }
-`;
-
-const Category = styled.button`
-  background-color: transparent;
-
-  &.selected,
-  &:hover {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
-  }
-`;
-
-const AddButton = styled.button`
-  background-color: ${(props) => props.theme.PRIMARY_30};
-  color: white;
-  font-size: 18px;
-`;
-
-const OptionButton = styled.button`
-  background-color: transparent;
-  > div {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
-  }
-
-  &.minus {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-    color: white;
-    > div {
-      background-color: white;
-      color: ${(props) => props.theme.PRIMARY_30};
-      border: 1px solid ${(props) => props.theme.PRIMARY_30};
-    }
-  }
-`;
-
 interface IOption {
   [key: string]: boolean;
 }
@@ -289,8 +242,6 @@ const Add = () => {
         className={styles.addButton}
         type="button"
         onClick={onClickAdd}
-        // type="submit"
-        // form="addForm"
       >
         Add {form.category}
       </AddButton>
@@ -302,5 +253,52 @@ const Add = () => {
     </Container>
   );
 };
+
+const Container = styled.main`
+  label {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
+  }
+
+  input[type="range"] {
+    ::-webkit-slider-thumb {
+      background-color: ${(props) => props.theme.PRIMARY_30};
+    }
+  }
+`;
+
+const Category = styled.button`
+  background-color: transparent;
+
+  &.selected,
+  &:hover {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
+  }
+`;
+
+const AddButton = styled.button`
+  background-color: ${(props) => props.theme.PRIMARY_30};
+  color: white;
+  font-size: 18px;
+`;
+
+const OptionButton = styled.button`
+  background-color: transparent;
+  > div {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
+  }
+
+  &.minus {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+    color: white;
+    > div {
+      background-color: white;
+      color: ${(props) => props.theme.PRIMARY_30};
+      border: 1px solid ${(props) => props.theme.PRIMARY_30};
+    }
+  }
+`;
 
 export default Add;

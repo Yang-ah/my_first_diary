@@ -11,52 +11,6 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isLoginAtom } from "../../../state";
 
-const GNB = styled.nav`
-  > button {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-
-    &.selectedButton,
-    &:hover {
-      background-color: ${(props) => props.theme.PRIMARY_40};
-    }
-  }
-  > .themeToggle {
-    background-color: ${(props) => props.theme.PRIMARY_40};
-    > p > svg {
-      fill: #fff;
-      margin-bottom: 8px;
-    }
-  }
-  .apple {
-    width: 36px;
-  }
-  .moon {
-    width: 48px;
-  }
-`;
-
-const ThemeButtons = styled.div`
-  > button[name="peach"] {
-    background-color: ${Peach.PRIMARY_10};
-  }
-
-  > button[name="tree"] {
-    background-color: ${Tree.PRIMARY_10};
-  }
-
-  > button[name="apple"] {
-    background-color: ${Apple.PRIMARY_10};
-    > svg {
-      width: 16px;
-      fill: ${Apple.PRIMARY_40};
-    }
-  }
-
-  > button[name="dark"] {
-    background-color: ${Dark.PRIMARY_30};
-  }
-`;
-
 interface INav {
   icon: string;
   onClick: any;
@@ -139,5 +93,51 @@ const Nav = ({ icon, onClick, path }: INav) => {
     </GNB>
   );
 };
+
+const GNB = styled.nav`
+  > button {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+
+    &.selectedButton,
+    &:hover {
+      background-color: ${(props) => props.theme.PRIMARY_40};
+    }
+  }
+  > .themeToggle {
+    background-color: ${(props) => props.theme.PRIMARY_40};
+    > p > svg {
+      fill: #fff;
+      margin-bottom: 8px;
+    }
+  }
+  .apple {
+    width: 36px;
+  }
+  .moon {
+    width: 48px;
+  }
+`;
+
+const ThemeButtons = styled.div`
+  > button[name="peach"] {
+    background-color: ${Peach.PRIMARY_10};
+  }
+
+  > button[name="tree"] {
+    background-color: ${Tree.PRIMARY_10};
+  }
+
+  > button[name="apple"] {
+    background-color: ${Apple.PRIMARY_10};
+    > svg {
+      width: 16px;
+      fill: ${Apple.PRIMARY_40};
+    }
+  }
+
+  > button[name="dark"] {
+    background-color: ${Dark.PRIMARY_30};
+  }
+`;
 
 export default Nav;

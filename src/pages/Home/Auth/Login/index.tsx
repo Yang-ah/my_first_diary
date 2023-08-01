@@ -8,12 +8,6 @@ import { Toast } from "../../../../components";
 import { useEffect, useState } from "react";
 import cx from "classnames";
 
-const Form = styled(motion.form)`
-  button {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-  }
-`;
-
 const Login = () => {
   const navigate = useNavigate();
   const setIsLogin = useSetRecoilState(isLoginAtom);
@@ -74,5 +68,11 @@ const Login = () => {
     </Form>
   );
 };
+
+const Form = styled(motion.form)`
+  button {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+  }
+`;
 
 export default Login;

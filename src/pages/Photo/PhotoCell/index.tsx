@@ -20,30 +20,6 @@ interface IPhotoCell {
   month: string;
 }
 
-const ImgInput = styled.input<IInput>``;
-
-const Label = styled.label<ILabel>`
-  &.nonePhoto {
-    background-color: ${(props) => props.theme.PRIMARY_10};
-
-    > .add {
-      background-color: ${(props) => props.theme.SECONDARY_30};
-    }
-  }
-
-  // have a photo
-  &:not(.nonePhoto) {
-    color: white;
-    background: no-repeat center/120% url(${(props) => props.photoUrl});
-    transition: 0.2s opacity ease-in;
-    background-size: cover;
-
-    &:hover {
-      opacity: 0.4;
-    }
-  }
-`;
-
 const PhotoCell = ({ item, month }: IPhotoCell) => {
   const imgRef = useRef<any>(null);
   const [newImgUrl, setNewImgUrl] = useState(item.photoUrl);
@@ -110,5 +86,28 @@ const PhotoCell = ({ item, month }: IPhotoCell) => {
     </form>
   );
 };
+
+const ImgInput = styled.input<IInput>``;
+
+const Label = styled.label<ILabel>`
+  &.nonePhoto {
+    background-color: ${(props) => props.theme.PRIMARY_10};
+
+    > .add {
+      background-color: ${(props) => props.theme.SECONDARY_30};
+    }
+  }
+
+  &:not(.nonePhoto) {
+    color: white;
+    background: no-repeat center/120% url(${(props) => props.photoUrl});
+    transition: 0.2s opacity ease-in;
+    background-size: cover;
+
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+`;
 
 export default PhotoCell;

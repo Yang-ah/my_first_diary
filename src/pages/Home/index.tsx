@@ -8,24 +8,6 @@ import { useState } from "react";
 import { Toast } from "../../components";
 import cx from "classnames";
 
-const Wrap = styled(motion.section)`
-  > header {
-    color: ${(props) => props.theme.PRIMARY_30};
-
-    span {
-      color: ${(props) => props.theme.PRIMARY_40};
-    }
-  }
-  > footer {
-    > button {
-      &:hover {
-        background-color: ${(props) => props.theme.PRIMARY_30};
-        color: white;
-      }
-    }
-  }
-`;
-
 const Home = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
@@ -91,5 +73,23 @@ const Home = () => {
     </Wrap>
   );
 };
+
+const Wrap = styled(motion.section)`
+  > header {
+    color: ${(props) => props.theme.PRIMARY_30};
+
+    span {
+      color: ${(props) => props.theme.PRIMARY_40};
+    }
+  }
+  > footer {
+    > button {
+      &:hover {
+        background-color: ${(props) => props.theme.PRIMARY_30};
+        color: white;
+      }
+    }
+  }
+`;
 
 export default Home;
