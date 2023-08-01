@@ -2,11 +2,11 @@ import { dataAtom, onTrackerAtom, thisMonthAtom, IData } from "../../state";
 import { useRecoilValue } from "recoil";
 import { EmojiSmile } from "../../assets/emoji";
 import { CheckBox, Line } from "../../components";
-import { monthStr } from "../../hooks";
 import { IconDumbbell, IconLock } from "../../assets/icon";
 import styles from "./diary.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
+import { monthStr } from "../../utils/date";
 
 const Header = styled.header`
   > p,

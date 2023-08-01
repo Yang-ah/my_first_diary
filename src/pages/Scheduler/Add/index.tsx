@@ -6,8 +6,8 @@ import cx from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { dataAtom } from "../../../state";
-import { monthStr } from "../../../hooks";
 import { Toast } from "../../../components";
+import { monthStr } from "../../../utils/date";
 
 const Container = styled.main`
   label {

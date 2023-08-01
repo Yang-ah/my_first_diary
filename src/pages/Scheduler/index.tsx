@@ -1,7 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { IData, dataAtom, onTrackerAtom, thisMonthAtom } from "../../state";
 import { CheckBox, Line } from "../../components";
-import { monthStr } from "../../hooks";
 import styles from "./scheduler.module.scss";
 import cx from "classnames";
 import styled from "styled-components";
@@ -11,6 +10,7 @@ import { useMatch, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Add from "./Add";
 import { useEffect, useState } from "react";
+import { monthStr } from "../../utils/date";
 
 const Header = styled.header`
   > p,

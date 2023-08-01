@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { IData, dataAtom, thisMonthAtom } from "../../state";
 import { useRecoilValue } from "recoil";
-import { monthStr, year } from "../../hooks";
 import PhotoCell from "./PhotoCell";
 import styles from "./photo.module.scss";
 import styled from "styled-components";
 import cx from "classnames";
+import { monthStr, year } from "../../utils/date";
 
 const Main = styled.main`
   .day {
