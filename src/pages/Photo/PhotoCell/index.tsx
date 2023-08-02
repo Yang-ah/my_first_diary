@@ -36,7 +36,7 @@ const PhotoCell = ({ item, month }: IPhotoCell) => {
     };
   };
 
-  const onChange = async () => {
+  const onChange = () => {
     const reader = new FileReader();
     reader.readAsDataURL(imgRef.current.files[0]);
     reader.onload = () => {
@@ -74,7 +74,6 @@ const PhotoCell = ({ item, month }: IPhotoCell) => {
 
         <button
           type="button"
-          // type="submit"
           className={cx(item.photoUrl ? styles.modify : "add")}
         >
           {item.photoUrl ? <IconModify /> : <IconPlus />}

@@ -84,7 +84,7 @@ const Scheduler = () => {
                   exercise={item.exercise}
                   planArray={item.schedule.plan}
                   workArray={item.schedule.work}
-                ></Line>
+                />
               );
             })}
         </section>
@@ -96,7 +96,7 @@ const Scheduler = () => {
               className={styles.overlay}
               onClick={goScheduler}
               animate={{ opacity: 1 }}
-            ></Overlay>
+            />
             <AddPage layoutId="addPage" className={styles.addPage}>
               <Add />
             </AddPage>

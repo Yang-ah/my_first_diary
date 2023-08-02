@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-// import { setInitData } from "./initData";
 import { setTestData } from "./testData";
 
 export const usernameAtom = atom({

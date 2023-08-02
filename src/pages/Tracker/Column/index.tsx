@@ -6,19 +6,6 @@ import { useRecoilValue } from "recoil";
 import { onTrackerAtom } from "../../../state";
 import convertEmoji from "../../../utils/convertEmoji";
 
-const Article = styled.article`
-  > header,
-  .date {
-    background-color: ${(props) => props.theme.PRIMARY_30};
-  }
-  .cell {
-    border: 1px solid ${(props) => props.theme.PRIMARY_10};
-  }
-  svg {
-    fill: ${(props) => props.theme.SECONDARY_30};
-  }
-`;
-
 interface IChildren {
   date: number;
   emotion: string;
@@ -37,7 +24,7 @@ const Column = ({ children, month, className }: IColumn) => {
     <Article key={month} className={cx(styles.column, className)}>
       {month === "date" && (
         <>
-          <header></header>
+          <header />
           {children.map((child: any) => {
             return (
               <div
@@ -76,5 +63,18 @@ const Column = ({ children, month, className }: IColumn) => {
     </Article>
   );
 };
+
+const Article = styled.article`
+  > header,
+  .date {
+    background-color: ${(props) => props.theme.PRIMARY_30};
+  }
+  .cell {
+    border: 1px solid ${(props) => props.theme.PRIMARY_10};
+  }
+  svg {
+    fill: ${(props) => props.theme.SECONDARY_30};
+  }
+`;
 
 export default Column;

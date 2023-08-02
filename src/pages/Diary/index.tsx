@@ -62,7 +62,7 @@ const Diary = () => {
                 emotion={item.emotion}
                 exercise={item.exercise}
                 month={monthStr(month)}
-              ></Line>
+              />
             );
           })}
       </main>

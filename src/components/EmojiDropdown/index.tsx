@@ -21,7 +21,7 @@ const EmojiDropdown = ({
   className,
 }: IEmojiDropdown) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [emoji, setEmoji] = useState(<EmojiSmile />); // Emoji SVG
+  const [emoji, setEmoji] = useState(<EmojiSmile />);
   const onClickDropdown = () => setIsOpen((cur) => !cur);
 
   const onChangeValue = (value: string) => {
